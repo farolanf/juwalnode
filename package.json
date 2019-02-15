@@ -1,0 +1,26 @@
+{
+  "name": "turing-fullstack-farolan",
+  "version": "1.0.0",
+  "description": "Turing full stack challenge",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "nodemon -w server server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farolanf/turing-fullstack-farolan.git"
+  },
+  "author": "Farolan Faisal <farolanfaisal@gmail.com>",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/farolanf/turing-fullstack-farolan/issues"
+  },
+  "homepage": "https://github.com/farolanf/turing-fullstack-farolan#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
