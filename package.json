@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon -w server server",
     "lint": "eslint server/**",
+    "initdb": "node server/cmd initdb",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +20,10 @@
   },
   "homepage": "https://github.com/farolanf/turing-fullstack-farolan#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "commander": "^2.19.0",
+    "express": "^4.16.4",
+    "helmet": "^3.15.1",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
