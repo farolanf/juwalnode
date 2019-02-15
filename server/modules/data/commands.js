@@ -10,7 +10,6 @@ function initDb(program, argv) {
   program.parse(argv)
   const prjPath = path.resolve(__dirname, '../../../')
   importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
-  importSql(path.resolve(__dirname, './data.sql'))
 }
 
 function importSql(sqlpath) {
