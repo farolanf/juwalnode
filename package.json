@@ -5,6 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "nodemon -w server server",
+    "lint": "eslint server/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "express": "^4.16.4"
   },
   "devDependencies": {
+    "eslint": "^5.13.0",
     "nodemon": "^1.18.10"
   }
 }
