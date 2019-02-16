@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     quantity: { type: DataTypes.INTEGER, allowNull: false },
     unit_cost: { type: DataTypes.DECIMAL(10, 2), allowNull: false }
   }, {
-    tableName: 'order_detail'
+    tableName: 'order_detail',
+    timestamps: false,
   });
   OrderDetail.associate = function(models) {
     OrderDetail.belongsTo(models.Order, { foreignKey: 'order_id' })

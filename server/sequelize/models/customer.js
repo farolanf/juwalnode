@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     eve_phone: DataTypes.STRING,
     mob_phone: DataTypes.STRING
   }, {
-    tableName: 'customer'
+    tableName: 'customer',
+    timestamps: false,
   });
   Customer.associate = function(models) {
     Customer.belongsTo(models.ShippingRegion, { foreignKey: 'shipping_region_id' })

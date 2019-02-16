@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     shipping_region: { type: DataTypes.STRING(100), allowNull: false }
   }, {
-    tableName: 'shipping_region'
+    tableName: 'shipping_region',
+    timestamps: false,
   });
   return ShippingRegion;
 };

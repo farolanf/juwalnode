@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     thumbnail: { type: DataTypes.STRING(150), allowNull: false },
     display: DataTypes.SMALLINT(6)
   }, {
-    tableName: 'product'
+    tableName: 'product',
+    timestamps: false,
   });
   Product.associate = function(models) {
     Product.belongsToMany(models.Category, {

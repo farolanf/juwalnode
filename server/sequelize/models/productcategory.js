@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     product_id: { type: DataTypes.INTEGER, allowNull: false },
     category_id: { type: DataTypes.INTEGER, allowNull: false }
   }, {
-    tableName: 'product_category'
+    tableName: 'product_category',
+    timestamps: false,
   });
   return ProductCategory;
 };

@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     attribute_id: { type: DataTypes.INTEGER, allowNull: false },
     value: { type: DataTypes.STRING(100), allowNull: false }
   }, {
-    tableName: 'attribute_value'
+    tableName: 'attribute_value',
+    timestamps: false,
   });
   AttributeValue.associate = function(models) {
     AttributeValue.belongsTo(models.Attribute, { foreignKey: 'attribute_id' })

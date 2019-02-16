@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     tax_type: { type: DataTypes.STRING(100), allowNull: false },
     tax_percentage: { type: DataTypes.DECIMAL(10, 2), allowNull: false }
   }, {
-    tableName: 'tax'
+    tableName: 'tax',
+    timestamps: false,
   });
   return Tax;
 };

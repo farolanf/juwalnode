@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     shipping_cost: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
     shipping_region_id: { type: DataTypes.INTEGER, allowNull: false }
   }, {
-    tableName: 'shipping'
+    tableName: 'shipping',
+    timestamps: false,
   });
   Shipping.associate = function(models) {
     Shipping.belongsTo(models.ShippingRegion, { foreignKey: 'shipping_region_id' })

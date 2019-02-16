@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     attribute_value_id: { type: DataTypes.INTEGER, allowNull: false }
   }, {
-    tableName: 'product_attribute'
+    tableName: 'product_attribute',
+    timestamps: false,
   });
   return ProductAttribute;
 };

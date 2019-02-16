@@ -59,7 +59,7 @@ function dumpRoutes(program, argv) {
     stack && stack.forEach(layer => {
       if (!layer.route) return
       const methods = Object.keys(layer.route.methods)
-      console.log(methods.join(',').padEnd(7), layer.route.path)
+      console.log(methods.join(',').padEnd(7).toUpperCase(), layer.route.path)
       dump(layer.route.stack)
     })
   }
