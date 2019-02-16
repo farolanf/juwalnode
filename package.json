@@ -7,7 +7,8 @@
     "start": "nodemon -w server server",
     "lint": "eslint server/**",
     "initdb": "node server/cmd initdb",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test mocha --file server/tests/init.js server/**/*Test.js",
+    "test:watch": "NODE_ENV=test mocha -w --file server/tests/init.js server/**/*Test.js"
   },
   "repository": {
     "type": "git",
@@ -20,11 +21,15 @@
   },
   "homepage": "https://github.com/farolanf/turing-fullstack-farolan#readme",
   "dependencies": {
+    "bcrypt": "^3.0.4",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "commander": "^2.19.0",
     "express": "^4.16.4",
     "helmet": "^3.15.1",
     "juwal-validation": "file:./shared/juwal-validation",
     "lodash": "^4.17.11",
+    "mocha": "^5.2.0",
     "mysql2": "^1.6.5",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
