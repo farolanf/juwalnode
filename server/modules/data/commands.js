@@ -5,7 +5,9 @@ const prompts = require('prompts')
 
 const db = require('../../sequelize')
 const cmd = require('../../lib/cmd')
-const config = require('../../config')
+
+const env = process.env.NODE_ENV || 'development'
+const sqlConfig = require('../../sequelize/config/config.json')[env]
 
 cmd.add('data', 'initdb', 'Initialize database', initDb)
 cmd.add('data', 'create-admin', 'Create admin user', createAdmin)
@@ -16,9 +18,9 @@ function initDb(program, argv) {
   importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
 }
 
-function importSql(sqlpath) {
-  const { user, password, dbName } = config.data.mysql
-  const cmd = `cat ${sqlpath} | mysql -u${user} -p${password} ${dbName}`
+function importSql(sqlPath) {
+  const { username, password, database } = sqlConfig
+  const cmd = `cat ${sqlPath} | mysql -u${username} -p${password} ${database}`
   exec(cmd, (err, stdout, stderr) => {
     console.log(stdout, stderr)
   })
@@ -43,5 +45,7 @@ async function createAdmin(program, argv) {
     }
   ])
 
-  return db.User.create({ email, username, password: inputs.password })
+  db.User
+    .create({ email, username, password: inputs.password })
+    .finally(() => db.sequelize.close())
 }
