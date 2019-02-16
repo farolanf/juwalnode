@@ -9,11 +9,11 @@
 ### Backend
 
 - configure mysql in `server/config/development.js`
-- `npm install` or `yarn`
+- `yarn`
 - `node cmd data:initdb` to initialize and populate database
 - `npm start`
 
 ### Frontend
 
-- `npm install` or `yarn`
+- `yarn`
 - `npm start`
