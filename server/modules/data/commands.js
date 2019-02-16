@@ -11,6 +11,7 @@ const sqlConfig = require('../../sequelize/config/config.json')[env]
 
 cmd.add('data', 'initdb', 'Initialize database', initDb)
 cmd.add('data', 'create-admin', 'Create admin user', createAdmin)
+cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 
 function initDb(program, argv) {
   program.parse(argv)
@@ -48,4 +49,18 @@ async function createAdmin(program, argv) {
   db.User
     .create({ email, username, password: inputs.password })
     .finally(() => db.sequelize.close())
+}
+
+function dumpRoutes(program, argv) {
+  program.parse(argv)
+  dump(global.app._router.stack)
+
+  function dump(stack) {
+    stack && stack.forEach(layer => {
+      if (!layer.route) return
+      const methods = Object.keys(layer.route.methods)
+      console.log(methods.join(',').padEnd(7), layer.route.path)
+      dump(layer.route.stack)
+    })
+  }
 }

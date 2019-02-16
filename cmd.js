@@ -1,6 +1,6 @@
 const cmd = require('./server/lib/cmd')
 
-require('./server/app')
+global.app = require('./server/app')
 
 if (process.argv.length < 3) {
   cmd.print()

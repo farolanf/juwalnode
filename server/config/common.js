@@ -9,6 +9,7 @@ module.exports = {
   modules: [
     'data',
     'auth',
+    'finale',
   ],
 
   // module options
@@ -39,6 +40,7 @@ module.exports = {
           { path: '/auth/logout', method: 'GET' },
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'POST' },
+          { path: '/Departments', method: 'GET' },
         ]
       },
       customer: {
