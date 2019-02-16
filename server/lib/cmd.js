@@ -50,10 +50,7 @@ function _runCommand(moduleName, cmd, argv) {
   if (!handlers[moduleName][cmd]) {
     throw new Error('Invalid command')
   }
-  Promise.resolve(handlers[moduleName][cmd].handler(program, argv))
-    .then(() => {
-      process.exit()
-    })
+  handlers[moduleName][cmd].handler(program, argv)
 }
 
 module.exports = {
