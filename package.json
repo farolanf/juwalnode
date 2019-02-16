@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon -w server server",
     "lint": "eslint server/**",
-    "initdb": "node server/cmd initdb",
+    "initdb": "node cmd data:initdb; sequelize db:migrate; NODE_ENV=test node cmd data:initdb; NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test mocha --file server/tests/init.js server/**/*Test.js",
     "test:watch": "NODE_ENV=test mocha -w --file server/tests/init.js server/**/*Test.js"
   },

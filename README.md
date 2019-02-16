@@ -8,9 +8,10 @@
 
 ### Backend
 
-- configure mysql in `server/config/development.js`
+- configure both development and test databases in `server/sequelize/config/config.json`
 - `yarn`
-- `node cmd data:initdb` to initialize and populate database
+- `npm run initdb` to initialize and populate database
+- `node cmd data:create-admin admin admin@foo.com` to create the admin user
 - `npm start`
 
 ### Frontend
