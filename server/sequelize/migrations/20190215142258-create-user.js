@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('Users', {
       user_id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,12 +12,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(100)
       },
-      password: {
+      username: {
         allowNull: false,
         type: Sequelize.STRING(50)
       },
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING(100)
+      },
       customer_id: {
         allowNull: false,
+        defaultValue: 0,
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -30,7 +35,8 @@ module.exports = {
       }
     });
   },
+  // eslint-disable-next-line
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('Users');
   }
 };

@@ -14,6 +14,8 @@ module.exports = {
   // module options
 
   auth: {
+    jwtSecret: ']ZW%/tOrZ:PeI,y5~C|y4rWoPQtx%g',
+
     // new customers will be assigned to these groups
     defaultGroups: ['public', 'customer'],
 
