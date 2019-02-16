@@ -1,15 +1,52 @@
 module.exports = {
-  // specify modules to load and their order
-  modules: [
-    'data',
-    'auth'
-  ],
   // app options
   app: {
     port: 3000,
     apiBase: '/api/v1'
   },
+
+  // specify modules to load and their order
+  modules: [
+    'data',
+    'auth',
+  ],
+
   // module options
-  // data: {},
-  // auth: {},
+
+  auth: {
+    // new customers will be assigned to these groups
+    defaultGroups: ['public', 'customer'],
+
+    groups: {
+      public: {
+        // routes white list
+        //
+        // e.g:
+        //   '/products'
+        //   is the same as
+        //   { path: '/products', method: 'GET' }
+        //
+        //   multiple methods
+        //   { path: '/products', method: ['GET', 'POST'] }
+        //
+        // path can be a RegExp or pattern
+        routes: [
+          { path: '/auth/register', method: 'POST' },
+          { path: '/auth/login', method: 'POST' },
+          { path: '/auth/logout', method: 'GET' },
+          { path: '/auth/verify', method: 'GET' },
+          { path: '/auth/unique-email', method: 'POST' },
+        ]
+      },
+      customer: {
+        routes: [
+        ]
+      },
+      // admin passed all checks
+      admin: true
+    },
+
+    // permissions bypass these methods
+    publicMethods: ['HEAD', 'OPTIONS'],
+  },
 }
