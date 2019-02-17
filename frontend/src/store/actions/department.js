@@ -1,5 +1,3 @@
-import { createAction } from 'redux-actions'
+import { createFetchAction } from '$src/lib/action'
 
-export const fetchDepartments = createAction('FETCH_DEPARTMENTS')
-export const fetchDepartmentsSuccess = createAction('FETCH_DEPARTMENTS_SUCCESS')
-export const fetchDepartmentsError = createAction('FETCH_DEPARTMENTS_ERROR')
+export const fetchDepartments = createFetchAction('FETCH_DEPARTMENTS')
