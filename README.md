@@ -9,6 +9,7 @@
 ### Backend
 
 - configure both development and test databases in `server/sequelize/config/config.json`
+- copy `.env.example` to `.env.development` and configure
 - `yarn`
 - `npm run initdb` to initialize and populate database
 - `node cmd data:create-admin admin admin@foo.com` to create the admin user
@@ -16,5 +17,6 @@
 
 ### Frontend
 
+- copy `.env.example` to `.env.development` and configure
 - `yarn`
 - `npm start`
