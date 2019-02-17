@@ -1,16 +1,10 @@
 import React, { } from "react"
 import { Link } from "gatsby"
-import { Router, navigate } from '@reach/router'
-import queryString from 'query-string'
+import { Router } from '@reach/router'
 
 import Layout from "$comp/layout"
 import SEO from "$comp/seo"
-
-const Browse = ({ department, category }) => (
-  <div>
-    Browse {department} {category}
-  </div>
-)
+import Browse from '$con/browse'
 
 const IndexPage = () => (
   <Layout>
