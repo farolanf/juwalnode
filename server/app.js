@@ -1,3 +1,6 @@
+require('dotenv').config({
+  path: '../.env.' + (process.env.NODE_ENV || 'development')
+})
 const path = require('path')
 const serveStatic = require('serve-static')
 const app = require('express')()
