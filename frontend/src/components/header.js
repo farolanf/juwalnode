@@ -6,7 +6,6 @@ import { API_HOST } from '$src/const'
 const Header = ({ siteTitle }) => (
   <header
     style={{
-      background: `rebeccapurple`,
       marginBottom: `1.45rem`,
     }}
   >
@@ -25,7 +24,7 @@ const Header = ({ siteTitle }) => (
             textDecoration: `none`,
           }}
         >
-          {siteTitle}
+          <img src={API_HOST + '/img/tshirtshop.png'} />
         </Link>
       </h1>
     </div>
