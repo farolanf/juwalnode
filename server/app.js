@@ -10,7 +10,8 @@ const config = require('./config')
 app.disable('x-powered-by')
 
 app.use(cors({
-  origin: process.env.FRONTEND_HOST
+  origin: process.env.FRONTEND_HOST,
+  exposedHeaders: ['Content-Range']
 }))
 
 app.use('/img',

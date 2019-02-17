@@ -26,8 +26,9 @@ const Header = () => (
         >
           <img src={API_HOST + '/img/tshirtshop.png'} />
         </Link>
-        <Link to='/browse'>Browse</Link>
       </h1>
+      <Link to='/browse'>Browse</Link>
+      <Link to='/admin'>Admin</Link>
     </div>
   </header>
 )
