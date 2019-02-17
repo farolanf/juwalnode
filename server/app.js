@@ -13,16 +13,17 @@ app.use(helmet.contentSecurityPolicy({
   }
 }))
 
-app.use(serveStatic(path.resolve(__dirname, '../challenge-files/Images/images'), {
-  index: false,
-  maxAge: '1d'
-}))
-
-app.use(serveStatic(path.resolve(__dirname, '../challenge-files/Images/product_images'), {
-  index: false,
-  fallthrough: false,
-  maxAge: '1d'
-}))
+app.use('/img',
+  serveStatic(path.resolve(__dirname, '../challenge-files/Images/images'), {
+    index: false,
+    maxAge: '1d'
+  }),
+  serveStatic(path.resolve(__dirname, '../challenge-files/Images/product_images'), {
+    index: false,
+    fallthrough: false,
+    maxAge: '1d'
+  })
+)
 
 require('./modules')(app, config)
 
