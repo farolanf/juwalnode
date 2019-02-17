@@ -3,17 +3,17 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-import path from 'path'
+const path = require('path')
 
-export const onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        $prj: path.resolve(__dirname, '..'),
-        $src: __dirname,
-        $comp: path.resolve(__dirname, './components'),
-        $con: path.resolve(__dirname, './containers'),
-        $act: path.resolve(__dirname, './store/actions'),
+        $prj: path.resolve(__dirname),
+        $src: path.resolve(__dirname, 'src'),
+        $comp: path.resolve(__dirname, 'src/components'),
+        $con: path.resolve(__dirname, 'src/containers'),
+        $act: path.resolve(__dirname, 'src/store/actions'),
       }
     }
   })
