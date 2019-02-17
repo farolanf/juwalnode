@@ -17,6 +17,7 @@
     "gatsby-plugin-offline": "^2.0.23",
     "gatsby-plugin-react-helmet": "^3.0.6",
     "gatsby-plugin-sharp": "^2.0.20",
+    "gatsby-plugin-tailwindcss": "^1.0.3",
     "gatsby-source-filesystem": "^2.0.20",
     "gatsby-transformer-sharp": "^2.1.13",
     "juwal-validation": "file:../shared/juwal-validation/",
@@ -28,6 +29,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-saga": "^1.0.1",
+    "tailwindcss": "^0.7.4",
     "typeface-roboto": "^0.0.54"
   },
   "keywords": [

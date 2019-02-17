@@ -10,4 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 8, // optional, recommended 6+
   },
+  globals: {
+    tw: true
+  }
 }
