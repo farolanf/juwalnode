@@ -27,7 +27,6 @@
     "commander": "^2.19.0",
     "express": "^4.16.4",
     "finale-rest": "^1.0.2",
-    "helmet": "^3.15.1",
     "jsonwebtoken": "^8.4.0",
     "juwal-validation": "file:./shared/juwal-validation",
     "lodash": "^4.17.11",

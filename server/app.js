@@ -1,17 +1,7 @@
 const path = require('path')
-const helmet = require('helmet')
 const serveStatic = require('serve-static')
 const app = require('express')()
 const config = require('./config')
-
-// use helmet default protections
-app.use(helmet())
-
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"]
-  }
-}))
 
 app.use('/img',
   serveStatic(path.resolve(__dirname, '../challenge-files/Images/images'), {
