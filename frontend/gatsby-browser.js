@@ -3,5 +3,6 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
+import _wrapRootElement from './wrapRootElement'
 
-// You can delete this file if you're not using it
+export const wrapRootElement = ({ element }) => _wrapRootElement(element)
