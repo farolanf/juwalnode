@@ -4715,6 +4715,13 @@ gatsby-link@^2.0.10:
     "@types/reach__router" "^1.0.0"
     prop-types "^15.6.1"
 
+gatsby-plugin-create-client-paths@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-create-client-paths/-/gatsby-plugin-create-client-paths-2.0.4.tgz#329f4488ee3004c475f76436c6c800a22c39d0a3"
+  integrity sha512-Y0fnx5ZMFqfp7QBF4xU4ZWAJdFX4ocFRXUxbkGGOuXwL3gvBt6L2ioSt/WdwpN9Z/LgPCqcmMqAm3F/7e+YuOQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
 gatsby-plugin-manifest@^2.0.17:
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-manifest/-/gatsby-plugin-manifest-2.0.17.tgz#1e2c3329b1a58bdf77186866dd9e94da54ac6e68"

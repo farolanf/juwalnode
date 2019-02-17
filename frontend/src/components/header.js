@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { API_HOST } from '$src/const'
 
-const Header = ({ siteTitle }) => (
+const Header = () => (
   <header
     style={{
       marginBottom: `1.45rem`,
