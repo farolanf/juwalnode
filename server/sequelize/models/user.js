@@ -26,12 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     }
   }, {
-    tableName: 'users',
-    defaultScope: {
-      attributes: {
-        exclude: ['password']
-      }
-    }
+    tableName: 'users'
   });
   User.associate = function (models) {
     User.belongsTo(models.Customer, { foreignKey: 'customer_id' })

@@ -35,6 +35,7 @@ module.exports = {
         //
         // path can be a RegExp or pattern
         routes: [
+          { path: '/auth/local', method: 'POST' },
           { path: '/auth/google', method: 'GET' },
           { path: '/auth/facebook', method: 'GET' },
           { path: '/auth/register', method: 'POST' },

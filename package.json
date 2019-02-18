@@ -22,6 +22,7 @@
   "homepage": "https://github.com/farolanf/turing-fullstack-farolan#readme",
   "dependencies": {
     "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "change-case": "^3.1.0",

@@ -12,5 +12,8 @@ module.exports = {
   },
   globals: {
     tw: true
+  },
+  env: {
+    browser: true
   }
 }

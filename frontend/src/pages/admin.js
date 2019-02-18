@@ -1,6 +1,7 @@
-import React from "react"
+import React from 'react'
 import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin'
 import dataProvider from '$src/lib/react-admin/data-provider'
+import authProvider from '$src/lib/react-admin/auth-provider'
 import {
   DepartmentList,
   DepartmentEdit,
@@ -8,7 +9,7 @@ import {
 } from '$src/lib/react-admin/department'
 
 const Page = () => (
-  <Admin dataProvider={dataProvider}>
+  <Admin dataProvider={dataProvider} authProvider={authProvider}>
     <Resource
       name='departments'
       list={DepartmentList}
