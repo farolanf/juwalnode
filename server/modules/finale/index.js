@@ -1,4 +1,5 @@
 const finale = require('finale-rest')
+const pluralize = require('pluralize')
 const db = require('../../sequelize')
 
 module.exports = function (app, config) {
@@ -12,6 +13,11 @@ module.exports = function (app, config) {
     .filter(key => key.toLowerCase() !== 'sequelize')
     .forEach(name => {
       const model = db[name]
-      finale.resource({ model })
+      const plural = pluralize(name).toLowerCase()
+      const singular = name.toLowerCase()
+      finale.resource({
+        model,
+        endpoints: [`/${plural}`, `/${plural}/:${singular}_id`]
+      })
     })
 }
