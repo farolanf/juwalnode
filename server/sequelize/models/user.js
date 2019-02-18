@@ -26,10 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     }
   }, {
-    tableName: 'users'
+    tableName: 'user'
   });
   User.associate = function (models) {
     User.belongsTo(models.Customer, { foreignKey: 'customer_id' })
+    User.belongsToMany(models.Group, { through: 'UserGroup', foreignKey: 'user_id' })
   };
   User.generatePassword = function (plain) {
     return bcrypt.hashSync(plain, saltRounds)

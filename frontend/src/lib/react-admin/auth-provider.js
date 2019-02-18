@@ -19,20 +19,26 @@ const authProvider = async (type, params) => {
       throw err
     })
     localStorage.setItem('token', response.data.token)
+    axios.defaults.headers.Authorization = 'Bearer ' + response.data.token
   } else if (type === AUTH_LOGOUT) {
     localStorage.removeItem('token')
+    delete axios.defaults.headers.Authorization
   } else if (type === AUTH_CHECK) {
     const token = localStorage.getItem('token')
-    return axios.get(API_BASE + '/auth/verify', {
+    await axios.get(API_BASE + '/auth/verify', {
       headers: {
         Authorization: 'Bearer ' + token
       }
     }).catch(err => {
       localStorage.removeItem('token')
+      delete axios.defaults.headers.Authorization
       throw err
     })
+    axios.defaults.headers.Authorization = 'Bearer ' + token
   } else if (type === AUTH_ERROR) {
-    localStorage.removeItem('token')
+    if (params.status === 401) {
+      localStorage.removeItem('token')
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
-const { User } = require('../../sequelize')
+const { User, Group } = require('../../sequelize')
+const { publicUser } = require('../../lib/user')
 
 // TODO: implement jwtId. It invalidates existing token on change as user
 // with the old jwtId will not be found.
@@ -30,9 +31,13 @@ module.exports = function (app, config) {
       if (!payload) {
         return res.sendStatus(500)
       }
-      User.findOne({ where: { user_id: payload.userId }})
+      User.findOne(
+        {
+          where: { user_id: payload.userId },
+          include: [Group]
+        })
         .then(user => {
-          req.user = user.dataValues
+          req.user = publicUser(user)
           next()
         })
         .catch(err => {
