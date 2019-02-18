@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     name: { type: DataTypes.STRING(100), allowNull: false },
     description: { type: DataTypes.STRING(1000), allowNull: false },
     price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
-    dicounted_price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
+    discounted_price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
     image: { type: DataTypes.STRING(150), allowNull: false },
     image_2: { type: DataTypes.STRING(150), allowNull: false },
     thumbnail: { type: DataTypes.STRING(150), allowNull: false },

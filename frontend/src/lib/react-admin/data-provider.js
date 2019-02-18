@@ -11,11 +11,19 @@ import {
   GET_MANY,
   GET_MANY_REFERENCE,
 } from 'react-admin'
+import pluralize from 'pluralize'
+import queryString from 'query-string'
 
 const convertId = d => {
   const pk = Object.keys(d).find(key => key.endsWith('_id'))
   d.id = d[pk]
   return d
+}
+
+const ifPk = (field, resource) => {
+  return field !== 'id'
+    ? field
+    : pluralize.singular(resource).toLowerCase() + '_id'
 }
 
 // eslint-disable-next-line
@@ -35,7 +43,8 @@ function convertResponse (response, type, resource, params) {
     case DELETE_MANY:
       return { data: response } // response is a list of ids
     case GET_MANY:
-      data = response.data.map(convertId)
+      // response is a list of records
+      data = response.map(convertId)
       return { data }
     case GET_MANY_REFERENCE:
       throw new Error('Not implemented')
@@ -43,13 +52,22 @@ function convertResponse (response, type, resource, params) {
 }
 
 export default (type, resource, params) => {
+  console.log(type, resource, params)
   const listUrl = `${API_BASE}/${resource}`
   const detailUrl = `${API_BASE}/${resource}/${params.id}`
-  let method, url, data
+  let method, url, query, data
   switch (type) {
     case GET_LIST:
       method = 'get'
       url = listUrl
+      query = {
+        sort: (params.sort.order === 'ASC' ? '-' : '') + ifPk(params.sort.field, resource),
+        count: params.pagination.perPage
+      }
+      if (params.pagination.page - 1) {
+        query.page = params.pagination.page - 1
+      }
+      url += `?${queryString.stringify(query)}`
       break
     case GET_ONE:
       method = 'get'
@@ -85,6 +103,12 @@ export default (type, resource, params) => {
         })
       ).then(ids => convertResponse(ids, type, resource, params))
     case GET_MANY:
+      return Promise.all(
+        params.ids.map(id => {
+          const detailUrl = `${API_BASE}/${resource}/${id}`
+          return axios.get(detailUrl).then(response => response.data)
+        })
+      ).then(records => convertResponse(records, type, resource, params))
     case GET_MANY_REFERENCE:
       throw new Error('Not implemented')
     }

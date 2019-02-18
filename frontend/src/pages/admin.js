@@ -7,6 +7,16 @@ import {
   DepartmentEdit,
   DepartmentCreate
 } from '$src/lib/react-admin/department'
+import {
+  CategoryList,
+  CategoryEdit,
+  CategoryCreate
+} from '$src/lib/react-admin/category'
+import {
+  ProductList,
+  ProductEdit,
+  ProductCreate
+} from '$src/lib/react-admin/product'
 
 const Page = () => (
   <Admin dataProvider={dataProvider} authProvider={authProvider}>
@@ -15,6 +25,18 @@ const Page = () => (
       list={DepartmentList}
       edit={DepartmentEdit}
       create={DepartmentCreate}
+    />
+    <Resource
+      name='categories'
+      list={CategoryList}
+      edit={CategoryEdit}
+      create={CategoryCreate}
+    />
+    <Resource
+      name='products'
+      list={ProductList}
+      edit={ProductEdit}
+      create={ProductCreate}
     />
   </Admin>
 )

@@ -20,14 +20,13 @@ app.use(bodyParser.json({
   strict: false
 }))
 
-app.use('/img',
+app.use(
   serveStatic(path.resolve(__dirname, '../challenge-files/Images/images'), {
     index: false,
     maxAge: '1d'
   }),
   serveStatic(path.resolve(__dirname, '../challenge-files/Images/product_images'), {
     index: false,
-    fallthrough: false,
     maxAge: '1d'
   })
 )
