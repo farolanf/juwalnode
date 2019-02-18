@@ -37,6 +37,8 @@ function convertResponse (response, type, resource, params) {
     case UPDATE:
     case DELETE:
       return { data: convertId(response.data) }
+    case DELETE_MANY:
+      return { data: response } // response is a list of ids
     case GET_MANY:
       data = response.data.map(convertId)
       return { data }
@@ -46,7 +48,7 @@ function convertResponse (response, type, resource, params) {
 export default (type, resource, params) => {
   const listUrl = `${API_BASE}/${resource}`
   const detailUrl = `${API_BASE}/${resource}/${params.id}`
-  let method, url, options
+  let method, url, data
   switch (type) {
     case GET_LIST:
       method = 'get'
@@ -59,8 +61,20 @@ export default (type, resource, params) => {
     case CREATE:
       method = 'post'
       url = listUrl
+      data = params.data
       break
+    case DELETE:
+      method = 'delete'
+      url = detailUrl
+      break
+    case DELETE_MANY:
+      return Promise.all(
+        params.ids.map(id => {
+          const detailUrl = `${API_BASE}/${resource}/${id}`
+          return axios.delete(detailUrl).then(() => id)
+        })
+      ).then(ids => convertResponse(ids, type, resource, params))
   }
-  return axios[method](url, options)
+  return axios[method](url, data)
     .then(response => convertResponse(response, type, resource, params))
 }
