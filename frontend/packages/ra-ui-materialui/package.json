@@ -1,0 +1,128 @@
+{
+  "_from": "ra-ui-materialui@^2.7.1",
+  "_id": "ra-ui-materialui@2.7.1",
+  "_inBundle": false,
+  "_integrity": "sha512-A+UYlcj/tWD/Q13czQXV4/Wx/3PiUCGJ87yp5+EPn5hMoxkWQPvNQXAauxbIvnt72QVeUoP3PC2hOYSkiTeK3A==",
+  "_location": "/ra-ui-materialui",
+  "_phantomChildren": {
+    "@types/jss": "9.5.7",
+    "@types/react-transition-group": "2.0.16",
+    "brcast": "3.0.1",
+    "change-emitter": "0.1.6",
+    "classnames": "2.2.6",
+    "csstype": "2.6.2",
+    "debounce": "1.2.0",
+    "dom-helpers": "3.4.0",
+    "fbjs": "0.8.17",
+    "invariant": "2.2.4",
+    "is-plain-object": "2.0.4",
+    "jss": "9.8.7",
+    "jss-camel-case": "6.1.0",
+    "jss-default-unit": "8.0.2",
+    "jss-global": "3.0.0",
+    "jss-nested": "6.0.1",
+    "jss-props-sort": "6.0.0",
+    "jss-vendor-prefixer": "7.0.0",
+    "keycode": "2.2.0",
+    "lodash": "4.17.11",
+    "lodash-es": "4.17.11",
+    "loose-envify": "1.4.0",
+    "normalize-scroll-left": "0.1.2",
+    "object-assign": "4.1.1",
+    "popper.js": "1.14.7",
+    "react-event-listener": "0.6.6",
+    "react-jss": "8.6.1",
+    "react-lifecycles-compat": "3.0.4",
+    "react-transition-group": "2.5.3",
+    "regenerator-runtime": "0.12.1",
+    "symbol-observable": "1.2.0",
+    "warning": "4.0.3"
+  },
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "ra-ui-materialui@^2.7.1",
+    "name": "ra-ui-materialui",
+    "escapedName": "ra-ui-materialui",
+    "rawSpec": "^2.7.1",
+    "saveSpec": null,
+    "fetchSpec": "^2.7.1"
+  },
+  "_requiredBy": [
+    "/react-admin"
+  ],
+  "_resolved": "https://registry.npmjs.org/ra-ui-materialui/-/ra-ui-materialui-2.7.1.tgz",
+  "_shasum": "1195de05468f68a31728465b1fb1b9a3c91634f5",
+  "_spec": "ra-ui-materialui@^2.7.1",
+  "_where": "/home/farolan/challenges/turing-fullstack/frontend/node_modules/react-admin",
+  "authors": [
+    "François Zaninotto",
+    "Gildas Garcia"
+  ],
+  "bugs": {
+    "url": "https://github.com/marmelab/react-admin/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@material-ui/core": "^1.4.0",
+    "@material-ui/icons": "^3.0.2",
+    "autosuggest-highlight": "^3.1.1",
+    "classnames": "~2.2.5",
+    "inflection": "~1.12.0",
+    "lodash": "~4.17.5",
+    "material-ui-chip-input": "1.0.0-beta.6 - 1.0.0-beta.8",
+    "papaparse": "^4.1.4",
+    "prop-types": "~15.6.1",
+    "ra-core": "^2.7.1",
+    "react-autosuggest": "^9.4.2",
+    "react-dropzone": "~4.0.1",
+    "react-headroom": "^2.2.4",
+    "react-redux": "~5.0.7",
+    "react-router-dom": "~4.2.2",
+    "react-transition-group": "^2.2.1",
+    "recompose": "~0.26.0",
+    "redux": "~3.7.2",
+    "redux-form": "~7.4.0"
+  },
+  "deprecated": false,
+  "description": "UI Components for react-admin with MaterialUI",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "enzyme": "~3.7.0",
+    "enzyme-adapter-react-16": "~1.6.0",
+    "file-api": "~0.10.4",
+    "ignore-styles": "~5.0.1",
+    "react": "~16.3.1",
+    "react-dom": "~16.3.1",
+    "react-test-renderer": "~16.3.1",
+    "rimraf": "^2.6.2"
+  },
+  "files": [
+    "*.md",
+    "lib",
+    "esm",
+    "src"
+  ],
+  "gitHead": "5cabddcab53bda4b109981f538d217e013dc7b4a",
+  "homepage": "https://github.com/marmelab/react-admin#readme",
+  "license": "MIT",
+  "main": "lib/index",
+  "module": "esm/index.js",
+  "name": "ra-ui-materialui",
+  "peerDependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marmelab/react-admin.git"
+  },
+  "scripts": {
+    "build": "yarn run build-cjs && yarn run build-esm",
+    "build-cjs": "rimraf ./lib && tsc",
+    "build-esm": "rimraf ./esm && tsc --outDir esm --module es2015",
+    "watch": "rimraf ./lib && tsc --watch"
+  },
+  "sideEffects": false,
+  "version": "2.7.1"
+}

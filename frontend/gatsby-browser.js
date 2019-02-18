@@ -6,4 +6,4 @@
 import 'typeface-roboto'
 import _wrapRootElement from './wrapRootElement'
 
-export const wrapRootElement = ({ element }) => _wrapRootElement(element)
+export const wrapPageElement = ({ element }) => _wrapRootElement(element)
