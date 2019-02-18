@@ -1,7 +1,5 @@
 const { User, sequelize } = require('../../sequelize')
 
-const email = 'user@foo.com'
-const username = 'user1'
 const password = 'mypassword1234'
 
 describe('User model', () => {
@@ -19,10 +17,5 @@ describe('User model', () => {
     const user = new User()
     user.password = password
     assert.isTrue(user.verifyPassword(password))
-  })
-  it('Exclude password', async () => {
-    const user = await User.create({ email, username, password })
-    const data = await User.findOne({ user_id: user.user_id })
-    assert.isUndefined(data.password)
   })
 })
