@@ -88,14 +88,14 @@ export default (type, resource, params) => {
     case UPDATE:
       method = 'put'
       url = detailUrl
-      data = params.data
+      data = { ...params.data }
       delete data.id
       break
     case UPDATE_MANY:
       return Promise.all(
         params.ids.map(id => {
           const detailUrl = `${API_BASE}/${resource}/${id}`
-          return axios.put(detailUrl).then(() => id)
+          return axios.put(detailUrl, { data: params.data }).then(() => id)
         })
       ).then(ids => convertResponse(ids, type, resource, params))
     case DELETE:
