@@ -11,6 +11,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
       alias: {
         $prj: path.resolve(__dirname),
         $src: path.resolve(__dirname, 'src'),
+        $lib: path.resolve(__dirname, 'src/lib'),
         $comp: path.resolve(__dirname, 'src/components'),
         $con: path.resolve(__dirname, 'src/containers'),
         $act: path.resolve(__dirname, 'src/store/actions'),
