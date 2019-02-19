@@ -20,6 +20,7 @@ const resourcePk = {
   productcategories: 'product_id',
 }
 
+// this is necessary because react-admin expects records primary key to be 'id'
 const makeId = resource => d => {
   const pk = resourcePk[resource]
   d.id = d[pk]
