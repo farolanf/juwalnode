@@ -7,21 +7,13 @@ import {
   SimpleForm,
   TextField,
   NumberField,
-  ReferenceField,
   TextInput,
   LongTextInput,
   NumberInput,
   ImageInput,
-  SelectInput,
   DisabledInput,
-  ReferenceInput
 } from 'react-admin'
-import { API_HOST } from '$src/const'
-
-// eslint-disable-next-line
-const ImageField = ({ source, record = {}, sortable, basePath, ...props }) => (
-  <img src={API_HOST + `/${record[source]}`} {...props} />
-)
+import ImageField from './image-field'
 
 export const ProductList = props => (
   <List {...props}>

@@ -17,6 +17,11 @@ import {
   ProductEdit,
   ProductCreate
 } from '$src/lib/react-admin/product'
+import {
+  ProductcategoryList,
+  ProductcategoryEdit,
+  ProductcategoryCreate
+} from '$src/lib/react-admin/product-category'
 
 const Page = () => (
   <Admin dataProvider={dataProvider} authProvider={authProvider}>
@@ -31,6 +36,12 @@ const Page = () => (
       list={CategoryList}
       edit={CategoryEdit}
       create={CategoryCreate}
+    />
+    <Resource
+      name='productcategories'
+      list={ProductcategoryList}
+      edit={ProductcategoryEdit}
+      create={ProductcategoryCreate}
     />
     <Resource
       name='products'

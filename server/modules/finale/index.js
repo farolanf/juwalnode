@@ -14,10 +14,10 @@ module.exports = function (app, config) {
     .forEach(name => {
       const model = db[name]
       const plural = pluralize(name).toLowerCase()
-      const singular = name.toLowerCase()
+      const pk = model.primaryKeyAttributes[0]
       finale.resource({
         model,
-        endpoints: [`/${plural}`, `/${plural}/:${singular}_id`]
+        endpoints: [`/${plural}`, `/${plural}/:${pk}`]
       })
     })
 }

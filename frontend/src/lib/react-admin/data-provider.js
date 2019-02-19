@@ -11,19 +11,24 @@ import {
   GET_MANY,
   GET_MANY_REFERENCE,
 } from 'react-admin'
-import pluralize from 'pluralize'
 import queryString from 'query-string'
 
-const convertId = d => {
-  const pk = Object.keys(d).find(key => key.endsWith('_id'))
+const resourcePk = {
+  departments: 'department_id',
+  categories: 'category_id',
+  products: 'product_id',
+  productcategories: 'product_id',
+}
+
+const makeId = resource => d => {
+  const pk = resourcePk[resource]
   d.id = d[pk]
   return d
 }
 
-const ifPk = (field, resource) => {
-  return field !== 'id'
-    ? field
-    : pluralize.singular(resource).toLowerCase() + '_id'
+const idToPk = (field, resource) => {
+  if (field === 'id') return resourcePk[resource]
+  return field
 }
 
 // eslint-disable-next-line
@@ -32,19 +37,19 @@ function convertResponse (response, type, resource, params) {
   switch (type) {
     case GET_LIST:
       total = +response.headers['content-range'].match(/(\d+)$/)[1]
-      data = response.data.map(convertId)
+      data = response.data.map(makeId(resource))
       return { data, total }
     case GET_ONE:
     case CREATE:
     case UPDATE:
     case DELETE:
-      return { data: convertId(response.data) }
+      return { data: makeId(resource)(response.data) }
     case UPDATE_MANY:
     case DELETE_MANY:
       return { data: response } // response is a list of ids
     case GET_MANY:
       // response is a list of records
-      data = response.map(convertId)
+      data = response.map(makeId(resource))
       return { data }
     case GET_MANY_REFERENCE:
       throw new Error('Not implemented')
@@ -61,7 +66,7 @@ export default (type, resource, params) => {
       method = 'get'
       url = listUrl
       query = {
-        sort: (params.sort.order === 'ASC' ? '-' : '') + ifPk(params.sort.field, resource),
+        sort: (params.sort.order === 'ASC' ? '-' : '') + idToPk(params.sort.field, resource),
         count: params.pagination.perPage
       }
       if (params.pagination.page - 1) {
