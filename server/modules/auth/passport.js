@@ -1,12 +1,12 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
-const { User, Group } = require('../../sequelize')
+const { User, Group, Sequelize: { Op } } = require('../../sequelize')
 const { publicUser } = require('../../lib/user')
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
     User.findOne({
-      where: { username },
+      where: { [Op.or]: [{ username }, { email: username }] },
       include: [Group]
     })
     .then(user => {
