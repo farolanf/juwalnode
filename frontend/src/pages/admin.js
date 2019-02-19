@@ -13,15 +13,30 @@ import {
   CategoryCreate
 } from '$src/lib/react-admin/category'
 import {
+  ProductcategoryList,
+  ProductcategoryEdit,
+  ProductcategoryCreate
+} from '$src/lib/react-admin/product-category'
+import {
   ProductList,
   ProductEdit,
   ProductCreate
 } from '$src/lib/react-admin/product'
 import {
-  ProductcategoryList,
-  ProductcategoryEdit,
-  ProductcategoryCreate
-} from '$src/lib/react-admin/product-category'
+  ProductAttributeList,
+  ProductAttributeEdit,
+  ProductAttributeCreate
+} from '$src/lib/react-admin/product-attribute'
+import {
+  AttributeList,
+  AttributeEdit,
+  AttributeCreate
+} from '$src/lib/react-admin/attribute'
+import {
+  AttributeValueList,
+  AttributeValueEdit,
+  AttributeValueCreate
+} from '$src/lib/react-admin/attribute-value'
 
 const Page = () => (
   <Admin dataProvider={dataProvider} authProvider={authProvider}>
@@ -48,6 +63,24 @@ const Page = () => (
       list={ProductList}
       edit={ProductEdit}
       create={ProductCreate}
+    />
+    <Resource
+      name='productattributes'
+      list={ProductAttributeList}
+      edit={ProductAttributeEdit}
+      create={ProductAttributeCreate}
+    />
+    <Resource
+      name='attributes'
+      list={AttributeList}
+      edit={AttributeEdit}
+      create={AttributeCreate}
+    />
+    <Resource
+      name='attributevalues'
+      list={AttributeValueList}
+      edit={AttributeValueEdit}
+      create={AttributeValueCreate}
     />
   </Admin>
 )

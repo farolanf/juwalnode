@@ -16,8 +16,11 @@ import queryString from 'query-string'
 const resourcePk = {
   departments: 'department_id',
   categories: 'category_id',
-  products: 'product_id',
   productcategories: 'product_id',
+  products: 'product_id',
+  productattributes: 'product_id',
+  attributes: 'attribute_id',
+  attributevalues: 'attribute_value_id',
 }
 
 // this is necessary because react-admin expects records primary key to be 'id'
