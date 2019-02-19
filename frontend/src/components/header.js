@@ -24,7 +24,7 @@ const Header = () => (
             textDecoration: `none`,
           }}
         >
-          <img src={API_HOST + '/img/tshirtshop.png'} />
+          <img src={API_HOST + '/tshirtshop.png'} />
         </Link>
       </h1>
       <Link to='/browse'>Browse</Link>
