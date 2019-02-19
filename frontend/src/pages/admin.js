@@ -57,6 +57,7 @@ const Page = () => (
       list={ProductcategoryList}
       edit={ProductcategoryEdit}
       create={ProductcategoryCreate}
+      options={{ label: 'Product Categories' }}
     />
     <Resource
       name='products'
@@ -69,6 +70,7 @@ const Page = () => (
       list={ProductAttributeList}
       edit={ProductAttributeEdit}
       create={ProductAttributeCreate}
+      options={{ label: 'Product Attributes' }}
     />
     <Resource
       name='attributes'
@@ -81,6 +83,7 @@ const Page = () => (
       list={AttributeValueList}
       edit={AttributeValueEdit}
       create={AttributeValueCreate}
+      options={{ label: 'Attribute Values' }}
     />
   </Admin>
 )
