@@ -16,11 +16,15 @@ import ImageField from './image-field'
 export const ProductcategoryList = props => (
   <List {...props}>
     <Datagrid rowClick="edit">
-      <ReferenceField source="product_id" reference="products"><TextField source="name" /></ReferenceField>
-      <ReferenceField source="product_id" reference="products" sortable={false}>
+      <ReferenceField source="product_id" reference="products" label='Product name'>
+        <TextField source="name" />
+      </ReferenceField>
+      <ReferenceField source="product_id" reference="products" label='Thumbnail' sortable={false}>
         <ImageField source="thumbnail" style={tw`w-16`} />
       </ReferenceField>
-      <ReferenceField source="category_id" reference="categories"><TextField source="name" /></ReferenceField>
+      <ReferenceField source="category_id" reference="categories">
+        <TextField source="name" />
+      </ReferenceField>
       <EditButton />
     </Datagrid>
   </List>

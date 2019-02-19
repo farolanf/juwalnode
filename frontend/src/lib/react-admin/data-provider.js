@@ -18,7 +18,7 @@ const resourcePk = {
   categories: 'category_id',
   productcategories: 'product_id',
   products: 'product_id',
-  productattributes: 'product_id',
+  productattributes: 'product_attribute_id',
   attributes: 'attribute_id',
   attributevalues: 'attribute_value_id',
 }
