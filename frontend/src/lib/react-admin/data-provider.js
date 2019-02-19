@@ -52,8 +52,7 @@ function convertResponse (response, type, resource, params) {
     case DELETE_MANY:
       return { data: response } // response is a list of ids
     case GET_MANY:
-      // response is a list of records
-      data = response.map(makeId(resource))
+      data = response.data.map(makeId(resource))
       return { data }
     case GET_MANY_REFERENCE:
       throw new Error('Not implemented')
@@ -61,7 +60,6 @@ function convertResponse (response, type, resource, params) {
 }
 
 export default (type, resource, params) => {
-  console.log(type, resource, params)
   const listUrl = `${API_BASE}/${resource}`
   const detailUrl = `${API_BASE}/${resource}/${params.id}`
   let method, url, query, data
@@ -112,12 +110,11 @@ export default (type, resource, params) => {
         })
       ).then(ids => convertResponse(ids, type, resource, params))
     case GET_MANY:
-      return Promise.all(
-        params.ids.map(id => {
-          const detailUrl = `${API_BASE}/${resource}/${id}`
-          return axios.get(detailUrl).then(response => response.data)
-        })
-      ).then(records => convertResponse(records, type, resource, params))
+      method = 'get'
+      url = listUrl
+      query = { [idToPk('id', resource)]: params.ids }
+      data = { params: query }
+      break
     case GET_MANY_REFERENCE:
       throw new Error('Not implemented')
     }
