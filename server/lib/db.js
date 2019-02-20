@@ -1,14 +1,14 @@
 exports.addIncludes = async function addIncludes (paths, value, context, db) {
-  if (paths.length <= 1) return
+  if (!paths.length || !paths[0]) return
 
-  const model = getModel(db, paths[0])
+  paths = paths.slice()
+
+  const model = getModel(db, paths.shift())
   const include = { model }
 
-  if (await hasField(model, paths[1])) {
-    include.where = { [paths[1]]: value }
-    paths = paths.slice(2)
-  } else {
-    paths = paths.slice(1)
+  if (paths.length && paths[0] && await hasField(model, paths[0])) {
+    include.where = { [paths[0]]: value }
+    paths.shift()
   }
 
   await addIncludes(paths, value, include, db)
