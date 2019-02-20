@@ -51,9 +51,9 @@ const Browse = ({
     // navigate to /browse/department/category
     department
       && departmentCategories
-      && departmentCategories.length > tab
+      && departmentCategories.length > val
       && category !== departmentCategories[tab].name
-      && navigate(`/browse/${department.toLowerCase()}/${departmentCategories[tab].name.toLowerCase()}`)
+      && navigate(`/browse/${department.toLowerCase()}/${departmentCategories[val].name.toLowerCase()}`)
   }
 
   return (
