@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "gatsby"
+import { navigate } from '@reach/router'
+
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 
 const Browse = ({
   department,
@@ -14,33 +18,48 @@ const Browse = ({
     fetchCategories()
   }, [])
 
-  department = department && departments && departments.find(
-    d => d.name.toLowerCase() === department.toLowerCase()
-  )
-  category = category && categories && categories.find(
-    c => c.name.toLowerCase() === category.toLowerCase()
-  )
+  let [tab, setTab] = useState(0)
+  const [lastTabs, setLastTabs] = useState({})
+
+  // restore tab
+  tab = lastTabs[department] || 0
+  useEffect(() => {
+    setTab(lastTabs[department] || 0)
+  }, [department])
+
+  const departmentObj = department
+    && departments
+    && departments.find(d => d.name.toLowerCase() === department.toLowerCase())
+
+  // department categories
+  const departmentCategories = departmentObj
+    && categories
+    && categories.filter(c => c.department_id === departmentObj.department_id)
+
+  // navigate to /browse/department/category
+  useEffect(() => {
+    department
+      && departmentCategories
+      && departmentCategories.length > tab
+      && category !== departmentCategories[tab].name
+      && navigate(`/browse/${department.toLowerCase()}/${departmentCategories[tab].name.toLowerCase()}`)
+  }, [tab])
+
+  const handleChangeTab = (e, val) => {
+    // remember tab
+    department && setLastTabs(Object.assign({}, lastTabs, { [department]: val }))
+    setTab(val)
+  }
+
+  console.log('render')
 
   return (
     <div>
-      <ul>
-        {departments && departments.map(d => (
-          <li key={d.department_id}>
-            <Link to={'/browse/' + d.name.toLowerCase()}>{d.name}</Link>
-          </li>
+      <Tabs value={tab} onChange={handleChangeTab}>
+        {departmentCategories && departmentCategories.map(c => (
+          <Tab key={c.category_id} label={c.name} />
         ))}
-      </ul>
-      {department && (
-        <ul>
-          {categories && categories.map(c => (
-            c.department_id === department.department_id && (
-              <li key={c.category_id}>
-                <Link to={`/browse/${department.name.toLowerCase()}/${c.name.toLowerCase()}`}>{c.name}</Link>
-              </li>
-            )
-          ))}
-        </ul>
-      )}
+      </Tabs>
     </div>
   )
 }
