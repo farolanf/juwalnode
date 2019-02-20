@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { takeLatest, call, put } from 'redux-saga/effects'
+import { contentRange } from '$src/lib/pagination'
 
 export function createFetchAction (name) {
   const action = createAction(name)
@@ -13,11 +14,13 @@ export function fetchActionReducersObj (action) {
     [action.success]: (state, { payload }) => ({
       ...state,
       data: payload.data,
+      range: payload.range,
       error: null
     }),
     [action.error]: (state, { payload }) => ({
       ...state,
       data: null,
+      range: null,
       error: payload
     })
   }
@@ -33,11 +36,14 @@ export function handleFetchAction (action) {
   )
 }
 
-export function handleFetchAsync (action, fetchApi) {
-  return function* () {
+export function handleFetchAsync (action, fetchApi, onSuccess) {
+  return function* (dispatchedAction) {
     try {
-      const response = yield call(fetchApi)
-      yield put(action.success({ data: response.data }))
+      const response = yield call(fetchApi, dispatchedAction)
+      const range = contentRange(response.headers['content-range'])
+      onSuccess
+        ? onSuccess({ action, response, range, put })
+        : yield put(action.success({ data: response.data, range }))
     } catch (err) {
       yield put(action.error(err))
     }

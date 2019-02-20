@@ -10,13 +10,19 @@ const Browse = ({
   category,
   fetchDepartments,
   fetchCategories,
+  fetchProducts,
   departments,
-  categories
+  categories,
+  products
 }) => {
   useEffect(() => {
     fetchDepartments()
     fetchCategories()
   }, [])
+
+  useEffect(() => {
+    fetchProducts({ department, category })
+  }, [department, category])
 
   let [tab, setTab] = useState(0)
   const [lastTabs, setLastTabs] = useState({})
@@ -36,22 +42,19 @@ const Browse = ({
     && categories
     && categories.filter(c => c.department_id === departmentObj.department_id)
 
-  // navigate to /browse/department/category
-  useEffect(() => {
+  const handleChangeTab = (e, val) => {
+    setTab(val)
+
+    // remember tab
+    department && setLastTabs(Object.assign({}, lastTabs, { [department]: val }))
+
+    // navigate to /browse/department/category
     department
       && departmentCategories
       && departmentCategories.length > tab
       && category !== departmentCategories[tab].name
       && navigate(`/browse/${department.toLowerCase()}/${departmentCategories[tab].name.toLowerCase()}`)
-  }, [tab])
-
-  const handleChangeTab = (e, val) => {
-    // remember tab
-    department && setLastTabs(Object.assign({}, lastTabs, { [department]: val }))
-    setTab(val)
   }
-
-  console.log('render')
 
   return (
     <div>
@@ -60,6 +63,9 @@ const Browse = ({
           <Tab key={c.category_id} label={c.name} />
         ))}
       </Tabs>
+      {products && products.map(p => (
+        <div key={p.product_id}>{p.name}</div>
+      ))}
     </div>
   )
 }
