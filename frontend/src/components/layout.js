@@ -4,7 +4,9 @@ import { StaticQuery, graphql } from "gatsby"
 
 import { withStyles } from '@material-ui/core/styles'
 
-import Header from "./header"
+import Header from "$con/header"
+import Footer from "$con/footer"
+
 import containerStyle from '$styles/container'
 
 const styles = theme => ({
@@ -30,9 +32,7 @@ const Layout = ({ classes, children }) => (
       <div className={classes.root}>
         <Header siteTitle={data.site.siteMetadata.title} />
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()} {data.site.siteMetadata.author}
-        </footer>
+        <Footer />
       </div>
     )}
   />
