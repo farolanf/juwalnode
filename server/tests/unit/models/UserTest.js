@@ -1,4 +1,4 @@
-const { User, sequelize } = require('../../sequelize')
+const { User, sequelize } = require('../../../sequelize')
 
 const password = 'mypassword1234'
 

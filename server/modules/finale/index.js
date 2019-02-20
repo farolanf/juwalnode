@@ -1,6 +1,7 @@
 const finale = require('finale-rest')
 const pluralize = require('pluralize')
 const db = require('../../sequelize')
+const { addIncludes } = require('../../lib/db')
 
 module.exports = function (app, config) {
   finale.initialize({
@@ -15,9 +16,26 @@ module.exports = function (app, config) {
       const model = db[name]
       const plural = pluralize(name).toLowerCase()
       const pk = model.primaryKeyAttributes[0]
-      finale.resource({
+      const resource = finale.resource({
         model,
         endpoints: [`/${plural}`, `/${plural}/:${pk}`]
       })
+      initMilestones(resource)
     })
+}
+
+function initMilestones (resource) {
+  // create include query
+  resource.list.fetch.before(async (req, res, context) => {
+    await Promise.all(
+      Object.keys(req.query).map(async q => {
+        const paths = q.split('__')
+        if (paths.length > 1) {
+          await addIncludes(paths, req.query[q], context, db)
+          JSON.stringify(context.include, null, 2)
+        }
+      })
+    )
+    return context.continue
+  })
 }
