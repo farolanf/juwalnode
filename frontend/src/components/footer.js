@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StaticQuery, graphql } from 'gatsby'
+import { StaticQuery, graphql, Link } from 'gatsby'
 
 import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
@@ -14,7 +14,10 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
 import { faMedium } from '@fortawesome/free-brands-svg-icons/faMedium'
 
-const styles = () => ({
+import commonStyles from '$styles/common'
+
+const styles = theme => ({
+  ...commonStyles(theme),
   paper: tw`flex flex-col p-8`,
   nav: tw`mb-0`,
   social: tw`flex-grow flex justify-center mb-3`,
@@ -47,7 +50,11 @@ const Footer = ({ classes, theme, departments, fetchDepartments }) => {
             <Grid container justify='center' spacing={theme.spacing.unit} className={classes.nav}>
               {departments && departments.map(d => (
                 <Grid item xs={12} md className={classes.department} key={d.department_id}>
-                  <Button>{d.name}</Button>
+                  <Button>
+                    <Link to={'/browse/' + d.name.toLowerCase()} className={classes.link}>
+                      {d.name}
+                    </Link>
+                  </Button>
                 </Grid>
               ))}
             </Grid>
