@@ -2,9 +2,17 @@ exports.addIncludes = async function addIncludes (paths, value, context, db) {
   if (!paths.length || !paths[0]) return
 
   paths = paths.slice()
+  context.include = context.include || []
 
   const model = getModel(db, paths.shift())
-  const include = { model }
+
+  let include
+
+  include = context.include.find(inc => inc.model === model)
+  if (!include) {
+    include = { model }
+    context.include.push(include)
+  }
 
   if (paths.length && paths[0] && await hasField(model, paths[0])) {
     include.where = { [paths[0]]: value }
@@ -12,9 +20,6 @@ exports.addIncludes = async function addIncludes (paths, value, context, db) {
   }
 
   await addIncludes(paths, value, include, db)
-
-  context.include = context.include || []
-  context.include.push(include)
 }
 
 function getModel (db, name) {

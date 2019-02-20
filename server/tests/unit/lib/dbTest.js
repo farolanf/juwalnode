@@ -35,7 +35,7 @@ describe('db lib', () => {
       ])
     })
 
-    it('Build include', async () => {
+    it('build include', async () => {
       const context = {}
       const expected = {
         include: [
@@ -52,7 +52,7 @@ describe('db lib', () => {
       assert.deepEqual(context.include[0].where, expected.include[0].where)
     })
 
-    it('Build include nested', async () => {
+    it('build include nested', async () => {
       const context = {}
       const expected = {
         include: [
@@ -68,6 +68,34 @@ describe('db lib', () => {
         ]
       }
       await populate()
+      await addIncludes(['category', 'department', 'name'], 'Department 2', context, db)
+
+      assert.isArray(context.include)
+      assert.equal(context.include[0].model, expected.include[0].model)
+
+      assert.isArray(context.include[0].include)
+      assert.equal(context.include[0].include[0].model, expected.include[0].include[0].model)
+      assert.deepEqual(context.include[0].include[0].where, expected.include[0].include[0].where)
+    })
+
+    it('support multi query', async () => {
+      const context = {}
+      const expected = {
+        include: [
+          {
+            model: db.Category,
+            where: { name: 'Category 1' },
+            include: [
+              {
+                model: db.Department,
+                where: { name: 'Department 2' },
+              }
+            ]
+          }
+        ]
+      }
+      await populate()
+      await addIncludes(['category', 'name'], 'Category 1', context, db)
       await addIncludes(['category', 'department', 'name'], 'Department 2', context, db)
 
       assert.isArray(context.include)

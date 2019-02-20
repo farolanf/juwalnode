@@ -30,9 +30,8 @@ function initMilestones (resource) {
     await Promise.all(
       Object.keys(req.query).map(async q => {
         const paths = q.split('__')
-        if (paths.length > 1) {
+        if (paths.length) {
           await addIncludes(paths, req.query[q], context, db)
-          JSON.stringify(context.include, null, 2)
         }
       })
     )

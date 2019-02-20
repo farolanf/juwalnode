@@ -8,12 +8,12 @@ describe('User model', () => {
     await sequelize.truncate({ logging: false })
   })
 
-  it('Store password hash', () => {
+  it('store password hash', () => {
     const user = new User()
     user.password = password
     assert.notEqual(user.password, password)
   })
-  it('Verify password', () => {
+  it('verify password', () => {
     const user = new User()
     user.password = password
     assert.isTrue(user.verifyPassword(password))
