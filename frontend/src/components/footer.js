@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 
 import withStyles from '@material-ui/core/styles/withStyles'
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
@@ -15,12 +16,16 @@ import { faMedium } from '@fortawesome/free-brands-svg-icons/faMedium'
 
 const styles = () => ({
   paper: tw`flex flex-col p-8`,
-  nav: tw`flex-grow flex justify-center mb-2`,
+  nav: tw`mb-0`,
   social: tw`flex-grow flex justify-center mb-3`,
   copyright: tw`flex-grow flex justify-center`,
+  department: {
+    flexGrow: 0,
+    textAlign: 'center'
+  }
 })
 
-const Footer = ({ classes, departments, fetchDepartments }) => {
+const Footer = ({ classes, theme, departments, fetchDepartments }) => {
   useEffect(() => {
     fetchDepartments()
   }, [])
@@ -39,11 +44,13 @@ const Footer = ({ classes, departments, fetchDepartments }) => {
       {data => (
         <footer>
           <Paper className={classes.paper}>
-            <div className={classes.nav}>
+            <Grid container justify='center' spacing={theme.spacing.unit} className={classes.nav}>
               {departments && departments.map(d => (
-                <Button>{d.name}</Button>
+                <Grid item xs={12} md className={classes.department} key={d.department_id}>
+                  <Button>{d.name}</Button>
+                </Grid>
               ))}
-            </div>
+            </Grid>
             <div className={classes.social}>
               <IconButton><FontAwesomeIcon icon={faInstagram} /></IconButton>
               <IconButton><FontAwesomeIcon icon={faFacebook} /></IconButton>
@@ -62,4 +69,4 @@ const Footer = ({ classes, departments, fetchDepartments }) => {
   )
 }
 
-export default withStyles(styles)(Footer)
+export default withStyles(styles, { withTheme: true })(Footer)

@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 
 import withStyles from '@material-ui/core/styles/withStyles'
+import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
@@ -23,7 +24,7 @@ const styles = theme => ({
 
 const Spacer = () => <span style={tw`flex-grow`} />
 
-const Header = ({ classes, departments, fetchDepartments }) => {
+const Header = ({ classes, theme, departments, fetchDepartments }) => {
   useEffect(() => {
     fetchDepartments()
   }, [])
@@ -32,9 +33,13 @@ const Header = ({ classes, departments, fetchDepartments }) => {
       <Toolbar>
         <img src={API_HOST + '/tshirtshop.png'} className={classes.brand} />
         <div className={classes.sectionDesktop}>
-          {departments && departments.map(d => (
-            <Button key={d.department_id}>{d.name}</Button>
-          ))}
+          <Grid container spacing={theme.spacing.unit} alignItems='center'>
+            {departments && departments.map(d => (
+              <Grid item>
+                <Button key={d.department_id}>{d.name}</Button>
+              </Grid>
+            ))}
+          </Grid>
           <Spacer />
           <IconButton className={classes.icon}>
             <FontAwesomeIcon icon={faUserAlt} />
@@ -53,4 +58,4 @@ Header.defaultProps = {
   siteTitle: ``,
 }
 
-export default withStyles(styles)(Header)
+export default withStyles(styles, { withTheme: true })(Header)
