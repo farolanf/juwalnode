@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from "gatsby"
 import { navigate } from '@reach/router'
 import _ from 'lodash'
 import queryString from 'query-string'
@@ -10,10 +9,11 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
 import Product from '$comp/product'
-import Filter from '$comp/filter'
+import Filter from '$con/filter'
 
 const styles = () => ({
-  root: tw`pt-4 pb-8`
+  root: tw`pt-4 pb-8`,
+  tabs: tw`mb-4`,
 })
 
 const Browse = ({
@@ -28,6 +28,9 @@ const Browse = ({
   products,
   filters,
   setFilters,
+  clearFilters,
+  setDepartment,
+  setCategory,
 }) => {
   useEffect(() => {
     fetchDepartments()
@@ -37,17 +40,17 @@ const Browse = ({
 
   // clear filters when changing department or category path
   useEffect(() => {
-    const filters = {}
     if (category) {
-      filters.categories = [category]
+      clearFilters()
+      setCategory(category)
     } else if (department) {
-      filters.departments = [department]
+      clearFilters()
+      setDepartment(department)
     }
-    (category || department) && setFilters(filters)
   }, [department, category])
 
   useEffect(() => {
-    fetchProducts(filters)
+    fetchProducts(filters.toJS())
   }, [filters])
 
   let [tab, setTab] = useState(0)
@@ -84,7 +87,7 @@ const Browse = ({
 
   return (
     <div className={classes.root}>
-      <Tabs value={tab} onChange={handleChangeTab}>
+      <Tabs value={tab} onChange={handleChangeTab} className={classes.tabs}>
         {departmentCategories && departmentCategories.map(c => (
           <Tab key={c.category_id} label={c.name} />
         ))}
