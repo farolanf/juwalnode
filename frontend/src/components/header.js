@@ -54,7 +54,7 @@ const Header = ({
   departments,
   fetchDepartments,
   clearFilters,
-  setQuery: setQ,
+  setQuery: setSearchQuery,
 }) => {
   useEffect(() => {
     fetchDepartments()
@@ -65,7 +65,7 @@ const Header = ({
   function handleSubmitQuery (e) {
     e.preventDefault()
     clearFilters()
-    setQ({ q: query })
+    setSearchQuery(query)
     setQuery('')
     navigate('/search?q=' + query)
   }
