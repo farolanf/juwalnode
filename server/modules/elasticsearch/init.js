@@ -5,13 +5,6 @@ const db = require('../../sequelize')
 
 const options = {
   settings: {
-    analysis: {
-      normalizer: {
-        ikeyword: {
-          filter: ['lowercase']
-        }
-      }
-    }
   },
   mappings: {
     products: {
@@ -24,20 +17,20 @@ const options = {
         departments: {
           type: 'nested',
           properties: {
-            name: { type: 'keyword', normalizer: 'ikeyword' }
+            name: { type: 'keyword' }
           }
         },
         categories: {
           type: 'nested',
           properties: {
-            name: { type: 'keyword', normalizer: 'ikeyword'  }
+            name: { type: 'keyword' }
           }
         },
         attributes: {
           type: 'nested',
           properties: {
-            name: { type: 'keyword', normalizer: 'ikeyword'  },
-            value: { type: 'keyword', normalizer: 'ikeyword'  },
+            name: { type: 'keyword' },
+            value: { type: 'keyword' },
           }
         }
       }
