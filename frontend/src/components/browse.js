@@ -21,7 +21,13 @@ const Browse = ({
   }, [])
 
   useEffect(() => {
-    fetchProducts({ department, category })
+    const q = {}
+    if (category) {
+      q.categories = [category]
+    } else if (department) {
+      q.departments = [department]
+    }
+    fetchProducts(q)
   }, [department, category])
 
   let [tab, setTab] = useState(0)
