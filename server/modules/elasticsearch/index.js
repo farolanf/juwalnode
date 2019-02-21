@@ -5,136 +5,37 @@ require('./commands')
 
 module.exports = (app, config) => {
   app.get(config.app.apiBase + '/search/:type', (req, res) => {
+    if (req.query.count) {
+      req.query.count = +req.query.count
+    }
     if (req.query.attributes) {
       req.query.attributes = JSON.parse(req.query.attributes)
     }
+
     const search = {
-      size: Math.min(req.query.count || 15, config.elasticsearch.maxCount),
+      size: Math.min(
+        !isNaN(req.query.count) ? req.query.count : 15,
+        config.elasticsearch.maxCount
+      ),
       query: {
         bool: {
-          must: {
-            query_string: {
-              query: req.query.q || '*'
-            }
+          must: searchQuery(req.query.q),
+          filter: {
+            bool: { should: filterQuery(req.query) }
           }
         }
-      }
-    }
-
-    if (req.query.departments) {
-      search.query.bool.filter = _.merge(
-        search.query.bool.filter,
-        {
-          bool: {
-            must: []
-          }
-        }
-      )
-      search.query.bool.filter.bool.must.push({
-        nested: {
-          path: 'departments',
-          query: {
-            terms: {
-              'departments.name': _.castArray(req.query.departments)
-            }
-          }
-        }
-      })
-    }
-
-    if (req.query.categories) {
-      search.query.bool.filter = _.merge(
-        search.query.bool.filter,
-        {
-          bool: {
-            must: []
-          }
-        }
-      )
-      search.query.bool.filter.bool.must.push({
-        nested: {
-          path: 'categories',
-          query: {
-            terms: {
-              'categories.name': _.castArray(req.query.categories)
-            }
-          }
-        }
-      })
-    }
-
-    if (req.query.attributes) {
-      search.query.bool.filter = _.merge(
-        search.query.bool.filter,
-        {
-          bool: {
-            must: []
-          }
-        }
-      )
-      search.query.bool.filter.bool.must.push({
-        nested: {
-          path: 'attributes',
-          query: {
-            bool: {
-              should: req.query.attributes.map(attr => ({
+      },
+      aggs: {
+        all: {
+          global: {},
+          aggs: {
+            search: {
+              filter: {
                 bool: {
-                  must: [
-                    {
-                      match: { 'attributes.name': attr.name }
-                    },
-                    {
-                      match: { 'attributes.value': attr.value }
-                    }
-                  ]
-                }
-              }))
-            }
-          }
-        }
-      })
-    }
-
-    search.aggs = {
-      all: {
-        global: {},
-        aggs: {
-          search: {
-            filter: {
-              query_string: {
-                query: req.query.q || '*'
-              }
-            },
-            aggs: {
-              departments: {
-                nested: { path: 'departments' },
-                aggs: {
-                  name: {
-                    terms: { field: 'departments.name' }
-                  }
+                  must: searchQuery(req.query.q),
                 }
               },
-              categories: {
-                nested: { path: 'categories' },
-                aggs: {
-                  name: {
-                    terms: { field: 'categories.name' }
-                  }
-                }
-              },
-              attributes: {
-                nested: { path: 'attributes' },
-                aggs: {
-                  name: {
-                    terms: { field: 'attributes.name' },
-                    aggs: {
-                      value: {
-                        terms: { field: 'attributes.value' }
-                      }
-                    }
-                  }
-                }
-              }
+              aggs: aggs()
             }
           }
         }
@@ -149,4 +50,91 @@ module.exports = (app, config) => {
       res.send(results)
     })
   })
+}
+
+function searchQuery (q) {
+  return {
+    query_string: {
+      query: q || '*'
+    }
+  }
+}
+
+function filterQuery (query) {
+  return [].concat(
+    (query.departments && [departmentsQuery(query.departments)] || []),
+    (query.categories && [categoriesQuery(query.categories)] || []),
+    (query.attributes && [attributesQuery(query.attributes)] || [])
+  )
+}
+
+function departmentsQuery (departments) {
+  return {
+    nested: {
+      path: 'departments',
+      query: {
+        terms: { 'departments.name': _.castArray(departments) }
+      }
+    }
+  }
+}
+
+function categoriesQuery (categories) {
+  return {
+    nested: {
+      path: 'categories',
+      query: {
+        terms: { 'categories.name': _.castArray(categories) }
+      }
+    }
+  }
+}
+
+function attributesQuery (attributes) {
+  return attributes.map(attr => ({
+    bool: {
+      must: [
+        {
+          match: { 'attributes.name': attr.name }
+        },
+        {
+          match: { 'attributes.value': attr.value }
+        }
+      ]
+    }
+  }))
+}
+
+function aggs () {
+  return {
+    departments: {
+      nested: { path: 'departments' },
+      aggs: {
+        name: {
+          terms: { field: 'departments.name' }
+        }
+      }
+    },
+    categories: {
+      nested: { path: 'categories' },
+      aggs: {
+        name: {
+          terms: { field: 'categories.name' }
+        }
+      }
+    },
+    attributes: {
+      nested: { path: 'attributes' },
+      aggs: {
+        name: {
+          terms: { field: 'attributes.name' },
+          aggs: {
+            value: {
+              terms: { field: 'attributes.value' }
+            }
+          }
+        }
+      }
+    }
+  }
 }
