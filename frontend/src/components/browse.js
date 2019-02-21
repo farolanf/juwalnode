@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "gatsby"
 import { navigate } from '@reach/router'
+import _ from 'lodash'
+import queryString from 'query-string'
 
+import withStyles from '@material-ui/core/styles/withStyles'
+import Grid from '@material-ui/core/Grid'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
+import Product from '$comp/product'
+import Filter from '$comp/filter'
+
+const styles = () => ({
+  root: tw`pt-4 pb-8`
+})
+
 const Browse = ({
+  classes,
   department,
   category,
   fetchDepartments,
@@ -13,22 +25,30 @@ const Browse = ({
   fetchProducts,
   departments,
   categories,
-  products
+  products,
+  filters,
+  setFilters,
 }) => {
   useEffect(() => {
     fetchDepartments()
     fetchCategories()
+    !(department || category) && filtersFromUrl(setFilters)
   }, [])
 
+  // clear filters when changing department or category path
   useEffect(() => {
-    const q = {}
+    const filters = {}
     if (category) {
-      q.categories = [category]
+      filters.categories = [category]
     } else if (department) {
-      q.departments = [department]
+      filters.departments = [department]
     }
-    fetchProducts(q)
+    (category || department) && setFilters(filters)
   }, [department, category])
+
+  useEffect(() => {
+    fetchProducts(filters)
+  }, [filters])
 
   let [tab, setTab] = useState(0)
   const [lastTabs, setLastTabs] = useState({})
@@ -63,17 +83,32 @@ const Browse = ({
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <Tabs value={tab} onChange={handleChangeTab}>
         {departmentCategories && departmentCategories.map(c => (
           <Tab key={c.category_id} label={c.name} />
         ))}
       </Tabs>
-      {products && products.map(p => (
-        <div key={p.product_id}>{p.name}</div>
-      ))}
+      <Grid container wrap='nowrap'>
+          <Grid item>
+            <Filter />
+          </Grid>
+          <Grid item container spacing={24}>
+            {_.get(products, 'hits.hits', []).map(p => (
+              <Grid item xs={12} md={4} xl={3} key={p._id} container justify='center'>
+                <Product item={p} />
+              </Grid>
+            ))}
+          </Grid>
+      </Grid>
     </div>
   )
 }
 
-export default Browse
+export default withStyles(styles)(Browse)
+
+// init filters from query string
+function filtersFromUrl (setFilters) {
+  const query = queryString.parse(window.location.search)
+  console.log(query)
+}

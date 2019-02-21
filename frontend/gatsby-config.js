@@ -10,7 +10,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: {
-        prefixes: [`/browse/*`]
+        prefixes: [`/browse/*`, `/search/*`]
       }
     },
     {

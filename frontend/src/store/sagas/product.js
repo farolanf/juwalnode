@@ -6,8 +6,8 @@ import { API_BASE } from '$src/const'
 import { fetchActionSaga } from '$src/lib/action'
 import { fetchProducts } from '$act/product'
 
-function fetchApi ({ payload: { departments, categories, attributes, page }}) {
-  const params = { count: 15, page }
+function fetchApi ({ payload: { q, departments, categories, attributes, page }}) {
+  const params = { count: 15, page, q }
   if (departments) {
     params.departments = _.castArray(departments).map(changeCase.upperCaseFirst)
   }
