@@ -95,6 +95,52 @@ module.exports = (app, config) => {
       })
     }
 
+    search.aggs = {
+      all: {
+        global: {},
+        aggs: {
+          search: {
+            filter: {
+              query_string: {
+                query: req.query.q || '*'
+              }
+            },
+            aggs: {
+              departments: {
+                nested: { path: 'departments' },
+                aggs: {
+                  name: {
+                    terms: { field: 'departments.name' }
+                  }
+                }
+              },
+              categories: {
+                nested: { path: 'categories' },
+                aggs: {
+                  name: {
+                    terms: { field: 'categories.name' }
+                  }
+                }
+              },
+              attributes: {
+                nested: { path: 'attributes' },
+                aggs: {
+                  name: {
+                    terms: { field: 'attributes.name' },
+                    aggs: {
+                      value: {
+                        terms: { field: 'attributes.value' }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     client.search({
       index: config.elasticsearch.index,
       type: req.params.type,
