@@ -1,0 +1,128 @@
+GET _search?index=tshirtshop&type=products
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": {
+        "query_string": {
+          "query": "shirt"
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "nested": {
+                "path": "departments",
+                "query": {
+                  "terms": {
+                    "departments.name": ["Regional", "Nature"]
+                  }
+                }
+              }
+            },
+            {
+              "nested": {
+                "path": "categories",
+                "query": {
+                  "terms": {
+                    "categories.name": ["Irish", "Animal"]
+                  }
+                }
+              }
+            },
+            {
+              "nested": {
+                "path": "attributes",
+                "query": {
+                  "bool": {
+                    "should": [
+                      {
+                        "bool": {
+                          "must": [
+                            {
+                              "match": {
+                                "attributes.name": "Color"
+                              }
+                            },
+                            {
+                              "match": {
+                                "attributes.value": "Green"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "bool": {
+                          "must": [
+                            {
+                              "match": {
+                                "attributes.name": "Screen Size"
+                              }
+                            },
+                            {
+                              "match": {
+                                "attributes.value": "10\""
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "aggs": {
+    "all": {
+      "global": {},
+      "aggs": {
+        "search": {
+          "filter": {
+            "query_string": {
+              "query": "shirt"
+            }
+          },
+          "aggs": {
+            "departments": {
+              "nested": { "path": "departments" },
+              "aggs": {
+                "name": {
+                  "terms": { "field": "departments.name" }
+                }
+              }
+            },
+            "categories": {
+              "nested": { "path": "categories" },
+              "aggs": {
+                "name": {
+                  "terms": { "field": "categories.name" }
+                }
+              }
+            },
+            "attributes": {
+              "nested": { "path": "attributes" },
+              "aggs": {
+                "name": {
+                  "terms": { "field": "attributes.name" },
+                  "aggs": {
+                    "value": {
+                      "terms": { "field": "attributes.value" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

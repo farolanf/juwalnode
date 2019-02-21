@@ -44,6 +44,8 @@ module.exports = {
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'GET' },
 
+          { path: '/search/.*', method: 'GET' },
+
           // public resources
           { path: '/departments(/.*)?', method: 'GET' },
           { path: '/categories(/.*)?', method: 'GET' },
