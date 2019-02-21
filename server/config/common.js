@@ -11,6 +11,7 @@ module.exports = {
     'data',
     'auth',
     'finale',
+    'elasticsearch',
   ],
 
   // module options
@@ -73,4 +74,8 @@ module.exports = {
     // permissions bypass these methods
     publicMethods: ['HEAD', 'OPTIONS'],
   },
+
+  elasticsearch: {
+    index: 'tshirtshop'
+  }
 }

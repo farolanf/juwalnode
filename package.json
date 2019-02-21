@@ -29,6 +29,7 @@
     "commander": "^2.19.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
+    "elasticsearch": "^15.4.1",
     "express": "^4.16.4",
     "finale-rest": "^1.0.2",
     "jsonwebtoken": "^8.4.0",
