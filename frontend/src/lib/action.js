@@ -30,7 +30,7 @@ export function handleFetchAction (action) {
   return handleActions(
     fetchActionReducersObj(action),
     {
-      data: [],
+      data: null,
       error: null
     }
   )
