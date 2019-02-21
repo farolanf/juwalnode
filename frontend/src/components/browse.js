@@ -110,5 +110,8 @@ export default withStyles(styles)(Browse)
 // init filters from query string
 function filtersFromUrl (setFilters) {
   const query = queryString.parse(window.location.search)
-  console.log(query)
+  if (query.attributes) {
+    query.attributes = JSON.parse(query.attributes)
+  }
+  setFilters(query)
 }
