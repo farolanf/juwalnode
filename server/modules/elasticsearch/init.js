@@ -66,7 +66,10 @@ module.exports = async function initIndices () {
         'description',
         'price',
         'discounted_price',
-        'display'
+        'display',
+        'image',
+        'image_2',
+        'thumbnail'
       ])
       doc.departments = (record.Categories || []).map(c => ({
         name: c.Department.name
