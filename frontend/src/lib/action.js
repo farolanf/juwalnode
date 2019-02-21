@@ -21,7 +21,7 @@ export function fetchActionReducersObj (action) {
       ...state,
       data: null,
       range: null,
-      error: payload
+      error: ''+payload
     })
   }
 }
@@ -50,8 +50,8 @@ export function handleFetchAsync (action, fetchApi, onSuccess) {
   }
 }
 
-export function fetchActionSaga (action, fetchApi) {
+export function fetchActionSaga (action, fetchApi, onSuccess) {
   return function* () {
-    yield takeLatest(action, handleFetchAsync(action, fetchApi))
+    yield takeLatest(action, handleFetchAsync(action, fetchApi, onSuccess))
   }
 }
