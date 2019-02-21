@@ -78,6 +78,7 @@ module.exports = {
   },
 
   elasticsearch: {
-    index: 'tshirtshop'
+    index: 'tshirtshop',
+    maxCount: 100
   }
 }

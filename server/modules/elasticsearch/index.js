@@ -5,7 +5,11 @@ require('./commands')
 
 module.exports = (app, config) => {
   app.get(config.app.apiBase + '/search/:type', (req, res) => {
+    if (req.query.attributes) {
+      req.query.attributes = JSON.parse(req.query.attributes)
+    }
     const search = {
+      size: Math.min(req.query.count || 15, config.elasticsearch.maxCount),
       query: {
         bool: {
           must: {
