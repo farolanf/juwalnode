@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from '@reach/router'
 import _ from 'lodash'
-import queryString from 'query-string'
+import changeCase from 'change-case'
 
 import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
@@ -18,8 +18,6 @@ const styles = () => ({
 
 const Browse = ({
   classes,
-  department,
-  category,
   fetchDepartments,
   fetchCategories,
   fetchProducts,
@@ -31,7 +29,12 @@ const Browse = ({
   clearFilters,
   setDepartment,
   setCategory,
+  ...props,
 }) => {
+  const paths = props['*'].split('/')
+  const department = paths.length && paths[0]
+  const category = paths.length > 1 && paths[1]
+
   useEffect(() => {
     fetchDepartments()
     fetchCategories()
@@ -42,10 +45,10 @@ const Browse = ({
   useEffect(() => {
     if (category) {
       clearFilters()
-      setCategory(category)
+      setCategory(changeCase.upperCaseFirst(category))
     } else if (department) {
       clearFilters()
-      setDepartment(department)
+      setDepartment(changeCase.upperCaseFirst(department))
     }
   }, [department, category])
 
@@ -112,9 +115,9 @@ export default withStyles(styles)(Browse)
 
 // init filters from query string
 function filtersFromUrl (setFilters) {
-  const query = queryString.parse(window.location.search)
-  if (query.attributes) {
-    query.attributes = JSON.parse(query.attributes)
-  }
-  setFilters(query)
+  // const query = queryString.parse(window.location.search)
+  // if (query.attributes) {
+  //   query.attributes = JSON.parse(query.attributes)
+  // }
+  // setFilters(query)
 }

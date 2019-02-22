@@ -9,10 +9,7 @@ const Page = () => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Router>
-      <Browse path='/search' />
-      <Browse path='/browse' />
-      <Browse path='/browse/:department' />
-      <Browse path='/browse/:department/:category' />
+      <Browse path='/browse/*' />
     </Router>
   </Layout>
 )

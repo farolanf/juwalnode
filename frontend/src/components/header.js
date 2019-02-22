@@ -67,7 +67,7 @@ const Header = ({
     clearFilters()
     setSearchQuery(query)
     setQuery('')
-    navigate('/search?q=' + query)
+    navigate('/browse?q=' + query)
   }
 
   return (

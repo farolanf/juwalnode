@@ -5,7 +5,8 @@ import {
   clearFilters,
   setQuery,
   setDepartment,
-  toggleDepartment
+  toggleDepartment,
+  toggleAttribute,
 } from '$act/search'
 import { setCategory, toggleCategory } from '../actions/search';
 
@@ -44,6 +45,11 @@ export default handleActions(
         ['filters', 'categories'],
         list => listToggleValuei(list, category)
       ),
+    [toggleAttribute]: (state, { payload: { name, value }}) =>
+      state.updateIn(
+        ['filters', 'attributes'],
+        list => listToggleAttribute(list, name, value)
+      )
   },
   fromJS(initialState)
 )
@@ -52,4 +58,9 @@ export default handleActions(
 function listToggleValuei (list, value) {
   const i = list.findIndex(v => v.toLowerCase() === value.toLowerCase())
   return i !== -1 ? list.delete(i) : list.push(value)
+}
+
+function listToggleAttribute (list, name, value) {
+  const i = list.findIndex(a => a.name === name && a.value === value)
+  return i !== -1 ? list.delete(i) : list.push({ name, value })
 }

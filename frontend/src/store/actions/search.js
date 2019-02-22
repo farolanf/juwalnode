@@ -10,3 +10,5 @@ export const toggleDepartment = createAction('TOGGLE_DEPARTMENT')
 
 export const setCategory = createAction('SET_CATEGORY')
 export const toggleCategory = createAction('TOGGLE_CATEGORY')
+
+export const toggleAttribute = createAction('TOGGLE_ATTRIBUTE')
