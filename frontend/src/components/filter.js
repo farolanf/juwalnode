@@ -38,9 +38,10 @@ const Filter = ({
               key={d.key}
               control={
                 <Checkbox
-                  checked={filters.get('departments').includes(d.key)}
+                  checked={filters.get('departments').includes(d.key) || departments.length === 1}
                   onChange={() => toggleDepartment(d.key)}
                   className={classes.checkbox}
+                  disabled={departments.length === 1}
                 />
               }
               label={d.key}
@@ -56,9 +57,10 @@ const Filter = ({
               key={d.key}
               control={
                 <Checkbox
-                  checked={filters.get('categories').includes(d.key)}
+                  checked={filters.get('categories').includes(d.key) || categories.length === 1}
                   onChange={() => toggleCategory(d.key)}
                   className={classes.checkbox}
+                  disabled={categories.length === 1}
                 />
               }
               label={d.key}
