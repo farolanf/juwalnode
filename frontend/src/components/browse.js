@@ -19,6 +19,25 @@ const styles = () => ({
   pagination: tw`my-4`
 })
 
+const PaginationRow = ({ classes, total, offset, count, end, onClick }) => (
+  <Grid item container justify='space-between' alignItems='center' className={classes.pagination}>
+    <Grid item>
+      Found {total} items
+    </Grid>
+    <Grid item>
+      <Pagination
+        limit={count}
+        offset={offset}
+        total={total}
+        onClick={onClick}
+      />
+    </Grid>
+    <Grid item>
+        Showing {offset + 1}-{end} of {total}
+    </Grid>
+  </Grid>
+)
+
 const Browse = ({
   classes,
   fetchDepartments,
@@ -94,6 +113,8 @@ const Browse = ({
       && navigate(`/browse/${department.toLowerCase()}/${departmentCategories[val].name.toLowerCase()}`)
   }
 
+  const end = Math.min((products && products.hits.total), offset + count)
+
   return (
     <div className={classes.root}>
       {(department || category) && (
@@ -108,14 +129,14 @@ const Browse = ({
             <Filter />
           </Grid>
           <Grid item container direction='column'>
-            <Grid item container justify='center' className={classes.pagination}>
-              <Pagination
-                limit={count}
-                offset={offset}
-                total={products ? products.hits.total : 0}
-                onClick={(e, offset) => setOffset(offset)}
-              />
-            </Grid>
+            <PaginationRow
+              classes={classes}
+              total={products ? products.hits.total : 0}
+              offset={offset}
+              count={count}
+              end={end}
+              onClick={(e, offset) => setOffset(offset)}
+            />
             <Grid item container spacing={24}>
               {_.get(products, 'hits.hits', []).map(p => (
                 <Grid item xs={12} md={4} xl={3} key={p._id} container justify='center'>
@@ -123,14 +144,14 @@ const Browse = ({
                 </Grid>
               ))}
             </Grid>
-            <Grid item container justify='center' className={classes.pagination}>
-              <Pagination
-                limit={count}
-                offset={offset}
-                total={products ? products.hits.total : 0}
-                onClick={(e, offset) => setOffset(offset)}
-              />
-            </Grid>
+            <PaginationRow
+              classes={classes}
+              total={products ? products.hits.total : 0}
+              offset={offset}
+              count={count}
+              end={end}
+              onClick={(e, offset) => setOffset(offset)}
+            />
           </Grid>
       </Grid>
     </div>
