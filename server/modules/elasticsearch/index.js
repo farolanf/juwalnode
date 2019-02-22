@@ -11,7 +11,6 @@ module.exports = (app, config) => {
     if (req.query.attributes) {
       req.query.attributes = JSON.parse(req.query.attributes)
     }
-
     const search = {
       size: Math.min(
         !isNaN(req.query.count) ? req.query.count : 15,
@@ -92,15 +91,20 @@ function categoriesQuery (categories) {
 
 function attributesQuery (attributes) {
   return attributes.map(attr => ({
-    bool: {
-      must: [
-        {
-          match: { 'attributes.name': attr.name }
-        },
-        {
-          match: { 'attributes.value': attr.value }
+    nested: {
+      path: 'attributes',
+      query: {
+        bool: {
+          must: [
+            {
+              match: { 'attributes.name': attr.name }
+            },
+            {
+              match: { 'attributes.value': attr.value }
+            }
+          ]
         }
-      ]
+      }
     }
   }))
 }
