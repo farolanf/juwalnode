@@ -23,6 +23,7 @@
     "gatsby-source-filesystem": "^2.0.21",
     "gatsby-transformer-sharp": "^2.1.14",
     "immutable": "^3.8.2",
+    "material-ui-flat-pagination": "^3.2.0",
     "pluralize": "^7.0.0",
     "prop-types": "^15.7.2",
     "ra-ui-materialui": "file:./packages/ra-ui-materialui",

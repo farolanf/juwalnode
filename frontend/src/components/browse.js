@@ -8,12 +8,15 @@ import Grid from '@material-ui/core/Grid'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
+import Pagination from 'material-ui-flat-pagination'
+
 import Product from '$comp/product'
 import Filter from '$con/filter'
 
 const styles = () => ({
   root: tw`pt-4 pb-8`,
   tabs: tw`mb-4`,
+  pagination: tw`my-4`
 })
 
 const Browse = ({
@@ -29,6 +32,9 @@ const Browse = ({
   clearFilters,
   setDepartment,
   setCategory,
+  offset,
+  count,
+  setOffset,
   ...props,
 }) => {
   const paths = props['*'].split('/')
@@ -53,8 +59,8 @@ const Browse = ({
   }, [department, category])
 
   useEffect(() => {
-    fetchProducts(filters.toJS())
-  }, [filters])
+    fetchProducts({ ...filters.toJS(), offset, count })
+  }, [filters, offset, count])
 
   let [tab, setTab] = useState(0)
   const [lastTabs, setLastTabs] = useState({})
@@ -99,12 +105,30 @@ const Browse = ({
           <Grid item>
             <Filter />
           </Grid>
-          <Grid item container spacing={24}>
-            {_.get(products, 'hits.hits', []).map(p => (
-              <Grid item xs={12} md={4} xl={3} key={p._id} container justify='center'>
-                <Product item={p} />
-              </Grid>
-            ))}
+          <Grid item container direction='column'>
+            <Grid item container justify='center' className={classes.pagination}>
+              <Pagination
+                limit={count}
+                offset={offset}
+                total={products ? products.hits.total : 0}
+                onClick={(e, offset) => setOffset(offset)}
+              />
+            </Grid>
+            <Grid item container spacing={24}>
+              {_.get(products, 'hits.hits', []).map(p => (
+                <Grid item xs={12} md={4} xl={3} key={p._id} container justify='center'>
+                  <Product item={p} />
+                </Grid>
+              ))}
+            </Grid>
+            <Grid item container justify='center' className={classes.pagination}>
+              <Pagination
+                limit={count}
+                offset={offset}
+                total={products ? products.hits.total : 0}
+                onClick={(e, offset) => setOffset(offset)}
+              />
+            </Grid>
           </Grid>
       </Grid>
     </div>

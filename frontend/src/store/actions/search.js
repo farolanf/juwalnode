@@ -12,3 +12,5 @@ export const setCategory = createAction('SET_CATEGORY')
 export const toggleCategory = createAction('TOGGLE_CATEGORY')
 
 export const toggleAttribute = createAction('TOGGLE_ATTRIBUTE')
+
+export const setOffset = createAction('SET_OFFSET')

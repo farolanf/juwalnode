@@ -12,6 +12,7 @@ module.exports = (app, config) => {
       req.query.attributes = JSON.parse(req.query.attributes)
     }
     const search = {
+      from: req.query.offset || 0,
       size: Math.min(
         !isNaN(req.query.count) ? req.query.count : 15,
         config.elasticsearch.maxCount

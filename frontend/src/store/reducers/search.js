@@ -7,6 +7,7 @@ import {
   setDepartment,
   toggleDepartment,
   toggleAttribute,
+  setOffset,
 } from '$act/search'
 import { setCategory, toggleCategory } from '../actions/search';
 
@@ -16,7 +17,9 @@ const initialState = {
     departments: [],
     categories: [],
     attributes: []
-  }
+  },
+  offset: 0,
+  count: 15,
 }
 
 export default handleActions(
@@ -49,7 +52,9 @@ export default handleActions(
       state.updateIn(
         ['filters', 'attributes'],
         list => listToggleAttribute(list, name, value)
-      )
+      ),
+    [setOffset]: (state, { payload: { offset }}) =>
+        state.update('offset', () => offset),
   },
   fromJS(initialState)
 )
