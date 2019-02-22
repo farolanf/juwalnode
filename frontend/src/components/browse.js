@@ -96,11 +96,13 @@ const Browse = ({
 
   return (
     <div className={classes.root}>
-      <Tabs value={tab} onChange={handleChangeTab} className={classes.tabs}>
-        {departmentCategories && departmentCategories.map(c => (
-          <Tab key={c.category_id} label={c.name} />
-        ))}
-      </Tabs>
+      {(department || category) && (
+        <Tabs value={tab} onChange={handleChangeTab} className={classes.tabs}>
+          {departmentCategories && departmentCategories.map(c => (
+            <Tab key={c.category_id} label={c.name} />
+          ))}
+        </Tabs>
+      )}
       <Grid container wrap='nowrap'>
           <Grid item>
             <Filter />
