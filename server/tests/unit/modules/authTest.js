@@ -26,6 +26,13 @@ describe('auth', () => {
       })
   })
 
+  it('validate register params', () => {
+    return register('not-an-email', password)
+      .then(response => {
+        assert.equal(response.status, 400)
+      })
+  })
+
   it('auth - local', async () => {
     await register(email, password)
     await request(app)
