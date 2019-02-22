@@ -1,41 +1,15 @@
 const _ = require('lodash')
 const config = require('../../config')
 const client = require('./client')
-const db = require('../../sequelize')
+const docs = require('./docs')
 
 const options = {
   settings: {
   },
-  mappings: {
-    products: {
-      properties: {
-        name: { type: 'text' },
-        description: { type: 'text' },
-        price: { type: 'float' },
-        discounted_price: { type: 'float' },
-        display: { type: 'integer' },
-        departments: {
-          type: 'nested',
-          properties: {
-            name: { type: 'keyword' }
-          }
-        },
-        categories: {
-          type: 'nested',
-          properties: {
-            name: { type: 'keyword' }
-          }
-        },
-        attributes: {
-          type: 'nested',
-          properties: {
-            name: { type: 'keyword' },
-            value: { type: 'keyword' },
-          }
-        }
-      }
-    },
-  }
+  mappings: Object.keys(docs).reduce((mappings, type) => {
+    mappings[type] = docs[type].mappings
+    return mappings
+  }, {})
 }
 
 module.exports = async function initIndices () {
@@ -44,49 +18,26 @@ module.exports = async function initIndices () {
     body: options
   })
 
-  // reindex
-  const records = await db.Product.findAll({
-    include: [
-      {
-        model: db.Category,
-        include: db.Department,
-      },
-      {
-        model: db.AttributeValue,
-        include: db.Attribute
-      }
-    ]
-  })
+  return Promise.all(_.map(docs, rebuildIndex))
+}
 
-  await Promise.all(
-    records.map(record => {
-      const doc = _.pick(record.dataValues, [
-        'product_id',
-        'name',
-        'description',
-        'price',
-        'discounted_price',
-        'display',
-        'image',
-        'image_2',
-        'thumbnail'
-      ])
-      doc.departments = (record.Categories || []).map(c => ({
-        name: c.Department.name
-      }))
-      doc.categories = (record.Categories || []).map(c => ({
-        name: c.name
-      }))
-      doc.attributes = (record.AttributeValues || []).map(av => ({
-        name: av.Attribute.name,
-        value: av.value
-      }))
-      return client.create({
-        index: config.elasticsearch.index,
-        type: 'products',
-        id: doc.product_id,
-        body: doc
-      })
+async function rebuildIndex (Doc) {
+  // FIXME: split in batches
+  const records = await Doc.model.findAll({
+    include: Doc.associations.include
+  })
+  await Promise.all(records.map(createRecord(Doc)))
+}
+
+function createRecord (Doc) {
+  return record => {
+    const doc = Doc.getDoc(record)
+    const pk = Doc.model.primaryKeyAttributes[0]
+    return client.create({
+      index: Doc.index,
+      type: Doc.type,
+      id: doc[pk],
+      body: doc
     })
-  )
+  }
 }
