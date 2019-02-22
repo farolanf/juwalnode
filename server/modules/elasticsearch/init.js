@@ -2,6 +2,7 @@ const _ = require('lodash')
 const config = require('../../config')
 const client = require('./client')
 const docs = require('./docs')
+const { createRecord } = require('./hooks')
 
 const options = {
   settings: {
@@ -27,17 +28,4 @@ async function rebuildIndex (Doc) {
     include: Doc.associations.include
   })
   await Promise.all(records.map(createRecord(Doc)))
-}
-
-function createRecord (Doc) {
-  return record => {
-    const doc = Doc.getDoc(record)
-    const pk = Doc.model.primaryKeyAttributes[0]
-    return client.create({
-      index: Doc.index,
-      type: Doc.type,
-      id: doc[pk],
-      body: doc
-    })
-  }
 }

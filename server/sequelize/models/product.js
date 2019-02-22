@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     description: { type: DataTypes.STRING(1000), allowNull: false },
     price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
     discounted_price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
-    image: { type: DataTypes.STRING(150), allowNull: false },
-    image_2: { type: DataTypes.STRING(150), allowNull: false },
-    thumbnail: { type: DataTypes.STRING(150), allowNull: false },
+    image: DataTypes.STRING(150),
+    image_2: DataTypes.STRING(150),
+    thumbnail: DataTypes.STRING(150),
     display: DataTypes.SMALLINT(6)
   }, {
     tableName: 'product',

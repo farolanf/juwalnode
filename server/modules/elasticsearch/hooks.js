@@ -6,21 +6,58 @@ const client = require('./client')
 _.each(docs, initHooks)
 
 function initHooks (Doc) {
-  Doc.model.hook('afterCreate', updateRecord)
-  Doc.model.hook('afterUpdate', updateRecord)
-  Doc.model.hook('afterDestroy', deleteRecord(Doc.index, Doc.type))
+  Doc.model.hook('afterCreate', createFullRecord(Doc))
+  Doc.model.hook('afterUpdate', updateFullRecord(Doc))
+  Doc.model.hook('afterDestroy', deleteRecord(Doc))
 
   _.each(Doc.hooks, (definition, name) => {
     const model = db[name]
     model.hook('afterUpdate', async instance => {
-      // eslint-disable-next-line
-      console.log('Reindex', Doc.type, 'by', name)
       const records = await Doc.model.findAll({
         include: definition.include(instance)
       })
-      records.forEach(partialUpdate(Doc, definition))
+      const pk = Doc.model.primaryKeyAttributes[0]
+      const ids = records.map(r => r[pk])
+      const _records = await Doc.model.findAll({
+        where: { [pk]: ids },
+        include: Doc.associations.include
+      })
+      _records.forEach(updateRecord(Doc))
+      // eslint-disable-next-line
+      console.log('Reindex', _records.length, Doc.type, 'by', name)
     })
   })
+}
+
+function createFullRecord (Doc) {
+  return record => getFullRecord(record, Doc).then(createRecord(Doc))
+}
+
+function updateFullRecord (Doc) {
+  return record => getFullRecord(record, Doc).then(updateRecord(Doc))
+}
+
+function getFullRecord (record, Doc) {
+  const pk = Doc.model.primaryKeyAttributes[0]
+  return Doc.model.findOne({
+    where: {
+      [pk]: record[pk]
+    },
+    include: Doc.associations.include
+  })
+}
+
+function createRecord (Doc) {
+  return record => {
+    const doc = Doc.getDoc(record)
+    const pk = Doc.model.primaryKeyAttributes[0]
+    return client.create({
+      index: Doc.index,
+      type: Doc.type,
+      id: doc[pk],
+      body: doc
+    })
+  }
 }
 
 function updateRecord (Doc) {
@@ -50,14 +87,17 @@ function partialUpdate (Doc, association) {
   }
 }
 
-function deleteRecord (index, type) {
+function deleteRecord (Doc) {
+  const pk = Doc.model.primaryKeyAttributes[0]
   return record => {
-    const model = record._modelOptions.sequelize.models[record._modelOptions.name.singular]
-    const pk = model.primaryKeyAttributes[0]
     client.delete({
-      index,
-      type,
+      index: Doc.index,
+      type: Doc.type,
       id: record[pk]
     })
   }
+}
+
+module.exports = {
+  createRecord
 }
