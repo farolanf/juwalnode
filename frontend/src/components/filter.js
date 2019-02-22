@@ -69,8 +69,8 @@ const Filter = ({
                   disabled={departments.length === 1}
                 />
               }
-              label={d.key}
-            />
+              label={d.key + ` (${d.doc_count})`}
+              />
           ))}
         </FormGroup>
       </FormControl>
@@ -88,8 +88,8 @@ const Filter = ({
                   disabled={categories.length === 1}
                 />
               }
-              label={d.key}
-            />
+              label={d.key + ` (${d.doc_count})`}
+              />
           ))}
         </FormGroup>
       </FormControl>
@@ -109,7 +109,7 @@ const Filter = ({
                     className={classes.checkbox}
                   />
                 }
-                label={v.key}
+                label={v.key + ` (${v.doc_count})`}
               />
             ))}
           </FormGroup>
