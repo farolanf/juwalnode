@@ -2,11 +2,18 @@ import React from 'react'
 import _ from 'lodash'
 
 import withStyles from '@material-ui/core/styles/withStyles'
+import FormControl from '@material-ui/core/FormControl'
+import FormLabel from '@material-ui/core/FormLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
 const styles = () => ({
   root: {
     width: 240,
-  }
+  },
+  filterGroup: tw`block my-4`,
+  checkbox: tw`py-1`,
 })
 
 const Filter = ({
@@ -23,51 +30,63 @@ const Filter = ({
 
   return (
     <div className={classes.root}>
-      <h5>Departments</h5>
-      {departments && departments.map(d => (
-        <div key={d.key}>
-          <label>
-            <input
-              type='checkbox'
-              checked={filters.get('departments').includes(d.key)}
-              onChange={() => toggleDepartment(d.key)}
-            />
-            {d.key}
-          </label>
-        </div>
-      ))}
-      <h5>Categories</h5>
-      {categories && categories.map(d => (
-        <div key={d.key}>
-          <label>
-            <input
-              type='checkbox'
-              checked={filters.get('categories').includes(d.key)}
-              onChange={() => toggleCategory(d.key)}
-            />
-            {d.key}
-          </label>
-        </div>
-      ))}
-      <h5>Attributes</h5>
-      {attributes && attributes.map(d => (
-        <div key={d.key}>
-          <p>{d.key}</p>
-          {d.value.buckets.map(v => (
-            <div key={v.key}>
-              <label>
-                <input
-                  type='checkbox'
-                  checked={!!filters.get('attributes').find(
-                    a => a.name === d.key && a.value === v.key
-                  )}
-                  onChange={() => toggleAttribute(d.key, v.key)}
+      <FormControl component='fieldset' className={classes.filterGroup}>
+        <FormLabel component='legend'>Departments</FormLabel>
+        <FormGroup>
+          {departments && departments.map(d => (
+            <FormControlLabel
+              key={d.key}
+              control={
+                <Checkbox
+                  checked={filters.get('departments').includes(d.key)}
+                  onChange={() => toggleDepartment(d.key)}
+                  className={classes.checkbox}
                 />
-                {v.key}
-              </label>
-            </div>
+              }
+              label={d.key}
+            />
           ))}
-        </div>
+        </FormGroup>
+      </FormControl>
+      <FormControl component='fieldset' className={classes.filterGroup}>
+        <FormLabel component='legend'>Categories</FormLabel>
+        <FormGroup>
+          {categories && categories.map(d => (
+            <FormControlLabel
+              key={d.key}
+              control={
+                <Checkbox
+                  checked={filters.get('categories').includes(d.key)}
+                  onChange={() => toggleCategory(d.key)}
+                  className={classes.checkbox}
+                />
+              }
+              label={d.key}
+            />
+          ))}
+        </FormGroup>
+      </FormControl>
+      {attributes && attributes.map(d => (
+        <FormControl component='fieldset' className={classes.filterGroup} key={d.key}>
+          <FormLabel component='legend'>{d.key}</FormLabel>
+          <FormGroup>
+            {d.value.buckets.map(v => (
+              <FormControlLabel
+                key={v.key}
+                control={
+                  <Checkbox
+                    checked={!!filters.get('attributes').find(
+                      a => a.name === d.key && a.value === v.key
+                    )}
+                    onChange={() => toggleAttribute(d.key, v.key)}
+                    className={classes.checkbox}
+                  />
+                }
+                label={v.key}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
       ))}
     </div>
   )
