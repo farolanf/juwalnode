@@ -7,19 +7,28 @@ import FormLabel from '@material-ui/core/FormLabel'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import Button from '@material-ui/core/Button'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 
 const styles = () => ({
   root: {
     width: 240,
+    position: 'relative'
   },
   filterGroup: tw`block my-4`,
   checkbox: tw`py-1`,
+  icon: tw`text-base mr-2`,
+  iconLabel: tw`ml-2`,
+  clear: tw`text-grey-darker`,
 })
 
 const Filter = ({
   classes,
   products,
   filters,
+  clearFilters,
   toggleDepartment,
   toggleCategory,
   toggleAttribute,
@@ -28,8 +37,24 @@ const Filter = ({
   const categories = products && products.aggregations.all.search.categories.name.buckets
   const attributes = products && products.aggregations.all.search.attributes.name.buckets
 
+  const hasFilters = !!filters.get('departments').size
+    || !!filters.get('categories').size
+    || !!filters.get('attributes').size
+
+  function handleClickClear () {
+    clearFilters({ exclude: ['q'] })
+  }
+
   return (
     <div className={classes.root}>
+      {hasFilters && (
+        <div className={classes.clear}>
+          <Button color='inherit' onClick={handleClickClear}>
+            <FontAwesomeIcon icon={faTimes} className={classes.icon} />
+            Clear filters
+          </Button>
+        </div>
+      )}
       <FormControl component='fieldset' className={classes.filterGroup}>
         <FormLabel component='legend'>Departments</FormLabel>
         <FormGroup>

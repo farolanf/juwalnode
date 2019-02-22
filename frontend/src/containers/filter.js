@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Filter from '$comp/filter'
 import {
+  clearFilters,
   toggleDepartment,
   toggleCategory,
   toggleAttribute,
@@ -12,6 +13,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  clearFilters: payload => dispatch(clearFilters(payload)),
   toggleDepartment: department => dispatch(toggleDepartment({ department })),
   toggleCategory: category => dispatch(toggleCategory({ category })),
   toggleAttribute: (name, value) => dispatch(toggleAttribute({ name, value }))

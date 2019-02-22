@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable'
 import { handleActions } from 'redux-actions'
+import _ from 'lodash'
 import {
   setFilters,
   clearFilters,
@@ -24,8 +25,18 @@ const initialState = {
 
 export default handleActions(
   {
-    [setFilters]: (state, { payload: { filters }}) => fromJS(filters),
-    [clearFilters]: () => fromJS(initialState),
+    [setFilters]: (state, { payload: { filters }}) => ({
+      ...state,
+      filters: fromJS(filters),
+    }),
+    [clearFilters]: (state, { payload: { exclude } = {} }) =>
+      state.updateIn(['filters'], filters => {
+        _.each(initialState.filters, (val, key) => {
+          if (exclude && exclude.includes(key)) return
+          filters = filters.updateIn([key], () => fromJS(initialState.filters[key]))
+        })
+        return filters
+      }),
     [setQuery]: (state, { payload: { q }}) =>
       state.updateIn(['filters', 'q'], () => q),
     [setDepartment]: (state, { payload: { department }}) =>
