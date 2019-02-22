@@ -1,0 +1,1 @@
+echo 'DROP DATABASE turing_fullstack; CREATE DATABASE turing_fullstack CHARACTER SET=utf8 COLLATE=utf8_general_ci; DROP DATABASE turing_fullstack_test; CREATE DATABASE turing_fullstack_test CHARACTER SET=utf8 COLLATE=utf8_general_ci' | mysql -uadmin -padmin

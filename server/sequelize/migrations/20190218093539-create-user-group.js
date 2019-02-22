@@ -12,8 +12,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      group_id: {
-        type: Sequelize.INTEGER,
+      group: {
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       createdAt: {

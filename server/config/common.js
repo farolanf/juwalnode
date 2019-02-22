@@ -7,7 +7,6 @@ module.exports = {
 
   // specify modules to load and their order
   modules: [
-    'devel',
     'data',
     'auth',
     'finale',
@@ -62,11 +61,6 @@ module.exports = {
       },
       customer: {
         routes: [
-          // protected resources - only owner can access
-          { path: '/customers/\\d+', method: ['GET', 'PUT'] },
-          { path: '/orders/\\d+', method: ['GET', 'PUT'] },
-          { path: '/orderDetails/\\d+', method: ['GET', 'PUT'] },
-          { path: '/shoppingCarts/\\d+', method: ['GET', 'PUT'] },
         ]
       },
       // admin passed all checks

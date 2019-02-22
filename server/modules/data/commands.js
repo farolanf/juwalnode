@@ -49,8 +49,7 @@ async function createAdmin(program, argv) {
   db.User
     .create({ email, username, password: inputs.password })
     .then(user => {
-      return db.Group.findOne({ where: { name: 'admin' }})
-        .then(group => user.addGroup(group))
+      return db.UserGroup.create({ user_id: user.user_id, group: 'admin' })
     })
     .finally(() => db.sequelize.close())
 }

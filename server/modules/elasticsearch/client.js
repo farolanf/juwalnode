@@ -5,9 +5,7 @@ const client = elasticsearch.Client({
 })
 
 client.ping({
-  requestTimeout: 10000
+  requestTimeout: 5000
 })
-.then(() => console.log('elasticsearch is up'))
-.catch(() => console.log('elasticsearch is down'))
 
 module.exports = client
