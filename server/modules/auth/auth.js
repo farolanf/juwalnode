@@ -92,7 +92,9 @@ module.exports = function (app, config) {
         where: { user_id: payload.userId },
         include: UserGroup
       })
-      .then(user => sendUser(user, res))
+      .then(user => {
+        user ? sendUser(user, res) : res.sendStatus(401)
+      })
       .catch(handleError)
   })
 
