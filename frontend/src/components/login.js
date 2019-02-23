@@ -136,7 +136,7 @@ const LoginBox = ({ open, onClose, classes, width }) => {
                   <Button
                     variant='contained'
                     color='secondary'
-                    href={API_HOST + '/auth/facebook/login'}
+                    href={API_HOST + '/auth/facebook'}
                     fullWidth={isWidthDown('sm', width)}
                   >
                     <FontAwesomeIcon icon={faFacebook} className={classes.buttonIcon} />
@@ -147,7 +147,7 @@ const LoginBox = ({ open, onClose, classes, width }) => {
                   <Button
                     variant='contained'
                     color='secondary'
-                    href={API_HOST + '/auth/google/login'}
+                    href={API_HOST + '/auth/google'}
                     fullWidth={isWidthDown('sm', width)}
                   >
                     <FontAwesomeIcon icon={faGoogle} className={classes.buttonIcon} />

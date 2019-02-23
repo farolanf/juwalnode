@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
-    }
+    },
+    facebook_id: DataTypes.STRING(100),
+    google_id: DataTypes.STRING(100),
   }, {
     tableName: 'user'
   });
