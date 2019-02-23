@@ -50,7 +50,11 @@ module.exports = function (app, config) {
           include: UserGroup
         })
         .then(user => {
-          req.user = publicUser(user)
+          if (user) {
+            req.user = publicUser(user)
+          } else {
+            throw new Error('Invalid user')
+          }
           next()
         })
       } else {
