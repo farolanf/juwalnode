@@ -18,6 +18,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import { Link } from "gatsby"
 import { API_HOST } from '$src/const'
 
+import LoginBox from '$comp/login'
+
 import commonStyles from '$styles/common'
 
 const styles = theme => ({
@@ -55,6 +57,8 @@ const Header = ({
   fetchDepartments,
   clearFilters,
   setQuery: setSearchQuery,
+  user,
+  loggedIn,
 }) => {
   useEffect(() => {
     fetchDepartments()
@@ -69,6 +73,8 @@ const Header = ({
     setQuery('')
     navigate('/browse?q=' + query)
   }
+
+  const [loginOpen, setLoginOpen] = useState(false)
 
   return (
     <AppBar color='inherit' className={classes.root}>
@@ -102,9 +108,16 @@ const Header = ({
               />
             </form>
           </div>
-          <IconButton className={classes.icon}>
-            <FontAwesomeIcon icon={faUserAlt} />
-          </IconButton>
+          {loggedIn ? (
+            <IconButton className={classes.icon}>
+              <FontAwesomeIcon icon={faUserAlt} />
+            </IconButton>
+          ) : (
+            <Button onClick={() => setLoginOpen(true)}>
+              Login
+            </Button>
+          )}
+          <LoginBox open={loginOpen} onClose={() => setLoginOpen(false)} />
         </div>
       </Toolbar>
     </AppBar>

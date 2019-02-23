@@ -7,6 +7,8 @@ import { clearFilters, setQuery } from '$act/search'
 const mapStateToProps = state => ({
   departments: state.department.data,
   categories: state.category.data,
+  user: state.auth.user,
+  loggedIn: state.auth.loggedIn,
 })
 
 const mapDispatchToProps = dispatch => ({
