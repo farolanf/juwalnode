@@ -83,4 +83,27 @@ describe('auth', () => {
         assert.notProperty(response.body.user, 'password')
       })
   })
+
+  it('check unique email - true', () => {
+    return request(app)
+      .get(apiBase + '/auth/unique-email')
+      .query({ email })
+      .then(response => {
+        assert.equal(response.status, 200)
+        assert.property(response.body, 'unique')
+        assert.equal(response.body.unique, true)
+      })
+  })
+
+  it('check unique email - false', async () => {
+    await register(email, password)
+    return request(app)
+      .get(apiBase + '/auth/unique-email')
+      .query({ email })
+      .then(response => {
+        assert.equal(response.status, 200)
+        assert.property(response.body, 'unique')
+        assert.equal(response.body.unique, false)
+      })
+  })
 })

@@ -109,4 +109,13 @@ module.exports = function (app, config) {
       user: publicUser(user)
     })
   }
+
+  app.get(config.app.apiBase + '/auth/unique-email', async (req, res) => {
+    const user = await User.findOne({
+      where: {
+        email: req.query.email
+      }
+    }).catch(handleError)
+    res.send({ unique: !user })
+  })
 }
