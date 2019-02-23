@@ -21,7 +21,7 @@ import { Formik, Form } from 'formik'
 import FormikTextField from '$comp/formik-text-field'
 
 import { API_HOST } from '$src/const'
-import { login, register, loginRedirect, storeReferer } from '$lib/auth';
+import { login, register, storeReferer } from '$lib/auth';
 
 import loginSchema from '$src/schemas/login'
 import registerSchema from '$src/schemas/register'
@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 })
 
-const LoginBox = ({ open, onClose, classes, width, setUser }) => {
+const LoginBox = ({ open, onClose, classes, width }) => {
   const [mode, setMode] = useState('login')
   const otherMode = mode === 'login' ? 'register' : 'login'
 
@@ -53,12 +53,11 @@ const LoginBox = ({ open, onClose, classes, width, setUser }) => {
   function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
     if (mode === 'login') {
       login(email, password)
-        .then(res => {
-          setUser(res.data.user)
+        .then(() => {
           onClose()
-          loginRedirect()
         })
         .catch(err => {
+          console.log(err)
           err.response.status === 403 && setErrors({
             email: 'invalid email / password',
             password: 'invalid email / password',
@@ -67,8 +66,7 @@ const LoginBox = ({ open, onClose, classes, width, setUser }) => {
         .finally(() => setSubmitting(false))
     } else if (mode === 'register') {
       register(email, password)
-        .then(res => {
-          setUser(res.data.user)
+        .then(() => {
           onClose()
           navigate('/welcome/unconfirmed')
         })

@@ -9,6 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import InputBase from '@material-ui/core/InputBase'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,8 +21,9 @@ import { Link } from "gatsby"
 import { API_HOST } from '$src/const'
 
 import LoginBox from '$comp/login'
-
 import commonStyles from '$styles/common'
+
+import { logout } from "$lib/auth";
 
 const styles = theme => ({
   ...commonStyles(theme),
@@ -47,6 +50,32 @@ const styles = theme => ({
     }
   }
 })
+
+const ProfileMenu = ({ classes, user }) => {
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  function handleLogout () {
+    logout()
+    setAnchorEl(null)
+  }
+
+  return (
+    <>
+      <IconButton className={classes.icon} onClick={e => setAnchorEl(e.currentTarget)}>
+        <FontAwesomeIcon icon={faUserAlt} />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={!!anchorEl}
+        onClose={() => setAnchorEl(null)}
+      >
+        <MenuItem disabled>{user.email}</MenuItem>
+        <MenuItem>Profile</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
+    </>
+  )
+}
 
 const Spacer = () => <span style={tw`flex-grow`} />
 
@@ -109,9 +138,7 @@ const Header = ({
             </form>
           </div>
           {loggedIn ? (
-            <IconButton className={classes.icon}>
-              <FontAwesomeIcon icon={faUserAlt} />
-            </IconButton>
+            <ProfileMenu classes={classes} user={user} />
           ) : (
             <Button onClick={() => setLoginOpen(true)}>
               Login
