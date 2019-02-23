@@ -8,6 +8,6 @@ const theme = createMuiTheme({
   }
 })
 
-console.log(theme)
+process.env.NODE_ENV !== 'production' && console.log(theme)
 
 export default theme

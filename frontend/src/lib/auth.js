@@ -9,23 +9,32 @@ const setUser = user => {
 }
 
 export const saveToken = token => {
+  if (typeof localStorage === 'undefined') return
   localStorage.setItem('token', token)
   initAuthorization()
 }
 
 const clearToken = () => {
+  if (typeof localStorage === 'undefined') return
   localStorage.removeItem('token')
   initAuthorization()
 }
 
-const loadToken = () => localStorage.getItem('token')
+const loadToken = () => {
+  if (typeof localStorage === 'undefined') return
+  return localStorage.getItem('token')
+}
 
 export const storeReferer = () => {
+  if (typeof localStorage === 'undefined') return
   const url = window.location.pathname + window.location.search
   localStorage.setItem('referer', url)
 }
 
-const loadReferer = () => localStorage.getItem('referer')
+const loadReferer = () => {
+  if (typeof localStorage === 'undefined') return
+  return localStorage.getItem('referer')
+}
 
 export const register = (email, password) => {
   return axios
@@ -61,7 +70,7 @@ export const logout = () => {
 }
 
 export const verify = () => {
-  if (!loadToken()) return
+  if (!loadToken()) return Promise.resolve()
   initAuthorization()
   return axios.get(API_BASE + '/auth/verify')
     .then(res => {

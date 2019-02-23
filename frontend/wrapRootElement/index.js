@@ -4,7 +4,7 @@ import mui from './mui'
 
 export default element => {
   // don't wrap react-admin
-  if (element.key.startsWith('/admin/')) {
+  if (element.props.location.pathname.startsWith('/admin/')) {
     return element
   }
   return compose(
