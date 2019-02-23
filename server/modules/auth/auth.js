@@ -29,25 +29,23 @@ function verifyToken (token, secret) {
   }
 }
 
-function handleError (res) {
-  return err => {
-    // eslint-disable-next-line
-    console.log(err)
-    res.sendStatus(500)
-  }
+function handleError (err, res) {
+  // eslint-disable-next-line
+  console.log(err)
+  res.sendStatus(500)
 }
 
 module.exports = function (app, config) {
   // decode token and set req.user
   app.use((req, res, next) => {
-    const token = tokenFromRequest(req)
-    if (token) {
-      const payload = verifyToken(token, config.auth.jwtSecret)
-      if (!payload) {
-        return res.sendStatus(500)
-      }
-      User.findOne(
-        {
+    try {
+      const token = tokenFromRequest(req)
+      if (token) {
+        const payload = verifyToken(token, config.auth.jwtSecret)
+        if (!payload) {
+          return res.sendStatus(500)
+        }
+        User.findOne({
           where: { user_id: payload.userId },
           include: UserGroup
         })
@@ -55,47 +53,89 @@ module.exports = function (app, config) {
           req.user = publicUser(user)
           next()
         })
-        .catch(handleError(res))
-    } else {
-      next()
+      } else {
+        next()
+      }
+    }
+    catch (err) {
+      handleError(err, res)
     }
   })
 
   app.post(config.app.apiBase + '/auth/register', async (req, res) => {
-    if (!await registerSchema.isValid(req.body)) {
-      return res.sendStatus(400)
+    try {
+      if (!await registerSchema.isValid(req.body)) {
+        return res.sendStatus(400)
+      }
+      const { email, password } = req.body
+      const count = await User.count()
+      const username = 'user' + (count + 1)
+      const user = await User.create({ username, email, password })
+      await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
+        user_id: user.user_id,
+        group
+      })))
+      const _user = await User.findOne({
+        where: { user_id: user.user_id },
+        include: UserGroup
+      })
+      sendUser(_user, res)
     }
-    const { email, password } = req.body
-    const count = await User.count().catch(handleError(res))
-    const username = 'user' + (count + 1)
-    const user = await User.create({ username, email, password })
-      .catch(handleError(res))
-    await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
-      user_id: user.user_id,
-      group
-    })))
-    const _user = await User.findOne({
-      where: { user_id: user.user_id },
-      include: UserGroup
-    })
-    sendUser(_user, res)
+    catch (err) {
+      handleError(err, res)
+    }
   })
 
   app.get(config.app.apiBase + '/auth/verify', (req, res) => {
-    const token = tokenFromRequest(req)
-    const payload = verifyToken(token, config.auth.jwtSecret)
-    if (!payload) {
-      return res.sendStatus(401)
-    }
-    User.findOne(
-      {
+    try {
+      const token = tokenFromRequest(req)
+      const payload = verifyToken(token, config.auth.jwtSecret)
+      if (!payload) {
+        return res.sendStatus(401)
+      }
+      User.findOne({
         where: { user_id: payload.userId },
         include: UserGroup
       })
       .then(user => {
         user ? sendUser(user, res) : res.sendStatus(401)
       })
-      .catch(handleError)
+    }
+    catch (err) {
+      handleError(err, res)
+    }
+  })
+
+  app.get(config.app.apiBase + '/auth/unique-email', async (req, res) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          email: req.query.email
+        }
+      })
+      res.send({ unique: !user })
+    }
+    catch (err) {
+      handleError(err, res)
+    }
+  })
+
+  app.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['email'],
+  }))
+
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), (req, res) => {
+    const token = generateToken(req.user, config.auth.jwtSecret)
+    res.redirect(process.env.FRONTEND_AUTH_REDIRECT + `?token=${token}`)
+  })
+
+  app.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }))
+
+  app.get('/auth/google/callback', passport.authenticate('google', { session: false }), (req, res) => {
+    const token = generateToken(req.user, config.auth.jwtSecret)
+    res.redirect(process.env.FRONTEND_AUTH_REDIRECT + `?token=${token}`)
   })
 
   app.post(
@@ -111,13 +151,4 @@ module.exports = function (app, config) {
       user: publicUser(user)
     })
   }
-
-  app.get(config.app.apiBase + '/auth/unique-email', async (req, res) => {
-    const user = await User.findOne({
-      where: {
-        email: req.query.email
-      }
-    }).catch(handleError)
-    res.send({ unique: !user })
-  })
 }
