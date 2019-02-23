@@ -27,7 +27,11 @@ async function handleProfile (accessToken, refreshToken, profile, done) {
       },
       include: UserGroup
     })
-    .then(user => {
+    .then(async ([user, created]) => {
+      if (!created) {
+        user[provider + '_id'] = profile.id
+        user = await user.save()
+      }
       user ? done(null, user) : done(null, false)
     })
   }

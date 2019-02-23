@@ -8,7 +8,7 @@ const setUser = user => {
   store.dispatch(_setUser({ user }))
 }
 
-const saveToken = token => {
+export const saveToken = token => {
   localStorage.setItem('token', token)
   initAuthorization()
 }
@@ -61,6 +61,7 @@ export const logout = () => {
 }
 
 export const verify = () => {
+  if (!loadToken()) return
   initAuthorization()
   return axios.get(API_BASE + '/auth/verify')
     .then(res => {
@@ -68,13 +69,12 @@ export const verify = () => {
       setUser(res.data.user)
       return res
     })
-    .catch(err => {
+    .catch(() => {
       clearToken()
-      throw err
     })
 }
 
-const loginRedirect = () => {
+export const loginRedirect = () => {
   const referer = loadReferer()
   navigate(referer && referer !== '/' ? referer : process.env.GATSBY_HOME)
 }

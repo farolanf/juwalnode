@@ -112,7 +112,7 @@ const LoginBox = ({ open, onClose, classes, width }) => {
                 </Grid>
                 {mode === 'login' && (
                   <Grid item xs={12} container justify='flex-end'>
-                    <Link to='/lupa-password' className={classes.link} onClick={onClose}>Lupa password?</Link>
+                    <Link to='/forgot-password' className={classes.link} onClick={onClose}>Forgot password?</Link>
                   </Grid>
                 )}
                 {mode === 'register' && (
