@@ -1,3 +1,4 @@
+const url = require('url')
 const path = require('path')
 require('dotenv').config({
   path: path.resolve(__dirname, '../.env.' + (process.env.NODE_ENV || 'development'))
@@ -10,8 +11,11 @@ const config = require('./config')
 
 app.disable('x-powered-by')
 
+const frontendUrl = url.parse(process.env.FRONTEND_HOST)
+const origin = `${frontendUrl.protocol}//${frontendUrl.host}`
+
 app.use(cors({
-  origin: process.env.FRONTEND_HOST,
+  origin,
   exposedHeaders: ['Content-Range']
 }))
 
