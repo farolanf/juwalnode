@@ -57,8 +57,7 @@ const LoginBox = ({ open, onClose, classes, width }) => {
           onClose()
         })
         .catch(err => {
-          console.log(err)
-          err.response.status === 403 && setErrors({
+          [401, 403].includes(err.response.status) && setErrors({
             email: 'invalid email / password',
             password: 'invalid email / password',
           })
