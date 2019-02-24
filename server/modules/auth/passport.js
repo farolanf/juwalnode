@@ -6,6 +6,8 @@ const GoogleStrategy = require('passport-google-oauth20')
 
 const { User, UserGroup, Sequelize: { Op } } = require('../../sequelize')
 
+const config = require('../../config')
+
 async function handleProfile (accessToken, refreshToken, profile, done) {
   try {
     const { provider } = profile
@@ -28,7 +30,13 @@ async function handleProfile (accessToken, refreshToken, profile, done) {
       include: UserGroup
     })
     .then(async ([user, created]) => {
-      if (!created) {
+      if (created) {
+        await UserGroup.bulkCreate((config.auth.defaultGroups || []).map(group => ({
+          user_id: user.user_id,
+          group
+        })))
+        await user.reload()
+      } else {
         user[provider + '_id'] = profile.id
         user = await user.save()
       }
