@@ -1,3 +1,10 @@
+const path = require('path')
+
+const env = process.env.NODE_ENV || 'development'
+require('dotenv').config({
+  path: path.resolve(__dirname, './.env.' + env)
+})
+
 module.exports = {
   siteMetadata: {
     title: `TShirtShop`,
@@ -37,6 +44,9 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
-  ],
-  pathPrefix: process.env.GATSBY_PATH_PREFIX
+  ]
+}
+
+if (process.env.GATSBY_PATH_PREFIX) {
+  module.exports.pathPrefix = process.env.GATSBY_PATH_PREFIX
 }
