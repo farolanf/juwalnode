@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { navigate } from '@reach/router'
 import { setUser as _setUser } from '$act/auth'
-import { API_BASE } from '$src/const'
+import { API_BASE, PREFIX } from '$src/const'
 import store from '$src/store'
 
 const setUser = user => {
@@ -66,7 +66,7 @@ export const login = (username, password) => {
 export const logout = () => {
   clearToken()
   setUser(null)
-  navigate('/')
+  navigate(PREFIX)
 }
 
 export const verify = () => {
@@ -85,7 +85,7 @@ export const verify = () => {
 
 export const loginRedirect = () => {
   const referer = loadReferer()
-  navigate(referer && referer !== '/' ? referer : process.env.GATSBY_HOME)
+  navigate(referer && referer !== PREFIX ? referer : PREFIX + process.env.GATSBY_HOME)
 }
 
 export const uniqueEmail = email => {

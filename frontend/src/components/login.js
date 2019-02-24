@@ -20,7 +20,7 @@ import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { Formik, Form } from 'formik'
 import FormikTextField from '$comp/formik-text-field'
 
-import { API_HOST } from '$src/const'
+import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
 
 import loginSchema from '$src/schemas/login'
@@ -68,7 +68,7 @@ const LoginBox = ({ open, onClose, classes, width }) => {
       register(email, password)
         .then(() => {
           onClose()
-          navigate('/welcome/unconfirmed')
+          navigate(PREFIX + '/welcome/unconfirmed')
         })
         .finally(() => setSubmitting(false))
     }

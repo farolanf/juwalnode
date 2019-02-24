@@ -18,7 +18,7 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons/faUserAlt'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 
 import { Link } from "gatsby"
-import { API_HOST } from '$src/const'
+import { API_HOST, PREFIX } from '$src/const'
 
 import LoginBox from '$comp/login'
 import commonStyles from '$styles/common'
@@ -100,7 +100,7 @@ const Header = ({
     clearFilters()
     setSearchQuery(query)
     setQuery('')
-    navigate('/browse?q=' + query)
+    navigate(PREFIX + '/browse?q=' + query)
   }
 
   const [loginOpen, setLoginOpen] = useState(false)

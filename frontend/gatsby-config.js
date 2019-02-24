@@ -38,5 +38,5 @@ module.exports = {
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
   ],
-  pathPrefix: `/turing-fullstack-farolan`
+  pathPrefix: process.env.GATSBY_PATH_PREFIX
 }

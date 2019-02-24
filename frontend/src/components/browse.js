@@ -13,6 +13,8 @@ import Pagination from 'material-ui-flat-pagination'
 import Product from '$comp/product'
 import Filter from '$con/filter'
 
+import { PREFIX } from '$src/const'
+
 const styles = () => ({
   root: tw`pt-4 pb-8`,
   tabs: tw`mb-4`,
@@ -110,7 +112,7 @@ const Browse = ({
       && departmentCategories
       && departmentCategories.length > val
       && category !== departmentCategories[tab].name
-      && navigate(`/browse/${department.toLowerCase()}/${departmentCategories[val].name.toLowerCase()}`)
+      && navigate(PREFIX + `/browse/${department.toLowerCase()}/${departmentCategories[val].name.toLowerCase()}`)
   }
 
   const end = Math.min((products && products.hits.total), offset + count)
