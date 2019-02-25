@@ -13,6 +13,8 @@ const Page = () => (
     <Router>
       <Browse path={PREFIX + '/'} />
       <Browse path={PREFIX + '/browse/*'} />
+      <Browse path='/' />
+      <Browse path='/browse/*' />
       <PageNotFound path='*' />
     </Router>
   </Layout>
