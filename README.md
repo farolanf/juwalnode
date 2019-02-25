@@ -1,6 +1,14 @@
-# Turing Full Stack Challenge
+# Turing Full Stack Challenge - WIP
+
+## Demo
 
 [Live Demo](https://farolanf.github.io/turing-fullstack-farolan)
+
+Login with:
+  - username: admin
+  - password: admin
+
+Or use the social logins.
 
 ## Requirements
 
