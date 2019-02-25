@@ -6,11 +6,12 @@ import {
   clearFilters,
   setQuery,
   setDepartment,
+  setCategory,
+  toggleCategory,
   toggleDepartment,
   toggleAttribute,
   setOffset,
 } from '$act/search'
-import { setCategory, toggleCategory } from '../actions/search';
 
 const initialState = {
   filters: {
