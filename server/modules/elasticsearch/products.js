@@ -80,6 +80,21 @@ const ProductDoc = {
         }))
       })
     },
+    ProductCategory: {
+      include: productCategory => [
+        {
+          model: db.Category,
+          where: {
+            category_id: productCategory.category_id
+          }
+        },
+      ],
+      getPartialBody: record => ({
+        categories: (record.Categories || []).map(c => ({
+          name: c.name
+        }))
+      })
+    },
     Attribute: {
       include: attribute => [
         {
