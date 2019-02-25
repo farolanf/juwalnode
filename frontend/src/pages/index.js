@@ -4,7 +4,7 @@ import { Router } from '@reach/router'
 import Layout from "$comp/layout"
 import SEO from "$comp/seo"
 import Browse from '$con/browse'
-import PageNotFound from '$comp/404'
+import PageNotFound from './_404'
 
 const Page = () => (
   <Layout>
