@@ -6,13 +6,13 @@ const client = require('./client')
 _.each(docs, initHooks)
 
 function initHooks (Doc) {
-  Doc.model.hook('afterCreate', createFullRecord(Doc))
-  Doc.model.hook('afterUpdate', updateFullRecord(Doc))
-  Doc.model.hook('afterDestroy', deleteRecord(Doc))
+  Doc.model.addHook('afterCreate', createFullRecord(Doc))
+  Doc.model.addHook('afterUpdate', updateFullRecord(Doc))
+  Doc.model.addHook('afterDestroy', deleteRecord(Doc))
 
   _.each(Doc.hooks, (definition, name) => {
     const model = db[name]
-    model.hook('afterUpdate', async instance => {
+    model.addHook('afterUpdate', async instance => {
       const records = await Doc.model.findAll({
         include: definition.include(instance)
       })
