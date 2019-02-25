@@ -58,7 +58,7 @@ const Browse = ({
   setOffset,
   ...props,
 }) => {
-  const paths = (props['*'] || '').split('/')
+  const paths = props['*'].split('/')
   const department = paths.length && paths[0]
   const category = paths.length > 1 && paths[1]
 

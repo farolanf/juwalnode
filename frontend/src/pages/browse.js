@@ -1,3 +1,17 @@
-import IndexPage from './index'
+import React, { } from "react"
+import { Router } from '@reach/router'
 
-export default IndexPage
+import Layout from "$comp/layout"
+import SEO from "$comp/seo"
+import Browse from '$con/browse'
+
+const Page = () => (
+  <Layout>
+    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+    <Router>
+      <Browse path='/browse/*' />
+    </Router>
+  </Layout>
+)
+
+export default Page
