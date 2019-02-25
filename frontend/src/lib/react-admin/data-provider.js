@@ -16,7 +16,7 @@ import queryString from 'query-string'
 const resourcePk = {
   departments: 'department_id',
   categories: 'category_id',
-  productcategories: 'product_id',
+  productcategories: 'product_category_id',
   products: 'product_id',
   productattributes: 'product_attribute_id',
   attributes: 'attribute_id',
