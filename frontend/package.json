@@ -61,5 +61,7 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gatsby-cli": "^2.4.11"
+  }
 }
