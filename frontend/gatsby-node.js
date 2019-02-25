@@ -20,10 +20,3 @@ exports.onCreateWebpackConfig = ({ actions }) => {
     }
   })
 }
-
-exports.createPages = ({ actions: { createPage } }) => {
-  createPage({
-    path: '/search',
-    component: path.resolve(__dirname, './src/pages/browse.js')
-  })
-}
