@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "eslint": "^5.13.0",
+    "gatsby-cli": "^2.4.11",
     "gh-pages": "^2.0.1",
     "nodemon": "^1.18.10"
   }
