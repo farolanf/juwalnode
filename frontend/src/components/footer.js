@@ -16,6 +16,8 @@ import { faMedium } from '@fortawesome/free-brands-svg-icons/faMedium'
 
 import commonStyles from '$styles/common'
 
+import { PREFIX } from '$src/const'
+
 const styles = theme => ({
   ...commonStyles(theme),
   paper: tw`flex flex-col p-8`,
@@ -66,7 +68,7 @@ const Footer = ({ classes, theme, departments, fetchDepartments }) => {
               <IconButton><FontAwesomeIcon icon={faMedium} /></IconButton>
             </div>
             <div className={classes.admin}>
-                <a href='/admin' className={classes.link}>Admin</a>
+                <a href={PREFIX + '/admin'} className={classes.link}>Admin</a>
             </div>
             <div className={classes.copyright}>
               <Typography variant='caption'>
