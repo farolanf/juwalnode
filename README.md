@@ -4,11 +4,13 @@
 
 [Live Demo](https://farolanf.github.io/turing-fullstack-farolan)
 
+### Admin Panel
+
+You can access the admin panel by clicking the `Admin` link at the bottom of the page.
+
 Login with:
   - username: admin
   - password: admin
-
-Or use the social logins.
 
 ## Requirements
 

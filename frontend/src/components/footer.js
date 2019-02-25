@@ -25,7 +25,8 @@ const styles = theme => ({
   department: {
     flexGrow: 0,
     textAlign: 'center'
-  }
+  },
+  admin: tw`flex justify-center mb-3 text-sm`
 })
 
 const Footer = ({ classes, theme, departments, fetchDepartments }) => {
@@ -63,6 +64,9 @@ const Footer = ({ classes, theme, departments, fetchDepartments }) => {
               <IconButton><FontAwesomeIcon icon={faFacebook} /></IconButton>
               <IconButton><FontAwesomeIcon icon={faTwitter} /></IconButton>
               <IconButton><FontAwesomeIcon icon={faMedium} /></IconButton>
+            </div>
+            <div className={classes.admin}>
+                <a href='/admin' className={classes.link}>Admin</a>
             </div>
             <div className={classes.copyright}>
               <Typography variant='caption'>
