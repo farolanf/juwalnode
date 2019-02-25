@@ -2,7 +2,7 @@
 
 ## Demo
 
-[Live Demo](https://farolanf.github.io/turing-fullstack-farolan)
+[Live Demo](https://turing-fullstack-challenge.netlify.com/)
 
 ### Admin Panel
 
