@@ -30,5 +30,5 @@ function getModel (db, name) {
 }
 
 function hasField (model, name) {
-  return model.describe(null, { logging: false }).then(schema => !!schema[name])
+  return model.describe(null).then(schema => !!schema[name])
 }

@@ -7,28 +7,28 @@ describe('db lib', () => {
     await db.Department.bulkCreate([
       { department_id: 1, name: 'Department 1', description: 'Department 1 description' },
       { department_id: 2, name: 'Department 2', description: 'Department 2 description' },
-    ], { logging: false })
+    ])
     await db.Category.bulkCreate([
       { category_id: 1, department_id: 1, name: 'Category 1', description: 'Category 1 description' },
       { category_id: 2, department_id: 2, name: 'Category 2', description: 'Category 2 description' },
-    ], { logging: false })
+    ])
     await db.Product.bulkCreate([
       { product_id: 1, name: 'Product 1', description: 'Product 1 desc', price: 10 },
       { product_id: 2, name: 'Product 2', description: 'Product 2 desc', price: 10 },
-    ], { logging: false })
+    ])
     await db.ProductCategory.bulkCreate([
       { product_id: 1, category_id: 1 },
       { product_id: 2, category_id: 2 },
-    ], { logging: false })
+    ])
   }
 
   describe('addIncludes', () => {
 
     beforeEach(async () => {
-      await db.Department.destroy({ where: {}, logging: false })
-      await db.Category.destroy({ where: {}, logging: false })
-      await db.Product.destroy({ where: {}, logging: false })
-      await db.ProductCategory.destroy({ where: {}, logging: false })
+      await db.Department.destroy({ where: {} })
+      await db.Category.destroy({ where: {} })
+      await db.Product.destroy({ where: {} })
+      await db.ProductCategory.destroy({ where: {} })
     })
 
     it('build include', async () => {

@@ -5,7 +5,7 @@ const password = 'mypassword1234'
 describe('User model', () => {
 
   beforeEach(async () => {
-    await User.destroy({ where: {}, logging: false })
+    await User.destroy({ where: {} })
   })
 
   it('store password hash', () => {
