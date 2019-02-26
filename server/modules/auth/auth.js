@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const yup = require('yup')
 
+const { User, UserGroup, Customer } = require('../../sequelize')
+const { publicUser, internalUser } = require('../../lib/user')
 const { handleError } = require('../../lib/helpers')
 
 const events = require('../../lib/events')
@@ -42,11 +44,11 @@ module.exports = function (app, config) {
         }
         User.findOne({
           where: { user_id: payload.userId },
-          include: UserGroup
+          include: [UserGroup, Customer]
         })
         .then(user => {
           if (user) {
-            req.user = publicUser(user)
+            req.user = internalUser(user)
           } else {
             throw new Error('Invalid user')
           }
