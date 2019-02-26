@@ -10,7 +10,7 @@ function checkRoutePermission (path, method, groups, options) {
       route = typeof route === 'string' ? { path: route, method: 'GET' } : route
       const re = route.path instanceof RegExp ? route.path : new RegExp(route.path)
       const methods = Array.isArray(route.method) ? route.method : [route.method]
-      if (methods.includes(method) && re.test(path)) return true
+      if ((methods.includes('*') || methods.includes(method)) && re.test(path)) return true
     })
   })
 }
