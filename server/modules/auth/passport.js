@@ -7,6 +7,7 @@ const GoogleStrategy = require('passport-google-oauth20')
 const { User, UserGroup, Sequelize: { Op } } = require('../../sequelize')
 
 const config = require('../../config')
+const events = require('../../lib/events')
 
 async function handleProfile (accessToken, refreshToken, profile, done) {
   try {
@@ -35,6 +36,7 @@ async function handleProfile (accessToken, refreshToken, profile, done) {
           user_id: user.user_id,
           group
         })))
+        await events.emit('userCreated', user)
         await user.reload()
       } else {
         user[provider + '_id'] = profile.id

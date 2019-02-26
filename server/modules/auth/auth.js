@@ -5,6 +5,8 @@ const yup = require('yup')
 const { User, UserGroup } = require('../../sequelize')
 const { publicUser } = require('../../lib/user')
 
+const events = require('../../lib/events')
+
 // TODO: implement jwtId. It invalidates existing token on change as user
 // with the old jwtId will not be found.
 
@@ -75,6 +77,7 @@ module.exports = function (app, config) {
       const count = await User.count()
       const username = 'user' + (count + 1)
       const user = await User.create({ username, email, password })
+      await events.emit('userCreated', user)
       await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
         user_id: user.user_id,
         group

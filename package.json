@@ -43,10 +43,12 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
     "pluralize": "^7.0.0",
+    "promise-events": "^0.1.4",
     "prompts": "^2.0.2",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.4.0",
     "serve-static": "^1.13.2",
+    "short-uuid": "^3.1.0",
     "yup": "^0.26.10"
   },
   "devDependencies": {

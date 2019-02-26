@@ -11,6 +11,7 @@ module.exports = {
     'auth',
     'finale',
     'elasticsearch',
+    'customer',
   ],
 
   // module options
