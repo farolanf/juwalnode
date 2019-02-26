@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     added_on: { type: DataTypes.DATE, allowNull: false }
   }, {
     tableName: 'shopping_cart',
-    timestamps: false,
+    createdAt: 'added_on',
+    updatedAt: false,
   });
   ShoppingCart.associate = function(models) {
     ShoppingCart.belongsTo(models.Product, { foreignKey: 'product_id' })

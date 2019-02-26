@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 0
     },
-    created_on: { type: DataTypes.DATE, allowNull: false },
     shipped_on: DataTypes.DATE,
     status: { type: DataTypes.INTEGER, allowNull: false , defaultValue: 0 },
     comments: DataTypes.STRING,

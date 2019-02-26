@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     order_id: { type: DataTypes.INTEGER, allowNull: false },
-    created_on: { type: DataTypes.DATE, allowNull: false },
     message: { type: DataTypes.TEXT, allowNull: false },
     code: { type: DataTypes.INTEGER, allowNull: false }
   }, {

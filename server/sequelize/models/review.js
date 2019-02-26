@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     product_id: { type: DataTypes.INTEGER, allowNull: false },
     review: { type: DataTypes.TEXT, allowNull: false },
     rating: { type: DataTypes.SMALLINT(6), allowNull: false },
-    created_on: { type: DataTypes.DATE, allowNull: false }
   }, {
     tableName: 'review',
     createdAt: 'created_on',
