@@ -30,4 +30,4 @@ const Product = ({ classes, item }) => (
   </Card>
 )
 
-export default withStyles(styles)(Product)
+export default withStyles(styles, { name: 'product' })(Product)

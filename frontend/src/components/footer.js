@@ -82,4 +82,4 @@ const Footer = ({ classes, theme, departments, fetchDepartments }) => {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(Footer)
+export default withStyles(styles, { name: 'footer', withTheme: true })(Footer)

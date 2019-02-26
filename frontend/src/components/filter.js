@@ -119,4 +119,4 @@ const Filter = ({
   )
 }
 
-export default withStyles(styles)(Filter)
+export default withStyles(styles, { name: 'filter' })(Filter)

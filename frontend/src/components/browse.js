@@ -160,7 +160,7 @@ const Browse = ({
   )
 }
 
-export default withStyles(styles)(Browse)
+export default withStyles(styles, { name: 'browse' })(Browse)
 
 // init filters from query string
 function filtersFromUrl (setFilters) {

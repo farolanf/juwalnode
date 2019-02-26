@@ -159,4 +159,4 @@ Header.defaultProps = {
   siteTitle: ``,
 }
 
-export default withStyles(styles, { withTheme: true })(Header)
+export default withStyles(styles, { name: 'header', withTheme: true })(Header)

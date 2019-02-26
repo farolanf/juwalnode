@@ -42,4 +42,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default withStyles(styles)(Layout)
+export default withStyles(styles, { name: 'layout' })(Layout)

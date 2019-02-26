@@ -19,7 +19,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-material-ui`,
       options: {
-        theme
+        theme,
+        dangerouslyUseGlobalCSS: true
       }
     },
     {
