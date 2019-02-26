@@ -4,7 +4,12 @@ const LocalStrategy = require('passport-local')
 const FacebookStrategy = require('passport-facebook')
 const GoogleStrategy = require('passport-google-oauth20')
 
-const { User, UserGroup, Sequelize: { Op } } = require('../../sequelize')
+const {
+  User,
+  UserGroup,
+  Customer,
+  Sequelize: { Op }
+} = require('../../sequelize')
 
 const config = require('../../config')
 const events = require('../../lib/events')
@@ -28,7 +33,7 @@ async function handleProfile (accessToken, refreshToken, profile, done) {
         password: uuid(),
         [provider + '_id']: profile.id,
       },
-      include: UserGroup
+      include: [UserGroup, Customer]
     })
     .then(async ([user, created]) => {
       if (created) {
@@ -80,7 +85,7 @@ passport.use(new LocalStrategy((username, password, done) => {
         { username },
       ]
     },
-    include: UserGroup
+    include: [UserGroup, Customer]
   })
   .then(user => {
     if (user && user.verifyPassword(password)) {
