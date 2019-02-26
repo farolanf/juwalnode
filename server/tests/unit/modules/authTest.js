@@ -1,6 +1,7 @@
 const { app: { apiBase } } = require('../../../config')
 const app = require('../../../app')
-const { User, UserGroup } = require('../../../sequelize')
+const { User, UserGroup, Customer } = require('../../../sequelize')
+const { destroy } = require('../../helpers/db')
 
 const email = 'user@foo.com'
 const password = 'hellopw123'
@@ -14,8 +15,7 @@ describe('auth', () => {
   }
 
   beforeEach(async () => {
-    await User.destroy({ where: {}, logging: false })
-    await UserGroup.destroy({ where: {}, logging: false })
+    await destroy(User, UserGroup, Customer)
   })
 
   it('register', () => {
