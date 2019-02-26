@@ -6,5 +6,5 @@ if (process.argv.length < 3) {
   cmd.print()
 } else {
   const fullName = process.argv[2]
-  cmd.run(fullName)
+  cmd.run(fullName).then(() => process.exit())
 }

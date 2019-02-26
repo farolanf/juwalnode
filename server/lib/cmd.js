@@ -40,7 +40,7 @@ function runCommand(fullName) {
   const argv = process.argv.slice()
   argv[0] = path.basename(argv[0])
   argv[1] = argv[0] + ' ' + path.basename(argv[1]) + ' ' + argv.splice(2, 1)[0]
-  _runCommand(moduleName, cmd, argv)
+  return _runCommand(moduleName, cmd, argv)
 }
 
 function _runCommand(moduleName, cmd, argv) {
@@ -50,11 +50,12 @@ function _runCommand(moduleName, cmd, argv) {
   if (!handlers[moduleName][cmd]) {
     throw new Error('Invalid command')
   }
-  handlers[moduleName][cmd].handler(program, argv)
+  return Promise.resolve(handlers[moduleName][cmd].handler(program, argv))
 }
 
 module.exports = {
   add: addCommand,
   run: runCommand,
+  _run: _runCommand,
   print: printCommands
 }

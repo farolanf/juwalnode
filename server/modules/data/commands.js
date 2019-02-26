@@ -16,14 +16,17 @@ cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 function initDb(program, argv) {
   program.parse(argv)
   const prjPath = path.resolve(__dirname, '../../../')
-  importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
+  return importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
 }
 
 function importSql(sqlPath) {
   const { username, password, database } = sqlConfig
   const cmd = `cat ${sqlPath} | mysql -u${username} -p${password} ${database}`
+  return new Promise(resolve => {
   exec(cmd, (err, stdout, stderr) => {
     console.log(stdout, stderr)
+      resolve()
+    })
   })
 }
 
@@ -51,7 +54,6 @@ async function createAdmin(program, argv) {
     .then(user => {
       return db.UserGroup.create({ user_id: user.user_id, group: 'admin' })
     })
-    .finally(() => db.sequelize.close())
 }
 
 function dumpRoutes(program, argv) {

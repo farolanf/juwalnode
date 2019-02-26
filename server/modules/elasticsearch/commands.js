@@ -16,6 +16,4 @@ async function rebuildIndex (program, argv) {
     .then(() => console.log('index deleted'))
 
   await init().then(() => console.log('index created'))
-
-  db.sequelize.close()
 }
