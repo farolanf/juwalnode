@@ -1,11 +1,11 @@
-const { User, sequelize } = require('../../../sequelize')
+const { User } = require('../../../sequelize')
 
 const password = 'mypassword1234'
 
 describe('User model', () => {
 
   beforeEach(async () => {
-    await sequelize.truncate({ logging: false })
+    await User.destroy({ where: {}, logging: false })
   })
 
   it('store password hash', () => {

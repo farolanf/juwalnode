@@ -14,8 +14,8 @@ describe('auth', () => {
   }
 
   beforeEach(async () => {
-    await User.truncate({ logging: false })
-    await UserGroup.truncate({ logging: false })
+    await User.destroy({ where: {}, logging: false })
+    await UserGroup.destroy({ where: {}, logging: false })
   })
 
   it('register', () => {
