@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     day_phone: DataTypes.STRING,
     eve_phone: DataTypes.STRING,
-    mob_phone: DataTypes.STRING
+    mob_phone: DataTypes.STRING,
+    cart_id: { type: DataTypes.STRING(32), allowNull: false, unique: true }
   }, {
     tableName: 'customer',
     timestamps: false,

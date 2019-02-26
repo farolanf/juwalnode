@@ -117,8 +117,10 @@ CREATE TABLE `customer` (
   `day_phone`          varchar(100),
   `eve_phone`          varchar(100),
   `mob_phone`          varchar(100),
+  `cart_id`     CHAR(32)      NOT NULL,
   PRIMARY KEY  (`customer_id`),
   INDEX (`shipping_region_id`),
+  UNIQUE (`cart_id`),
   FOREIGN KEY (`shipping_region_id`) REFERENCES `shipping_region` (`shipping_region_id`)
     ON DELETE CASCADE
 ) ENGINE=INNODB;
@@ -180,6 +182,8 @@ CREATE TABLE `order_detail` (
   PRIMARY KEY  (`item_id`),
   INDEX (`order_id`),
   INDEX (`product_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `shopping_cart` (`item_id`)
+    ON DELETE CASCADE,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
     ON DELETE CASCADE,
   FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
