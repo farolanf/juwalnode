@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const yup = require('yup')
 
-const { User, UserGroup } = require('../../sequelize')
-const { publicUser } = require('../../lib/user')
+const { handleError } = require('../../lib/helpers')
 
 const events = require('../../lib/events')
 
@@ -29,12 +28,6 @@ function verifyToken (token, secret) {
   } catch (err) {
     // ignore
   }
-}
-
-function handleError (err, res) {
-  // eslint-disable-next-line
-  console.log(err)
-  res.sendStatus(500)
 }
 
 module.exports = function (app, config) {
