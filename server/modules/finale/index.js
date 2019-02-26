@@ -2,6 +2,7 @@ const finale = require('finale-rest')
 const pluralize = require('pluralize')
 const db = require('../../sequelize')
 const { addIncludes } = require('../../lib/db')
+const initAuth = require('./auth')
 
 module.exports = function (app, config) {
   finale.initialize({
@@ -9,6 +10,7 @@ module.exports = function (app, config) {
     sequelize: db.sequelize,
     base: config.app.apiBase
   })
+  const resources = {}
   Object
     .keys(db)
     .filter(key => key.toLowerCase() !== 'sequelize')
@@ -20,8 +22,10 @@ module.exports = function (app, config) {
         model,
         endpoints: [`/${plural}`, `/${plural}/:${pk}`]
       })
+      resources[plural] = resource
       initMilestones(resource)
     })
+  initAuth(resources)
 }
 
 function initMilestones (resource) {

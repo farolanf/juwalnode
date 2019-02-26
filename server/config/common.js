@@ -62,6 +62,7 @@ module.exports = {
       },
       customer: {
         routes: [
+          { path: '/shoppingcarts(/.*)?', method: '*' },
         ]
       },
       // admin passed all checks
