@@ -2,7 +2,7 @@
 
 ## Demo
 
-[Live Demo](https://turing-fullstack-challenge.netlify.com/)
+[Live Demo](https://turing-fullstack-challenge.juwal.id/)
 
 ### Admin Panel
 
