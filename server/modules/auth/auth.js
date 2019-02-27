@@ -40,7 +40,7 @@ module.exports = function (app, config) {
       if (token) {
         const payload = verifyToken(token, config.auth.jwtSecret)
         if (!payload) {
-          return res.sendStatus(500)
+          return res.sendStatus(401)
         }
         User.findOne({
           where: { user_id: payload.userId },
@@ -50,7 +50,7 @@ module.exports = function (app, config) {
           if (user) {
             req.user = internalUser(user)
           } else {
-            throw new Error('Invalid user')
+            return res.sendStatus(401)
           }
           next()
         })
