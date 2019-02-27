@@ -4,6 +4,7 @@ import department from './department'
 import category from './category'
 import product from './product'
 import search from './search'
+import cart from './cart'
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   category,
   product,
   search,
+  cart,
 })

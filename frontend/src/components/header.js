@@ -16,6 +16,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons/faUserAlt'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 
 import { Link } from "gatsby"
 import { API_HOST, PREFIX } from '$src/const'
@@ -31,6 +32,10 @@ const styles = theme => ({
   brand: tw`mr-4`,
   sectionDesktop: tw`flex-grow xs:hidden md:flex`,
   sectionMobile: tw`flex-grow xs:flex md:hidden`,
+  iconButton: {
+    width: 48,
+    height: 48
+  },
   icon: tw`text-lg`,
   search: {
     ...tw`flex items-center rounded`,
@@ -61,8 +66,11 @@ const ProfileMenu = ({ classes, user }) => {
 
   return (
     <>
-      <IconButton className={classes.icon} onClick={e => setAnchorEl(e.currentTarget)}>
-        <FontAwesomeIcon icon={faUserAlt} />
+      <IconButton
+        onClick={e => setAnchorEl(e.currentTarget)}
+        className={classes.iconButton}
+      >
+        <FontAwesomeIcon icon={faUserAlt} className={classes.icon} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -138,7 +146,14 @@ const Header = ({
             </form>
           </div>
           {loggedIn ? (
-            <ProfileMenu classes={classes} user={user} />
+            <>
+              <IconButton className={classes.iconButton}>
+                <Link to='/cart' className={classes.link}>
+                  <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                </Link>
+              </IconButton>
+              <ProfileMenu classes={classes} user={user} />
+            </>
           ) : (
             <Button onClick={() => setLoginOpen(true)}>
               Login

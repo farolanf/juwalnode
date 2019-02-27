@@ -5,16 +5,21 @@ import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
 
 import { API_HOST } from '$src/const'
 
 const styles = () => ({
   root: {
-    height: 320,
+    display: 'flex',
+    flexDirection: 'column',
+    height: 330,
   },
   media: tw`mx-auto mt-5 mb-2 w-48 h-48`,
   content: tw`text-center`,
   title: tw`text-base font-bold`,
+  actions: tw`justify-center flex-grow`,
 })
 
 const Product = ({ classes, item }) => (
@@ -27,6 +32,15 @@ const Product = ({ classes, item }) => (
         </div>
       </CardContent>
     </CardActionArea>
+    <CardActions className={classes.actions}>
+      <Button
+        variant='outlined'
+        size='small'
+        color='primary'
+      >
+        Add to cart
+      </Button>
+    </CardActions>
   </Card>
 )
 
