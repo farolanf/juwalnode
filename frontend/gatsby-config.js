@@ -5,8 +5,6 @@ require('dotenv').config({
   path: path.resolve(__dirname, './.env.' + env)
 })
 
-const theme = require('./src/theme')
-
 module.exports = {
   siteMetadata: {
     title: `TShirtShop`,
@@ -16,13 +14,6 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-tailwindcss`,
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        theme,
-        dangerouslyUseGlobalCSS: true
-      }
-    },
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: {
