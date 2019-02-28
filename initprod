@@ -1,0 +1,7 @@
+sudo service turingfullstack stop
+./dropdb
+npm update
+npm run initdb
+NODE_ENV=production node cmd data:create-admin admin admin@foo.com
+NODE_ENV=production node cmd es:rebuild
+sudo service turingfullstack start
