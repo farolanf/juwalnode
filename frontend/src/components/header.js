@@ -32,11 +32,6 @@ const styles = theme => ({
   brand: tw`mr-4`,
   sectionDesktop: tw`flex-grow xs:hidden md:flex`,
   sectionMobile: tw`flex-grow xs:flex md:hidden`,
-  iconButton: {
-    width: 48,
-    height: 48
-  },
-  icon: tw`text-lg`,
   search: {
     ...tw`flex items-center rounded`,
     '&:hover': {

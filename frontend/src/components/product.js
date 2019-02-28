@@ -22,26 +22,39 @@ const styles = () => ({
   actions: tw`justify-center flex-grow`,
 })
 
-const Product = ({ classes, item }) => (
-  <Card className={classes.root}>
-    <CardActionArea>
-      <CardMedia image={`${API_HOST}/${item._source.image}`} className={classes.media} />
-      <CardContent className={classes.content}>
-        <div className={classes.title}>
-          {item._source.name}
-        </div>
-      </CardContent>
-    </CardActionArea>
-    <CardActions className={classes.actions}>
-      <Button
-        variant='outlined'
-        size='small'
-        color='primary'
-      >
-        Add to cart
-      </Button>
-    </CardActions>
-  </Card>
-)
+const Product = ({ classes, item, addCartItem }) => {
+  function handleClickAddToCart () {
+    addCartItem({
+      product_id: item._source.product_id,
+      attrs: [
+        { name: 'Color', value: 'Orange' },
+        { name: 'Size', value: 'M' },
+      ],
+      quantity: Math.ceil(Math.random() * 5),
+    })
+  }
+  return (
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia image={`${API_HOST}/${item._source.image}`} className={classes.media} />
+        <CardContent className={classes.content}>
+          <div className={classes.title}>
+            {item._source.name}
+          </div>
+        </CardContent>
+      </CardActionArea>
+      <CardActions className={classes.actions}>
+        <Button
+          variant='outlined'
+          size='small'
+          color='primary'
+          onClick={handleClickAddToCart}
+        >
+          Add to cart
+        </Button>
+      </CardActions>
+    </Card>
+  )
+}
 
 export default withStyles(styles, { name: 'product' })(Product)

@@ -10,10 +10,11 @@ import Tab from '@material-ui/core/Tab'
 
 import Pagination from 'material-ui-flat-pagination'
 
-import Product from '$comp/product'
+import Product from '$con/product'
 import Filter from '$con/filter'
 
 import { PREFIX } from '$src/const'
+import { setItem } from '$lib/helpers'
 
 const styles = () => ({
   root: tw`pt-4 pb-8`,
@@ -61,6 +62,9 @@ const Browse = ({
   const paths = (props['*'] || '').split('/')
   const department = paths.length && paths[0]
   const category = paths.length > 1 && paths[1]
+
+  // save current last browsing path for 'continue shopping'
+  setItem('lastShopping', location.pathname + location.search)
 
   useEffect(() => {
     fetchDepartments()
