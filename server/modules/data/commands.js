@@ -56,7 +56,7 @@ async function createAdmin(program, argv) {
     }
   ])
 
-  db.User
+  await db.User
     .create({ email, username, password: inputs.password })
     .then(user => {
       return db.UserGroup.create({ user_id: user.user_id, group: 'admin' })
