@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const yup = require('yup')
 
-const { User, UserGroup, Customer } = require('../../sequelize')
-const { publicUser, internalUser } = require('../../lib/user')
+const { User, UserGroup } = require('../../sequelize')
+const { publicUser, internalUser, userInclude } = require('../../lib/user')
 const { handleError } = require('../../lib/helpers')
 
 const events = require('../../lib/events')
@@ -44,7 +44,7 @@ module.exports = function (app, config) {
         }
         User.findOne({
           where: { user_id: payload.userId },
-          include: [UserGroup, Customer]
+          include: userInclude()
         })
         .then(user => {
           if (user) {
@@ -79,7 +79,7 @@ module.exports = function (app, config) {
       })))
       const _user = await User.findOne({
         where: { user_id: user.user_id },
-        include: UserGroup
+        include: userInclude()
       })
       sendUser(_user, res)
     }
@@ -97,7 +97,7 @@ module.exports = function (app, config) {
       }
       User.findOne({
         where: { user_id: payload.userId },
-        include: UserGroup
+        include: userInclude()
       })
       .then(user => {
         user ? sendUser(user, res) : res.sendStatus(401)
