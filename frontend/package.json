@@ -64,5 +64,8 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "engines": {
+    "node": "^10.14.0"
+  }
 }
