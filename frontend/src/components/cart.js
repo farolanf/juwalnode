@@ -69,7 +69,10 @@ const Cart = ({
   updateCartItem,
   deleteCartItem,
   classes,
-  width
+  width,
+  subTotal,
+  shipping,
+  total,
 }) => {
   useEffect(() => {
     fetchCart()
@@ -78,17 +81,11 @@ const Cart = ({
   const [deleteItem, setDeleteItem] = useState(null)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
-  const shipping = 15
-  const subTotal = (items || []).reduce((acc, item) => {
-    return acc + (item.quantity * item.Product.price)
-  }, 0)
-  const total = subTotal + shipping
-
   const createChangeQuantityHandler = i => e => {
     setCartItemQuantity(i, e.target.value)
   }
 
-  const createDeleteItemHandler = item => e => {
+  const createDeleteItemHandler = item => () => {
     setDeleteItem(item)
     setDeleteDialogOpen(true)
   }

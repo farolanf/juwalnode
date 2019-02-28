@@ -5,7 +5,10 @@
     "database": "turing_fullstack",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "dialectOptions": {
+      "decimalNumbers": true
+    }
   },
   "test": {
     "username": "turing",
@@ -13,7 +16,10 @@
     "database": "turing_fullstack_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "dialectOptions": {
+      "decimalNumbers": true
+    }
   },
   "production": {
     "username": "turing",
@@ -21,6 +27,9 @@
     "database": "turing_fullstack_prod",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "dialectOptions": {
+      "decimalNumbers": true
+    }
   }
 }

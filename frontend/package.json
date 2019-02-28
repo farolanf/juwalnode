@@ -41,6 +41,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-saga": "^1.0.1",
+    "reselect": "^4.0.0",
     "tailwindcss": "^0.7.4",
     "typeface-roboto": "^0.0.54",
     "yup": "^0.26.10"
