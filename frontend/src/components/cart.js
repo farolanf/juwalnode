@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { navigate } from '@reach/router';
 
 import withStyles from '@material-ui/core/styles/withStyles'
@@ -15,6 +15,11 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogActions from '@material-ui/core/DialogActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
@@ -32,17 +37,46 @@ const styles = theme => ({
   updateCart: tw`whitespace-no-wrap`,
 })
 
+const DeleteItemDialog = ({ open, onClose, onDelete, item }) => {
+  function handleDelete () {
+    onClose()
+    onDelete()
+  }
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Delete item?</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          {item && (
+            <>
+              {item.Product.name} ({formatAttrs(item.attrs)}) x {item.quantity}
+            </>
+          )}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button variant='contained' color='primary' onClick={handleDelete}>Delete</Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
+
 const Cart = ({
   fetchCart,
   items,
   setCartItemQuantity,
   updateCartItem,
+  deleteCartItem,
   classes,
   width
 }) => {
   useEffect(() => {
     fetchCart()
   }, [])
+
+  const [deleteItem, setDeleteItem] = useState(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const shipping = 15
   const subTotal = (items || []).reduce((acc, item) => {
@@ -52,6 +86,15 @@ const Cart = ({
 
   const createChangeQuantityHandler = i => e => {
     setCartItemQuantity(i, e.target.value)
+  }
+
+  const createDeleteItemHandler = item => e => {
+    setDeleteItem(item)
+    setDeleteDialogOpen(true)
+  }
+
+  const handleDoDeleteItem = () => {
+    deleteCartItem(deleteItem)
   }
 
   const handleUpdateCart = () => {
@@ -92,7 +135,10 @@ const Cart = ({
                 <TableCell>{item.Product.name}</TableCell>
                 <TableCell>{formatAttrs(item.attrs)}</TableCell>
                 <TableCell align='center'>
-                  <IconButton className={classes.iconButton}>
+                  <IconButton
+                    className={classes.iconButton}
+                    onClick={createDeleteItemHandler(item)}
+                  >
                     <FontAwesomeIcon icon={faTrash} className={classes.iconSmall} />
                   </IconButton>
                 </TableCell>
@@ -191,6 +237,12 @@ const Cart = ({
           </Grid>
         </Grid>
       </div>
+      <DeleteItemDialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        onDelete={handleDoDeleteItem}
+        item={deleteItem}
+      />
     </Paper>
   )
 }

@@ -1,5 +1,5 @@
 import { handleFetchAction } from '$src/lib/action'
-import { fetchCart, setCartItemQuantity } from '$act/cart'
+import { fetchCart, setCartItemQuantity, deleteCartItem } from '$act/cart'
 
 export default handleFetchAction(fetchCart, {
   [setCartItemQuantity]: (state, { payload: { i, val } }) => ({
@@ -14,5 +14,9 @@ export default handleFetchAction(fetchCart, {
       }
       return item
     })
+  }),
+  [deleteCartItem]: (state, { payload: { item } }) => ({
+    ...state,
+    data: state.data.filter(it => it.item_id !== item.item_id)
   })
 })
