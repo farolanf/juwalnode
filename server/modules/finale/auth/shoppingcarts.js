@@ -1,5 +1,6 @@
 const { handleError } = require('../../../lib/helpers')
 const schemas = require('../schemas')
+const { Product } = require('../../../sequelize')
 
 module.exports = function secureShoppingCarts (resource) {
   // list
@@ -10,6 +11,9 @@ module.exports = function secureShoppingCarts (resource) {
         context.criteria = {
           cart_id: req.user.Customer.cart_id
         }
+        context.include = [
+          { model: Product }
+        ]
       }
       return context.continue
     }
