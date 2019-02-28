@@ -64,7 +64,9 @@ const Browse = ({
   const category = paths.length > 1 && paths[1]
 
   // save current last browsing path for 'continue shopping'
-  setItem('lastShopping', location.pathname + location.search)
+  if (typeof window !== 'undefined') {
+    setItem('lastShopping', location.pathname + location.search)
+  }
 
   useEffect(() => {
     fetchDepartments()
