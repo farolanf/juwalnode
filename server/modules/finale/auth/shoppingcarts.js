@@ -1,6 +1,5 @@
 const { handleError } = require('../../../lib/helpers')
 const schemas = require('../schemas')
-const { Product } = require('../../../sequelize')
 
 module.exports = function secureShoppingCarts (resource) {
   // list
@@ -11,9 +10,6 @@ module.exports = function secureShoppingCarts (resource) {
         context.criteria = {
           cart_id: req.user.Customer.cart_id
         }
-        context.include = [
-          { model: Product }
-        ]
       }
       return context.continue
     }
@@ -24,10 +20,7 @@ module.exports = function secureShoppingCarts (resource) {
 
   resource.list.send.before(async (req, res, context) => {
     try {
-      context.instance = context.instance.map(r => {
-        r.attrs = JSON.parse(r.attrs)
-        return r
-      })
+      context.instance = context.instance.map(prepareInstance)
       return context.continue
     }
     catch (err) {
@@ -64,6 +57,8 @@ module.exports = function secureShoppingCarts (resource) {
     }
   })
 
+  resource.create.send.before(prepareInstanceMilestone)
+
   // read
   resource.read.fetch.before(async (req, res, context) => {
     try {
@@ -80,15 +75,7 @@ module.exports = function secureShoppingCarts (resource) {
     }
   })
 
-  resource.read.send.before(async (req, res, context) => {
-    try {
-      context.instance.attrs = JSON.parse(context.instance.attrs)
-      return context.continue
-    }
-    catch (err) {
-      handleError(err, res)
-    }
-  })
+  resource.read.send.before(prepareInstanceMilestone)
 
   // update
 
@@ -129,15 +116,7 @@ module.exports = function secureShoppingCarts (resource) {
     }
   })
 
-  resource.update.send.before(async (req, res, context) => {
-    try {
-      context.instance.attrs = JSON.parse(context.instance.attrs)
-      return context.continue
-    }
-    catch (err) {
-      handleError(err, res)
-    }
-  })
+  resource.update.send.before(prepareInstanceMilestone)
 
   // delete
   resource.delete.fetch.before(async (req, res, context) => {
@@ -154,4 +133,19 @@ module.exports = function secureShoppingCarts (resource) {
       handleError(err, res)
     }
   })
+
+  function prepareInstance (instance) {
+    instance.attrs = JSON.parse(instance.attrs)
+    return instance
+  }
+
+  async function prepareInstanceMilestone (req, res, context) {
+    try {
+      prepareInstance(context.instance)
+      return context.continue
+    }
+    catch (err) {
+      handleError(err, res)
+    }
+  }
 }

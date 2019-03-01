@@ -3,6 +3,7 @@ const pluralize = require('pluralize')
 const db = require('../../sequelize')
 const { addIncludes } = require('../../lib/db')
 const initAuth = require('./auth')
+const includes = require('./includes')
 
 module.exports = function (app, config) {
   finale.initialize({
@@ -20,7 +21,8 @@ module.exports = function (app, config) {
       const pk = model.primaryKeyAttributes[0]
       const resource = finale.resource({
         model,
-        endpoints: [`/${plural}`, `/${plural}/:${pk}`]
+        endpoints: [`/${plural}`, `/${plural}/:${pk}`],
+        include: includes[plural]
       })
       resources[plural] = resource
       initMilestones(resource)
