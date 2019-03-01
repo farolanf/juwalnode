@@ -73,6 +73,7 @@ const Cart = ({
   subTotal,
   shipping,
   total,
+  dirty,
 }) => {
   useEffect(() => {
     fetchCart()
@@ -165,6 +166,7 @@ const Cart = ({
                   color='secondary'
                   className={classes.updateCart}
                   onClick={handleUpdateCart}
+                  disabled={!dirty}
                 >
                   Update cart
                 </Button>

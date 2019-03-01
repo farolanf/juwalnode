@@ -26,12 +26,18 @@ const totalSelector = createSelector(
   (subTotal, shipping) => subTotal + shipping
 )
 
+const dirtySelector = createSelector(
+  itemsSelector,
+  items => !!items.find(item => item._dirty)
+)
+
 export default connect(
   state => ({
     items: state.cart.data,
     subTotal: subTotalSelector(state),
     shipping: shippingSelector(state),
     total: totalSelector(state),
+    dirty: dirtySelector(state),
   }),
   dispatch => ({
     fetchCart: () => dispatch(fetchCart()),

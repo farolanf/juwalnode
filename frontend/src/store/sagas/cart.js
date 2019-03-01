@@ -1,7 +1,7 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { takeLatest, all, put } from 'redux-saga/effects'
-import { fetchActionSaga, asyncActionSaga } from '$src/lib/action'
+import { takeEvery, all, put } from 'redux-saga/effects'
+import { fetchActionSaga, handleAsyncAction } from '$src/lib/action'
 import { addNotification } from '$act/notification'
 import {
   fetchCart,
@@ -32,16 +32,23 @@ function deleteItemApi ({ payload: { item } }) {
 }
 
 function* notifications () {
-  yield takeLatest(addCartItem.success, createPutNotification(
-    ({ payload: { data } }) => ({
-      message: `'${data.Product.name}' added to cart`
-    })
-  ))
-  yield takeLatest(deleteCartItem.success, createPutNotification(
-    ({ payload: { data } }) => ({
-      message: `'${data.Product.name}' deleted`
-    })
-  ))
+  yield all([
+    takeEvery(addCartItem.success, createPutNotification(
+      ({ payload: { data } }) => ({
+        message: `'${data.Product.name}' added to cart`
+      })
+    )),
+    takeEvery(deleteCartItem.success, createPutNotification(
+      ({ payload: { data } }) => ({
+        message: `'${data.Product.name}' deleted`
+      })
+    )),
+    takeEvery(updateCartItem.success, createPutNotification(
+      ({ payload: { data } }) => ({
+        message: `'${data.Product.name}' updated`
+      })
+    ))
+  ])
 }
 
 const createPutNotification = getParamsCb => 
@@ -52,9 +59,9 @@ const createPutNotification = getParamsCb =>
 function* saga () {
   yield all([
     fetchActionSaga(fetchCart, fetchCartApi)(),
-    asyncActionSaga(addCartItem, addItemApi)(),
-    asyncActionSaga(updateCartItem, updateItemApi)(),
-    asyncActionSaga(deleteCartItem, deleteItemApi)(),
+    takeEvery(addCartItem, handleAsyncAction(addCartItem, addItemApi)),
+    takeEvery(updateCartItem, handleAsyncAction(updateCartItem, updateItemApi)),
+    takeEvery(deleteCartItem, handleAsyncAction(deleteCartItem, deleteItemApi)),
     notifications(),
   ])
 }
