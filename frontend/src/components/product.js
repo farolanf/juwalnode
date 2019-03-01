@@ -30,7 +30,7 @@ const Product = ({ classes, item, addCartItem }) => {
         { name: 'Color', value: 'Orange' },
         { name: 'Size', value: 'M' },
       ],
-      quantity: Math.ceil(Math.random() * 5),
+      quantity: 1,
     })
   }
   return (
