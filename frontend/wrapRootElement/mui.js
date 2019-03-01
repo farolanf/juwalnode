@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '$src/theme'
 
 const generateClassName = createGenerateClassName({
-  seed: 'e9de8ee1'
+  dangerouslyUseGlobalCSS: true,
 })
 
 const wrapRootElement = element => (
