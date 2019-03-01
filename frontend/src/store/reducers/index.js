@@ -5,6 +5,7 @@ import category from './category'
 import product from './product'
 import search from './search'
 import cart from './cart'
+import notification from './notification'
 
 export default combineReducers({
   auth,
@@ -13,4 +14,5 @@ export default combineReducers({
   product,
   search,
   cart,
+  notification,
 })

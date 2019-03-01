@@ -29,6 +29,7 @@
     "gatsby-transformer-sharp": "^2.1.14",
     "immutable": "^3.8.2",
     "material-ui-flat-pagination": "^3.2.0",
+    "notistack": "^0.4.3",
     "pluralize": "^7.0.0",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
