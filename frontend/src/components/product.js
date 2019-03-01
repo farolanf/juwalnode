@@ -57,4 +57,4 @@ const Product = ({ classes, item, addCartItem }) => {
   )
 }
 
-export default withStyles(styles, { name: 'product' })(Product)
+export default withStyles(styles)(Product)

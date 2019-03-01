@@ -70,4 +70,4 @@ Alert.defaultProps = {
   variant: 'info'
 }
 
-export default withStyles(styles, { name: 'alert' })(Alert)
+export default withStyles(styles)(Alert)

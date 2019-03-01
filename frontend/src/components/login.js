@@ -178,4 +178,4 @@ LoginBox.propTypes = {
   width: PropTypes.string,
 }
 
-export default withStyles(styles, { name: 'login' })(withWidth()(LoginBox))
+export default withStyles(styles)(withWidth()(LoginBox))

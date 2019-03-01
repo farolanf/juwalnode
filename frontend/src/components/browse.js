@@ -166,7 +166,10 @@ const Browse = ({
   )
 }
 
-export default withStyles(styles, { name: 'browse' })(Browse)
+export default compose(
+  withStyles(styles),
+  withWidth(),
+)(Browse)
 
 // init filters from query string
 function filtersFromUrl (setFilters) {

@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 
 import withStyles from '@material-ui/core/styles/withStyles'
 import FormControl from '@material-ui/core/FormControl'
@@ -119,4 +118,4 @@ const Filter = ({
   )
 }
 
-export default withStyles(styles, { name: 'filter' })(Filter)
+export default withStyles(styles)(Filter)
