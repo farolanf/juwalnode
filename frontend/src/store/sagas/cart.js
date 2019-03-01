@@ -1,7 +1,8 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { all } from 'redux-saga/effects'
+import { takeLatest, all, put } from 'redux-saga/effects'
 import { fetchActionSaga, asyncActionSaga } from '$src/lib/action'
+import { addNotification } from '$act/notification'
 import {
   fetchCart,
   addCartItem,
@@ -27,7 +28,26 @@ function updateItemApi ({ payload: { item } }) {
 
 function deleteItemApi ({ payload: { item } }) {
   return axios.delete(API_BASE + '/shoppingcarts/' + item.item_id)
+    .then(() => ({ data: item }))
 }
+
+function* notifications () {
+  yield takeLatest(addCartItem.success, createPutNotification(
+    ({ payload: { data } }) => ({
+      message: `'${data.Product.name}' added to cart`
+    })
+  ))
+  yield takeLatest(deleteCartItem.success, createPutNotification(
+    ({ payload: { data } }) => ({
+      message: `'${data.Product.name}' deleted`
+    })
+  ))
+}
+
+const createPutNotification = getParamsCb => 
+  function* (action) {
+    yield put(addNotification(getParamsCb(action)))
+  }
 
 function* saga () {
   yield all([
@@ -35,6 +55,7 @@ function* saga () {
     asyncActionSaga(addCartItem, addItemApi)(),
     asyncActionSaga(updateCartItem, updateItemApi)(),
     asyncActionSaga(deleteCartItem, deleteItemApi)(),
+    notifications(),
   ])
 }
 
