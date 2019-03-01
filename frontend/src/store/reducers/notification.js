@@ -1,5 +1,7 @@
 import { handleActions } from 'redux-actions'
-import { addNotification, clearNotifications } from '$act/notification'
+import { addNotification, deleteNotification } from '$act/notification'
+
+let id = 1
 
 export default handleActions(
   {
@@ -8,13 +10,14 @@ export default handleActions(
       data: [
         ...state.data,
         {
+          id: id++,
           ...payload
         }
       ]
     }),
-    [clearNotifications]: state => ({
+    [deleteNotification]: (state, { payload: { id } }) => ({
       ...state,
-      data: []
+      data: state.data.filter(n => n.id !== id)
     })
   },
   {

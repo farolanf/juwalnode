@@ -14,13 +14,14 @@ const styles = () => ({
 
 const Notifier = ({ 
   notifications, 
-  clearNotifications, 
+  deleteNotification, 
   enqueueSnackbar, 
   classes 
 }) => {
   useEffect(() => {
     notifications.forEach(n => {
       const options = _.defaults({}, n.options, {
+        autoHideDuration: 5000,
         action: (
           <IconButton color='inherit'>
             <FontAwesomeIcon icon={faTimes} className={classes.icon} />
@@ -28,8 +29,8 @@ const Notifier = ({
         ),
       })
       enqueueSnackbar(n.message, options)
+      deleteNotification(n.id)
     })
-    notifications.length && clearNotifications()
   }, [notifications])  
   return null
 }
