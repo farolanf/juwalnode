@@ -1,7 +1,9 @@
+const { ShoppingCart } = require('../../../sequelize')
 const { handleError } = require('../../../lib/helpers')
 const schemas = require('../schemas')
+const includes = require('../includes')
 
-module.exports = function secureShoppingCarts (resource) {
+module.exports = function initResource (resource) {
   // list
   resource.list.fetch.before(async (req, res, context) => {
     try {
@@ -42,11 +44,30 @@ module.exports = function secureShoppingCarts (resource) {
           return res.sendStatus(400)
         }
 
+        const attrs = JSON.stringify(params.attrs)
+
+        // just add quantity if item exists
+        const item = await ShoppingCart.findOne({
+          where: {
+            cart_id: req.user.Customer.cart_id,
+            product_id: params.product_id,
+            attrs
+          },
+          include: includes.shoppingcarts
+        })
+
+        if (item) {
+          item.quantity += params.quantity
+          await item.save()
+          res.send(item)
+          return context.stop
+        }
+
         // create item in the current shopping cart
         context.attributes = {
           cart_id: req.user.Customer.cart_id,
           product_id: params.product_id,
-          attrs: JSON.stringify(params.attrs),
+          attrs,
           quantity: params.quantity,
         }
       }

@@ -2,7 +2,7 @@ const finale = require('finale-rest')
 const pluralize = require('pluralize')
 const db = require('../../sequelize')
 const { addIncludes } = require('../../lib/db')
-const initAuth = require('./auth')
+const initResources = require('./resources')
 const includes = require('./includes')
 
 module.exports = function (app, config) {
@@ -27,7 +27,7 @@ module.exports = function (app, config) {
       resources[plural] = resource
       initMilestones(resource)
     })
-  initAuth(resources)
+  initResources(resources)
 }
 
 function initMilestones (resource) {
