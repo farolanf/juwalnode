@@ -82,8 +82,8 @@ const Cart = ({
   const [deleteItem, setDeleteItem] = useState(null)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
-  const createChangeQuantityHandler = i => e => {
-    setCartItemQuantity(i, e.target.value)
+  const createChangeQuantityHandler = id => e => {
+    setCartItemQuantity(id, e.target.value)
   }
 
   const createDeleteItemHandler = item => () => {
@@ -144,7 +144,7 @@ const Cart = ({
                   <TextField
                     type='number'
                     value={item.quantity}
-                    onChange={createChangeQuantityHandler(i)}
+                    onChange={createChangeQuantityHandler(item.item_id)}
                     style={tw`w-10`}
                     inputProps={{
                       min: 0,

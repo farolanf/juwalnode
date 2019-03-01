@@ -41,7 +41,8 @@ export default connect(
   }),
   dispatch => ({
     fetchCart: () => dispatch(fetchCart()),
-    setCartItemQuantity: (i, val) => dispatch(setCartItemQuantity({ i, val })),
+    setCartItemQuantity: (id, quantity) => 
+      dispatch(setCartItemQuantity({ id, quantity })),
     updateCartItem: item => dispatch(updateCartItem({ item })),
     deleteCartItem: item => dispatch(deleteCartItem({ item })),
   })

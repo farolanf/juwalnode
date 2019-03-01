@@ -7,13 +7,13 @@ import {
 } from '$act/cart'
 
 export default handleFetchAction(fetchCart, {
-  [setCartItemQuantity]: (state, { payload: { i, val } }) => ({
+  [setCartItemQuantity]: (state, { payload: { id, quantity } }) => ({
     ...state,
-    data: state.data.map((item, j) => {
-      if (j === i) {
+    data: state.data.map(item => {
+      if (item.item_id === id) {
         return {
           ...item,
-          quantity: val,
+          quantity,
           _dirty: true
         }
       }
