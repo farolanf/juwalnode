@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { navigate } from '@reach/router'
 import _ from 'lodash'
 import changeCase from 'change-case'
@@ -93,17 +93,11 @@ const Browse = ({
   }, [department, category])
 
   useEffect(() => {
-    fetchProducts({ ...filters.toJS(), offset, count })
+    // let animation finish
+    setTimeout(() => {
+      fetchProducts({ ...filters.toJS(), offset, count })
+    }, 300)
   }, [filters, offset, count])
-
-  let [tab, setTab] = useState(0)
-  const [lastTabs, setLastTabs] = useState({})
-
-  // restore tab
-  tab = lastTabs[department] || 0
-  useEffect(() => {
-    setTab(lastTabs[department] || 0)
-  }, [department])
 
   const departmentObj = department
     && departments
@@ -113,18 +107,28 @@ const Browse = ({
   const departmentCategories = departmentObj
     && categories
     && categories.filter(c => c.department_id === departmentObj.department_id)
+    || []
+
+  const tab = !category 
+    ? 0 
+    : 1 + departmentCategories.findIndex(c => 
+      c.name.toLowerCase() === category.toLowerCase())
 
   const handleChangeTab = (e, val) => {
-    setTab(val)
-
-    // remember tab
-    department && setLastTabs(Object.assign({}, lastTabs, { [department]: val }))
+    // navigate to /browse/department
+    if (val === 0) {
+      department
+        && navigate(PREFIX + `/browse/${department.toLowerCase()}`)
+      return
+    }
 
     // navigate to /browse/department/category
+    val--
+
     department
       && departmentCategories
       && departmentCategories.length > val
-      && category !== departmentCategories[tab].name
+      && category !== departmentCategories[val].name
       && navigate(PREFIX + `/browse/${department.toLowerCase()}/${departmentCategories[val].name.toLowerCase()}`)
   }
 
@@ -134,6 +138,7 @@ const Browse = ({
     <div className={classes.root}>
       {(department || category) && (
         <Tabs value={tab} onChange={handleChangeTab} className={classes.tabs}>
+          <Tab key={0} label={`All in ${department}`} />
           {departmentCategories && departmentCategories.map(c => (
             <Tab key={c.category_id} label={c.name} />
           ))}
