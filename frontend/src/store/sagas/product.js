@@ -4,12 +4,12 @@ import changeCase from 'change-case'
 
 import { API_BASE } from '$src/const'
 import { fetchActionSaga } from '$src/lib/action'
-import { fetchProducts } from '$act/product'
+import { fetchProducts, fetchProduct } from '$act/product'
 import { setOffset } from '$act/search'
 
 import store from '$src/store'
 
-function fetchApi ({ payload: { q, departments, categories, attributes, offset, count }}) {
+function fetchProductsApi ({ payload: { q, departments, categories, attributes, offset, count }}) {
   const params = { offset, count }
   if (q) {
     params.q = q
@@ -26,6 +26,10 @@ function fetchApi ({ payload: { q, departments, categories, attributes, offset, 
   return axios.get(API_BASE + '/search/products', { params })
 }
 
+function fetchProductApi ({ payload: { product_id } }) {
+  return axios.get(API_BASE + '/products/' + product_id)
+}
+
 function* doUpdateOffset ({ payload: { data }}) {
   if (store.getState().search.get('offset') >= data.hits.total) {
     yield put(setOffset({ offset: 0 }))
@@ -38,7 +42,8 @@ function* updateOffset () {
 
 function* saga () {
   yield all([
-    fetchActionSaga(fetchProducts, fetchApi)(),
+    fetchActionSaga(fetchProducts, fetchProductsApi)(),
+    fetchActionSaga(fetchProduct, fetchProductApi)(),
     updateOffset()
   ])
 }

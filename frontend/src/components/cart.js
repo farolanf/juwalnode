@@ -28,6 +28,7 @@ import commonStyles from '$src/styles/common'
 
 import { PREFIX } from '$src/const'
 import { getItem } from '$lib/helpers'
+import { formatCurrency } from '$lib/format'
 
 const styles = theme => ({
   ...commonStyles(theme),
@@ -250,12 +251,4 @@ export default withStyles(styles)(withWidth()(Cart))
 
 function formatAttrs(attrs) {
   return attrs.map(attr => `${attr.name}=${attr.value}`).join(', ')
-}
-
-function formatCurrency(num) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'code'
-  }).format(num)
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { navigate } from '@reach/router'
 
 import withStyles from '@material-ui/core/styles/withStyles'
 import Card from '@material-ui/core/Card'
@@ -19,6 +20,9 @@ const styles = () => ({
 })
 
 const Product = ({ classes, item, addCartItem }) => {
+  function handleViewDetail () {
+    navigate('/products/' + item._id)
+  }
   function handleClickAddToCart () {
     addCartItem({
       product_id: item._source.product_id,
@@ -31,7 +35,7 @@ const Product = ({ classes, item, addCartItem }) => {
   }
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={handleViewDetail}>
         <CardMedia image={`${API_HOST}/${item._source.image}`} className={classes.media} />
         <CardContent className={classes.content}>
           <div className={classes.title}>
