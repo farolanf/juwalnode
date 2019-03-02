@@ -8,7 +8,7 @@ import {
 } from '$act/search'
 
 const mapStateToProps = state => ({
-  products: state.product.data,
+  products: state.product.products.data,
   filters: state.search.get('filters')
 })
 
