@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { navigate } from '@reach/router'
+import { compose } from 'lodash/fp'
 
 import withStyles from '@material-ui/core/styles/withStyles'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -30,8 +32,6 @@ const styles = theme => ({
   ...commonStyles(theme),
   root: tw`static py-3`,
   brand: tw`mr-4`,
-  sectionDesktop: tw`flex-grow xs:hidden md:flex`,
-  sectionMobile: tw`flex-grow xs:flex md:hidden`,
   search: {
     ...tw`flex items-center rounded`,
     '&:hover': {
@@ -91,6 +91,7 @@ const Header = ({
   setQuery: setSearchQuery,
   user,
   loggedIn,
+  width,
 }) => {
   useEffect(() => {
     fetchDepartments()
@@ -111,52 +112,104 @@ const Header = ({
   return (
     <AppBar color='inherit' className={classes.root}>
       <Toolbar>
-        <Link to='/'>
-          <img src={API_HOST + '/tshirtshop.png'} className={classes.brand} />
-        </Link>
-        <div className={classes.sectionDesktop}>
-          <Grid container spacing={theme.spacing.unit} alignItems='center'>
-            {departments && departments.map(d => (
-              <Grid item key={d.department_id}>
-                <Button>
-                  <Link to={'/browse/' + d.name.toLowerCase()} className={classes.link}>
-                    {d.name}
-                  </Link>
-                </Button>
-              </Grid>
-            ))}
-          </Grid>
-          <Spacer />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <FontAwesomeIcon icon={faSearch} />
+        {isWidthUp('md', width) ? (
+          <>
+            <Link to='/'>
+              <img src={API_HOST + '/tshirtshop.png'} className={classes.brand} />
+            </Link>
+            <Grid container spacing={theme.spacing.unit} alignItems='center'>
+              {departments && departments.map(d => (
+                <Grid item key={d.department_id}>
+                  <Button>
+                    <Link to={'/browse/' + d.name.toLowerCase()} className={classes.link}>
+                      {d.name}
+                    </Link>
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
+            <Spacer />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <FontAwesomeIcon icon={faSearch} />
+              </div>
+              <form onSubmit={handleSubmitQuery}>
+                <InputBase
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder='Search...'
+                  classes={{ input: classes.searchInput }}
+                />
+              </form>
             </div>
-            <form onSubmit={handleSubmitQuery}>
-              <InputBase
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-                placeholder='Search...'
-                classes={{ input: classes.searchInput }}
-              />
-            </form>
-          </div>
-          {loggedIn ? (
-            <>
-              <IconButton className={classes.iconButton}>
-                <Link to='/cart' className={classes.link}>
-                  <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
-                </Link>
-              </IconButton>
-              <ProfileMenu classes={classes} user={user} />
-            </>
-          ) : (
-            <Button onClick={() => setLoginOpen(true)}>
-              Login
-            </Button>
-          )}
-          <LoginBox open={loginOpen} onClose={() => setLoginOpen(false)} />
-        </div>
+            {loggedIn ? (
+              <>
+                <IconButton className={classes.iconButton}>
+                  <Link to='/cart' className={classes.link}>
+                    <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                  </Link>
+                </IconButton>
+                <ProfileMenu classes={classes} user={user} />
+              </>
+            ) : (
+              <Button onClick={() => setLoginOpen(true)}>
+                Login
+              </Button>
+            )}
+          </>
+        ) : (
+          <Grid container spacing={theme.spacing.unit} alignItems='center'>
+            <Grid item xs>
+              <Link to='/'>
+                <img src={API_HOST + '/tshirtshop.png'} className={classes.brand} />
+              </Link>
+            </Grid>
+            <Grid item xs container justify='flex-end'>
+              {loggedIn ? (
+                <>
+                  <IconButton className={classes.iconButton}>
+                    <Link to='/cart' className={classes.link}>
+                      <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                    </Link>
+                  </IconButton>
+                  <ProfileMenu classes={classes} user={user} />
+                </>
+              ) : (
+                <Button onClick={() => setLoginOpen(true)}>
+                  Login
+                </Button>
+              )}
+            </Grid>
+            <Grid container spacing={theme.spacing.unit} alignItems='center'>
+              {departments && departments.map(d => (
+                <Grid item key={d.department_id}>
+                  <Button>
+                    <Link to={'/browse/' + d.name.toLowerCase()} className={classes.link}>
+                      {d.name}
+                    </Link>
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
+            <Grid container justify='flex-end'>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <FontAwesomeIcon icon={faSearch} />
+                </div>
+                <form onSubmit={handleSubmitQuery}>
+                  <InputBase
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    placeholder='Search...'
+                    classes={{ input: classes.searchInput }}
+                  />
+                </form>
+              </div>
+            </Grid>
+          </Grid>
+        )}
       </Toolbar>
+      <LoginBox open={loginOpen} onClose={() => setLoginOpen(false)} />
     </AppBar>
   )
 }
@@ -169,4 +222,7 @@ Header.defaultProps = {
   siteTitle: ``,
 }
 
-export default withStyles(styles, { withTheme: true })(Header)
+export default compose(
+  withWidth(),
+  withStyles(styles, { withTheme: true }),
+)(Header)

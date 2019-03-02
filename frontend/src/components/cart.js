@@ -225,7 +225,7 @@ const Cart = ({
       <div className={classes.actions}>
         <Grid container spacing={24} justify={isWidthUp('md', width) ? 'flex-end' : 'center'}>
           <Grid item>
-            <Button variant='contained' color='secondary' onClick={handleContinueShopping}>
+            <Button variant='outlined' onClick={handleContinueShopping}>
               Continue shopping
             </Button>
           </Grid>

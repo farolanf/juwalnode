@@ -16,16 +16,23 @@ import Filter from '$con/filter'
 import { PREFIX } from '$src/const'
 import { setItem } from '$lib/helpers'
 
-const styles = () => ({
-  root: tw`pt-4 pb-8`,
+const styles = theme => ({
+  root: tw``,
   tabs: tw`mb-4`,
-  pagination: tw`my-4`
+  topPagination: tw`pt-4 pb-2 px-2`,
+  bottomPagination: tw`pt-2 pb-8 px-2`,
+  productContainer: {
+    ...tw`py-2`,
+    [theme.breakpoints.up('md')]: {
+      ...tw`p-2`
+    }
+  }
 })
 
-const PaginationRow = ({ classes, total, offset, count, end, onClick }) => (
-  <Grid item container justify='space-between' alignItems='center' className={classes.pagination}>
+const PaginationRow = ({ className, total, offset, count, end, onClick }) => (
+  <Grid item container justify='space-between' alignItems='center' className={className}>
     <Grid item>
-      Found {total} items
+      {total} items
     </Grid>
     <Grid item>
       <Pagination
@@ -36,7 +43,7 @@ const PaginationRow = ({ classes, total, offset, count, end, onClick }) => (
       />
     </Grid>
     <Grid item>
-        Showing {offset + 1}-{end} of {total}
+      {offset + 1}-{end} of {total}
     </Grid>
   </Grid>
 )
@@ -132,44 +139,49 @@ const Browse = ({
           ))}
         </Tabs>
       )}
-      <Grid container wrap='nowrap'>
-          <Grid item>
-            <Filter />
+      <Grid container>
+        <Grid item xs={12} md style={{ maxWidth: 240 }}>
+          <Filter />
+        </Grid>
+        <Grid item xs={12} md container direction='column'>
+          <PaginationRow
+            className={classes.topPagination}
+            total={products ? products.hits.total : 0}
+            offset={offset}
+            count={count}
+            end={end}
+            onClick={(e, offset) => setOffset(offset)}
+          />
+          <Grid item container justify='center'>
+            {_.get(products, 'hits.hits', []).map(p => (
+              <Grid 
+                item 
+                xs={12} 
+                md={4} 
+                key={p._id} 
+                container 
+                justify='center'
+                className={classes.productContainer}
+              >
+                <Product item={p} />
+              </Grid>
+            ))}
           </Grid>
-          <Grid item container direction='column'>
-            <PaginationRow
-              classes={classes}
-              total={products ? products.hits.total : 0}
-              offset={offset}
-              count={count}
-              end={end}
-              onClick={(e, offset) => setOffset(offset)}
-            />
-            <Grid item container spacing={24}>
-              {_.get(products, 'hits.hits', []).map(p => (
-                <Grid item xs={12} md={4} xl={3} key={p._id} container justify='center'>
-                  <Product item={p} />
-                </Grid>
-              ))}
-            </Grid>
-            <PaginationRow
-              classes={classes}
-              total={products ? products.hits.total : 0}
-              offset={offset}
-              count={count}
-              end={end}
-              onClick={(e, offset) => setOffset(offset)}
-            />
-          </Grid>
+          <PaginationRow
+            className={classes.bottomPagination}
+            total={products ? products.hits.total : 0}
+            offset={offset}
+            count={count}
+            end={end}
+            onClick={(e, offset) => setOffset(offset)}
+          />
+        </Grid>
       </Grid>
     </div>
   )
 }
 
-export default compose(
-  withStyles(styles),
-  withWidth(),
-)(Browse)
+export default withStyles(styles)(Browse)
 
 // init filters from query string
 function filtersFromUrl (setFilters) {

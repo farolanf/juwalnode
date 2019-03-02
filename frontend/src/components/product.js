@@ -11,13 +11,9 @@ import Button from '@material-ui/core/Button'
 import { API_HOST } from '$src/const'
 
 const styles = () => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: 330,
-  },
-  media: tw`mx-auto mt-5 mb-2 w-48 h-48`,
-  content: tw`text-center`,
+  root: tw`flex flex-col w-full items-center pt-4 pb-3`,
+  media: tw`m-auto xs:h-64 md:h-48 bg-contain`,
+  content: tw`text-center pt-4 pb-2`,
   title: tw`text-base font-bold`,
   actions: tw`justify-center flex-grow`,
 })

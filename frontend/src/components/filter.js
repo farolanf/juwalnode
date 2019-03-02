@@ -11,10 +11,11 @@ import Button from '@material-ui/core/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 
-const styles = () => ({
+const styles = theme => ({
   root: {
-    width: 240,
-    position: 'relative'
+    maxWidth: 240,
+    position: 'relative',
+    [theme.breakpoints.down('sm')]: tw`px-2`,
   },
   filterGroup: tw`block my-4`,
   checkbox: tw`py-1`,
