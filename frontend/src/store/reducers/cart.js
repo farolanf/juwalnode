@@ -1,4 +1,4 @@
-import { handleFetchAction } from '$src/lib/action'
+import { fetchActionReducer } from '$src/lib/action'
 import { 
   fetchCart, 
   setCartItemQuantity,
@@ -6,7 +6,7 @@ import {
   deleteCartItem,
 } from '$act/cart'
 
-export default handleFetchAction(fetchCart, {
+export default fetchActionReducer(fetchCart, {
   [setCartItemQuantity]: (state, { payload: { id, quantity } }) => ({
     ...state,
     data: state.data.map(item => {

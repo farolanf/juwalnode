@@ -93,10 +93,7 @@ const Browse = ({
   }, [department, category])
 
   useEffect(() => {
-    // let animation finish
-    setTimeout(() => {
-      fetchProducts({ ...filters.toJS(), offset, count })
-    }, 300)
+    fetchProducts({ ...filters.toJS(), offset, count })
   }, [filters, offset, count])
 
   const departmentObj = department

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { takeEvery, all, put } from 'redux-saga/effects'
-import { fetchActionSaga, handleAsyncAction } from '$src/lib/action'
+import { takeEvery, takeLatest, all, put } from 'redux-saga/effects'
+import { fetchActionSaga, fetchActionWorker, asyncActionWorker } from '$src/lib/action'
 import { addNotification } from '$act/notification'
 import {
   fetchCart,
@@ -59,9 +59,10 @@ const createPutNotification = getParamsCb =>
 function* saga () {
   yield all([
     fetchActionSaga(fetchCart, fetchCartApi)(),
-    takeEvery(addCartItem, handleAsyncAction(addCartItem, addItemApi)),
-    takeEvery(updateCartItem, handleAsyncAction(updateCartItem, updateItemApi)),
-    takeEvery(deleteCartItem, handleAsyncAction(deleteCartItem, deleteItemApi)),
+    takeLatest(addCartItem.success, fetchActionWorker(fetchCart, fetchCartApi)),
+    takeEvery(addCartItem, asyncActionWorker(addCartItem, addItemApi)),
+    takeEvery(updateCartItem, asyncActionWorker(updateCartItem, updateItemApi)),
+    takeEvery(deleteCartItem, asyncActionWorker(deleteCartItem, deleteItemApi)),
     notifications(),
   ])
 }

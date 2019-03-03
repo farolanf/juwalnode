@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { debounce, call, put } from 'redux-saga/effects'
 import { contentRange } from '$src/lib/pagination'
 
 // Async action
@@ -11,7 +11,7 @@ export function createAsyncAction (name) {
   return action
 }
 
-export function handleAsyncAction (action, asyncApi, onSuccess) {
+export function asyncActionWorker (action, asyncApi, onSuccess) {
   return function* (dispatchedAction) {
     try {
       const response = yield call(asyncApi, dispatchedAction)
@@ -26,7 +26,7 @@ export function handleAsyncAction (action, asyncApi, onSuccess) {
 
 export function asyncActionSaga (action, asyncApi, onSuccess) {
   return function* () {
-    yield takeLatest(action, handleAsyncAction(action, asyncApi, onSuccess))
+    yield debounce(300, action, asyncActionWorker(action, asyncApi, onSuccess))
   }
 }
 
@@ -53,7 +53,7 @@ export function fetchActionReducersObj (action) {
   }
 }
 
-export function handleFetchAction (action, reducers = {}) {
+export function fetchActionReducer (action, reducers = {}) {
   return handleActions(
     {
       ...fetchActionReducersObj(action),
@@ -66,15 +66,22 @@ export function handleFetchAction (action, reducers = {}) {
   )
 }
 
-export function fetchActionSaga (action, fetchApi, onSuccess) {
-  return asyncActionSaga(
-    action,
-    fetchApi,
-    function* ({ action, response, put }) {
+export function fetchActionWorker (action, asyncApi, onSuccess) {
+  return function* (dispatchedAction) {
+    try {
+      const response = yield call(asyncApi, dispatchedAction)
       const range = contentRange(response.headers['content-range'])
       onSuccess
         ? yield onSuccess({ action, response, range, put })
         : yield put(action.success({ data: response.data, range }))
+    } catch (err) {
+      yield put(action.error(err))
     }
-  )
+  }
+}
+
+export function fetchActionSaga (action, fetchApi, onSuccess) {
+  return function* () {
+    yield debounce(300, action, fetchActionWorker(action, fetchApi, onSuccess))
+  }
 }
