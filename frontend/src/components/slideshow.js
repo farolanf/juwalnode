@@ -14,12 +14,13 @@ const styles = theme => ({
     ...tw`text-2xl text-grey black absolute cursor-pointer`,
     '&:hover': tw`text-black`,
     top: '40%',
+    transform: 'translate(-50%, -50%)',
   },
   arrowLeft: {
-    left: 25,
+    left: '10%',
   },
   arrowRight: {
-    right: 25,
+    left: '90%',
   },
   dots: tw`p-0 mt-4`,
   dot: {

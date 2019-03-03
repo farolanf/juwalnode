@@ -14,7 +14,7 @@ import {
 const mapStateToProps = state => ({
   departments: state.department.data,
   categories: state.category.data,
-  products: state.product.data,
+  products: state.product.products.data,
   offset: state.search.get('offset'),
   count: state.search.get('count'),
   filters: state.search.get('filters')

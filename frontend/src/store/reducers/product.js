@@ -1,4 +1,8 @@
+import { combineReducers } from 'redux'
 import { handleFetchAction } from '$src/lib/action'
-import { fetchProducts } from '$act/product'
+import { fetchProducts, fetchProduct } from '$act/product'
 
-export default handleFetchAction(fetchProducts)
+export default combineReducers({
+  products: handleFetchAction(fetchProducts),
+  product: handleFetchAction(fetchProduct),
+})
