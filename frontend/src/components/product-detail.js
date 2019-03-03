@@ -50,7 +50,7 @@ const styles = theme => ({
   },
 })
 
-const ProductDetail = ({ product_id, fetchProduct, product, classes }) => {
+const ProductDetail = ({ product_id, fetchProduct, product, addCartItem, classes }) => {
   const [attrs, setAttrs] = useState(null)
   const [color, setColor] = useState(null)
   const [size, setSize] = useState(null)
@@ -76,6 +76,17 @@ const ProductDetail = ({ product_id, fetchProduct, product, classes }) => {
   }, [product])
 
   const images = _.values(_.pick(product, ['image', 'image_2']))
+
+  function handleAddCartItem () {
+    addCartItem({
+      product_id,
+      attrs: [
+        { name: 'Color', value: color },
+        { name: 'Size', value: size },
+      ],
+      quantity,
+    })
+  }
 
   return (
     <Paper className={classes.root}>
@@ -167,7 +178,14 @@ const ProductDetail = ({ product_id, fetchProduct, product, classes }) => {
               </div>
             </Grid>
             <Grid item container className={classes.container}>
-              <Button variant='contained' color='primary'>Add to cart</Button>
+              <Button 
+                variant='contained' 
+                color='primary'
+                onClick={handleAddCartItem}
+                disabled={!color || !size}
+              >
+                Add to cart
+              </Button>
             </Grid>
           </Grid>
         </Grid>
