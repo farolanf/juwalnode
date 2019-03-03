@@ -148,7 +148,7 @@ const Cart = ({
                     onChange={createChangeQuantityHandler(item.item_id)}
                     style={tw`w-10`}
                     inputProps={{
-                      min: 0,
+                      min: 1,
                       style: tw`text-right`
                     }}
                   />
