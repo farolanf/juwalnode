@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton'
 import InputBase from '@material-ui/core/InputBase'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Badge from '@material-ui/core/Badge'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -92,9 +93,12 @@ const Header = ({
   user,
   loggedIn,
   width,
+  fetchCart,
+  items,
 }) => {
   useEffect(() => {
     fetchDepartments()
+    fetchCart()
   }, [])
 
   const [query, setQuery] = useState('')
@@ -146,7 +150,9 @@ const Header = ({
               <>
                 <IconButton className={classes.iconButton}>
                   <Link to='/cart' className={classes.link}>
-                    <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                    <Badge color='primary' badgeContent={(items || []).length}>
+                      <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                    </Badge>
                   </Link>
                 </IconButton>
                 <ProfileMenu classes={classes} user={user} />
@@ -169,7 +175,9 @@ const Header = ({
                 <>
                   <IconButton className={classes.iconButton}>
                     <Link to='/cart' className={classes.link}>
-                      <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                      <Badge color='primary' badgeContent={(items || []).length}>
+                        <FontAwesomeIcon icon={faShoppingCart} className={classes.icon} />
+                      </Badge>
                     </Link>
                   </IconButton>
                   <ProfileMenu classes={classes} user={user} />
