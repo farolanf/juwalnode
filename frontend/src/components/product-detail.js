@@ -15,12 +15,12 @@ import { API_HOST } from '$src/const'
 import { formatCurrency } from '$lib/format'
 
 const styles = theme => ({
-  root: tw`flex flex-col items-center py-8 px-2`,
+  root: tw`flex flex-col items-center pt-8 px-2`,
   title: tw`mb-4`,
-  attrTitle: tw`mb-4 xs:text-center md:text-left`,
+  attrTitle: tw`mb-4 xs:text-center md:text-left xs:text-xl md:text-base`,
   price: tw`mb-8`,
   slideshow: tw`mb-8 w-full text-center`,
-  image: tw`h-64 max-w-xs`,
+  image: tw`max-w-xs`,
   container: tw`mb-8 flex xs:justify-center md:justify-start`,
   rightContainer: tw`xs:justify-start md:justify-center`,
   dotColor: {
@@ -109,7 +109,7 @@ const ProductDetail = ({ product_id, fetchProduct, product, addCartItem, classes
             <Grid item>
               {attrs && attrs.Color && attrs.Color.length && (
                 <>
-                  <Typography variant='h6' color='textSecondary' className={classes.attrTitle}>
+                  <Typography color='textSecondary' className={classes.attrTitle}>
                     Color
                   </Typography>
                   <div className={classes.container}>
@@ -129,7 +129,7 @@ const ProductDetail = ({ product_id, fetchProduct, product, addCartItem, classes
             <Grid item>
               {attrs && attrs.Size && attrs.Size.length && (
                 <>
-                  <Typography variant='h6' color='textSecondary' className={classes.attrTitle}>
+                  <Typography color='textSecondary' className={classes.attrTitle}>
                     Size
                   </Typography>
                   <div className={classes.container}>
@@ -150,7 +150,7 @@ const ProductDetail = ({ product_id, fetchProduct, product, addCartItem, classes
               )}
             </Grid>
             <Grid item>
-              <Typography variant='h6' color='textSecondary' className={classes.attrTitle}>
+              <Typography color='textSecondary' className={classes.attrTitle}>
                 Quantity
               </Typography>
               <div className={cn(classes.container, classes.quantityContainer)}>
