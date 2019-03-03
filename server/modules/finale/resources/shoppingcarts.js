@@ -1,6 +1,6 @@
 const { ShoppingCart } = require('../../../sequelize')
 const { handleError } = require('../../../lib/helpers')
-const schemas = require('../schemas')
+const schemas = require('../schemas/shoppingcarts')
 const includes = require('../includes')
 
 module.exports = function initResource (resource) {
@@ -38,7 +38,7 @@ module.exports = function initResource (resource) {
   resource.create.write.before(async (req, res, context) => {
     try {
       if (!req.user.admin) {
-        const params = schemas.create.cast(req.body)
+        const params = schemas.create.cast(req.body, { stripUnknown: true })
 
         if (!params || !await schemas.create.isValid(params)) {
           return res.sendStatus(400)
@@ -118,7 +118,7 @@ module.exports = function initResource (resource) {
   resource.update.write.before(async (req, res, context) => {
     try {
       if (!req.user.admin) {
-        const params = schemas.create.cast(req.body)
+        const params = schemas.create.cast(req.body, { stripUnknown: true })
 
         if (!params || !await schemas.create.isValid(params)) {
           return res.sendStatus(400)

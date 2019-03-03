@@ -63,6 +63,7 @@ module.exports = {
       customer: {
         routes: [
           { path: '/shoppingcarts(/.*)?', method: '*' },
+          { path: '/customers(/.*)?', method: 'PUT' },
         ]
       },
       // admin passed all checks
