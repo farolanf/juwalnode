@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const { UserGroup, Customer, ShippingRegion } = require('../sequelize')
+const { UserGroup, Customer, ShippingRegion, Shipping } = require('../sequelize')
 
 exports.publicUser = _user => {
   const user = _.pick(_user.dataValues, ['user_id', 'email', 'username', 'Customer'])
@@ -22,7 +22,8 @@ exports.userInclude = () => [
     model: Customer,
     include: [
       {
-        model: ShippingRegion
+        model: ShippingRegion,
+        include: Shipping
       }
     ]
   }

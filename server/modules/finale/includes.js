@@ -15,5 +15,10 @@ module.exports = {
     {
       model: db.Product
     }
+  ],
+  shippingregions: [
+    {
+      model: db.Shipping
+    }
   ]
 }

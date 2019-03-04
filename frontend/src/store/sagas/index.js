@@ -3,6 +3,7 @@ import department from './department'
 import category from './category'
 import product from './product'
 import cart from './cart'
+import shipping from './shipping'
 
 function* rootSaga () {
   yield all([
@@ -10,6 +11,7 @@ function* rootSaga () {
     category(),
     product(),
     cart(),
+    shipping(),
   ])
 }
 

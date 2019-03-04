@@ -6,6 +6,7 @@ import product from './product'
 import search from './search'
 import cart from './cart'
 import notification from './notification'
+import shipping from './shipping'
 
 export default combineReducers({
   auth,
@@ -15,4 +16,5 @@ export default combineReducers({
   search,
   cart,
   notification,
+  shipping,
 })

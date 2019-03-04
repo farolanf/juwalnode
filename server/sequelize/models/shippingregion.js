@@ -12,5 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'shipping_region',
     timestamps: false,
   });
+  ShippingRegion.associate = function (models) {
+    ShippingRegion.hasOne(models.Shipping, { foreignKey: 'shipping_region_id' })
+  }
   return ShippingRegion;
 };
