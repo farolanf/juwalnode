@@ -4,6 +4,7 @@ import {
   setCartItemQuantity,
   updateCartItem,
   deleteCartItem,
+  setShipping,
 } from '$act/cart'
 
 export default fetchActionReducer(fetchCart, {
@@ -32,5 +33,9 @@ export default fetchActionReducer(fetchCart, {
   [deleteCartItem]: (state, { payload: { item } }) => ({
     ...state,
     data: state.data.filter(it => it.item_id !== item.item_id)
+  }),
+  [setShipping]: (state, { payload: { shipping } }) => ({
+    ...state,
+    shipping
   })
 })

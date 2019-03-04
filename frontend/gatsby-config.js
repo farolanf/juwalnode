@@ -20,7 +20,8 @@ module.exports = {
         prefixes: [
           `/browse/*`, 
           `/products/*`, 
-          `/profile/*`
+          `/profile/*`,
+          `/checkout/*`,
         ]
       }
     },

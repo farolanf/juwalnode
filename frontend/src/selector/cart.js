@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 
 export const itemsSelector = state => state.cart.data || []
 
-export const shippingCostSelector = state => _.get(state, 'cart.shipping.cost', 0)
+export const shippingCostSelector = state => _.get(state, 'cart.shipping.shipping_cost', 0)
 
 export const subTotalSelector = createSelector(
   itemsSelector,
