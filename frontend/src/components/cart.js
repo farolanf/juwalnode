@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from '@reach/router';
+import { Link } from 'gatsby'
 
 import withStyles from '@material-ui/core/styles/withStyles'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
@@ -125,6 +126,7 @@ const Cart = ({
               <TableCell>Item</TableCell>
               <TableCell>Attributes</TableCell>
               <TableCell align='center'>Actions</TableCell>
+              <TableCell align='right'>Price</TableCell>
               <TableCell align='center'>Quantity</TableCell>
               <TableCell align='right'>Amount</TableCell>
             </TableRow>
@@ -148,6 +150,7 @@ const Cart = ({
                     <FontAwesomeIcon icon={faTrash} className={classes.iconSmall} />
                   </IconButton>
                 </TableCell>
+                <TableCell align='right'>{formatCurrency(item.Product.price)}</TableCell>
                 <TableCell align='center'>
                   <TextField
                     type='number'
@@ -166,7 +169,7 @@ const Cart = ({
               </TableRow>
             ))}
             <TableRow>
-              <TableCell colSpan={4} />
+              <TableCell colSpan={5} />
               <TableCell align='center'>
                 <Button
                   variant='outlined'
@@ -184,19 +187,19 @@ const Cart = ({
             {isWidthUp('md', width) && (
               <>
                 <TableRow>
-                  <TableCell colSpan={5} align='right'>
+                  <TableCell colSpan={6} align='right'>
                     Sub total
                   </TableCell>
                   <TableCell align='right'>{formatCurrency(subTotal)}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell colSpan={5} align='right'>
+                  <TableCell colSpan={6} align='right'>
                     Shipping &amp; handling
                   </TableCell>
                   <TableCell align='right'>{formatCurrency(shipping)}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell colSpan={5} align='right'>
+                  <TableCell colSpan={6} align='right'>
                     Total
                   </TableCell>
                   <TableCell align='right'>{formatCurrency(total)}</TableCell>
@@ -210,19 +213,19 @@ const Cart = ({
         <Table>
           <TableBody>
             <TableRow>
-              <TableCell colSpan={5} align='right'>
+              <TableCell align='right'>
                 Sub total
               </TableCell>
               <TableCell align='right'>{formatCurrency(subTotal)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={5} align='right'>
+              <TableCell align='right'>
                 Shipping &amp; handling
               </TableCell>
               <TableCell align='right'>{formatCurrency(shipping)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={5} align='right'>
+              <TableCell align='right'>
                 Total
               </TableCell>
               <TableCell align='right'>{formatCurrency(total)}</TableCell>
@@ -239,7 +242,9 @@ const Cart = ({
           </Grid>
           <Grid item>
             <Button variant='contained' color='primary'>
-              Proceed to checkout
+              <Link to='/checkout' className={classes.link}>
+                Proceed to checkout
+              </Link>
             </Button>
           </Grid>
         </Grid>
