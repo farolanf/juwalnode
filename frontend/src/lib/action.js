@@ -4,8 +4,8 @@ import { contentRange } from '$src/lib/pagination'
 
 // Async action
 
-export function createAsyncAction (name) {
-  const action = createAction(name)
+export function createAsyncAction (name, payloadCreator, metaCreator) {
+  const action = createAction(name, payloadCreator, metaCreator)
   action.success = createAction(name + '_SUCCESS')
   action.error = createAction(name + '_ERROR')
   return action
