@@ -16,8 +16,16 @@ export function asyncActionWorker (action, asyncApi, onSuccess) {
     try {
       const response = yield call(asyncApi, dispatchedAction)
       onSuccess
-        ? yield onSuccess({ action, response, put })
-        : yield put(action.success({ data: response.data }))
+        ? yield onSuccess({ 
+          action, 
+          response, 
+          put, 
+          meta: dispatchedAction.meta 
+        })
+        : yield put(action.success({ 
+          data: response.data, 
+          meta: dispatchedAction.meta 
+        }))
     } catch (err) {
       yield put(action.error(err))
     }
