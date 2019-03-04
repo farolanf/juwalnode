@@ -5,6 +5,9 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
 
 import { Formik, Form } from 'formik'
 import FormikTextField from '$comp/formik-text-field'
@@ -21,6 +24,7 @@ const Profile = ({
   updateCustomer, 
   fetchShippingRegions, 
   fetchShippings, 
+  shippingRegions,
   classes 
 }) => {
   useEffect(() => {
@@ -28,36 +32,45 @@ const Profile = ({
     fetchShippings()
   }, [])
 
-  function onSubmit (values, actions) {
+  const initialValues = _.defaults(
+    {}, 
+    schema.cast(customer, { stripUnknown: true }), 
+    {
+      address_1: '',
+      address_2: '',
+      city: '',
+      region: '',
+      postal_code: '',
+      country: '',
+      shipping_region_id: 1,
+      day_phone: '',
+      eve_phone: '',
+      mob_phone: '',
+    })
+
+  const getValues = values => {
     values = schema.cast(values, { stripUnknown: true })
+    return {
+      ...values,
+      customer_id: customer.customer_id,
+    }
+  }
+
+  function onSubmit (values, actions) {
     updateCustomer({ 
-      values: {
-        ...values,
-        customer_id: customer.customer_id,
-      }, 
+      values: getValues(values), 
       actions 
     })
-  }  
+  }
 
   return (
     <Paper className={classes.root}>
       <Formik
-        initialValues={_.defaults({}, customer, {
-          address_1: '',
-          address_2: '',
-          city: '',
-          region: '',
-          postal_code: '',
-          country: '',
-          shipping_region_id: 1,
-          day_phone: '',
-          eve_phone: '',
-          mob_phone: '',
-        })}
+        initialValues={initialValues}
         validationSchema={schema}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ dirty, values, handleChange, isSubmitting }) => (
           <Form>
             <Grid container>
               <Grid item xs={12} md={6} container direction='column' className={classes.column}>
@@ -79,6 +92,26 @@ const Profile = ({
                   fullWidth
                   margin='normal'
                 />
+                <FormControl margin='normal'>
+                  <InputLabel>Shipping Region</InputLabel>
+                  <Select
+                    native
+                    name='shipping_region_id'
+                    value={values.shipping_region_id}
+                    onChange={handleChange}
+                  >
+                    {shippingRegions && shippingRegions
+                      .filter(sr => sr.shipping_region_id !== 1)
+                      .map(sr => (
+                        <option
+                          key={sr.shipping_region_id}
+                          value={sr.shipping_region_id}
+                        >
+                          {sr.shipping_region}
+                        </option>
+                      ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} md={6} container direction='column'>
                 <FormikTextField
@@ -106,7 +139,7 @@ const Profile = ({
                 type='submit'
                 variant='contained' 
                 color='primary' 
-                disabled={isSubmitting}
+                disabled={isSubmitting || !dirty}
               >
                 Save
               </Button>
