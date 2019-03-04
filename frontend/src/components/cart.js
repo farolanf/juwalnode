@@ -26,7 +26,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 
 import commonStyles from '$src/styles/common'
 
-import { PREFIX } from '$src/const'
+import { PREFIX, API_HOST } from '$src/const'
 import { getItem } from '$lib/helpers'
 import { formatCurrency } from '$lib/format'
 
@@ -36,6 +36,8 @@ const styles = theme => ({
   scroll: tw`overflow-x-auto`,
   actions: tw`p-8`,
   updateCart: tw`whitespace-no-wrap`,
+  itemTitle: tw`my-2`,
+  itemImage: tw`mb-2`,
 })
 
 const DeleteItemDialog = ({ open, onClose, onDelete, item }) => {
@@ -131,7 +133,12 @@ const Cart = ({
             {items && items.map((item, i) => (
               <TableRow key={i}>
                 <TableCell padding='dense'>{i + 1}</TableCell>
-                <TableCell>{item.Product.name}</TableCell>
+                <TableCell>
+                  <Grid container direction='column'>
+                    <div className={classes.itemTitle}>{item.Product.name}</div>
+                    <img src={`${API_HOST}/${item.Product.thumbnail}`} width='80' className={classes.itemImage} />
+                  </Grid>
+                </TableCell>
                 <TableCell>{formatAttrs(item.attrs)}</TableCell>
                 <TableCell align='center'>
                   <IconButton
