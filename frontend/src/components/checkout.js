@@ -15,7 +15,6 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 
 import commonStyles from '$styles/common'
-
 import { formatCurrency } from '$lib/format'
 
 const styles = theme => ({
@@ -49,10 +48,11 @@ const Checkout = ({
       <FormControl margin='normal'>
         <InputLabel>Shipping</InputLabel>
         <Select 
-          native 
+          native
           value={shipping && shipping.shipping_id}
           onChange={handleChangeShipping}
         >
+          <option>Please select</option>
           {shippings && shippings.map(s => (
             <option key={s.shipping_id} value={s.shipping_id}>
               {s.shipping_type}
