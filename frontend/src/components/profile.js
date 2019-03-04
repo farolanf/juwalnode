@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import _ from 'lodash'
 
 import withStyles from '@material-ui/core/styles/withStyles'
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
@@ -14,7 +15,7 @@ import FormikTextField from '$comp/formik-text-field'
 import schema from '$src/schemas/profile'
 
 const styles = () => ({
-  root: tw`py-8 xs:px-4 md:px-8`,
+  root: tw`my-8 py-8 xs:px-4 md:px-8`,
   column: tw`md:pr-4`,
   container: tw`mt-4 xs:justify-center md:justify-start`,
 })
@@ -34,7 +35,7 @@ const Profile = ({
 
   const initialValues = _.defaults(
     {}, 
-    schema.cast(customer, { stripUnknown: true }), 
+    schema.cast(customer || {}, { stripUnknown: true }), 
     {
       address_1: '',
       address_2: '',
@@ -65,6 +66,9 @@ const Profile = ({
 
   return (
     <Paper className={classes.root}>
+      <Typography variant='h6'>
+        Profile
+      </Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
