@@ -6,6 +6,7 @@ import SEO from "$comp/seo"
 import Browse from '$con/browse'
 import Cart from '$con/cart'
 import ProductDetail from '$con/product-detail'
+import Profile from '$con/profile'
 
 const Page = () => (
   <Layout>
@@ -15,6 +16,7 @@ const Page = () => (
       <Browse path='/browse/*' />
       <Cart path='/cart' />
       <ProductDetail path='/products/:product_id' />
+      <Profile path='/profile' />
     </Router>
   </Layout>
 )

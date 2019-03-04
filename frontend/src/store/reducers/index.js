@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import auth from './auth'
+import user from './user'
 import department from './department'
 import category from './category'
 import product from './product'
@@ -9,7 +9,7 @@ import notification from './notification'
 import shipping from './shipping'
 
 export default combineReducers({
-  auth,
+  user,
   department,
   category,
   product,

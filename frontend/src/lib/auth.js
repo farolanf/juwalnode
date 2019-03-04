@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { navigate } from '@reach/router'
-import { setUser as _setUser } from '$act/auth'
+import { setUser as _setUser } from '$act/user'
 import { API_BASE, PREFIX } from '$src/const'
 import store from '$src/store'
 

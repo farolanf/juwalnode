@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { setUser } from '$act/auth'
+import { setUser, updateCustomer } from '$act/user'
 
 export default handleActions(
   {
@@ -7,6 +7,13 @@ export default handleActions(
       ...state,
       user,
       loggedIn: !!user
+    }),
+    [updateCustomer.success]: (state, { payload: { data } }) => ({
+      ...state,
+      user: {
+        ...state.user,
+        Customer: data
+      }
     })
   },
   {

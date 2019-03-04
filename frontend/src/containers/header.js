@@ -8,8 +8,8 @@ import { fetchCart } from '$act/cart'
 const mapStateToProps = state => ({
   departments: state.department.data,
   categories: state.category.data,
-  user: state.auth.user,
-  loggedIn: state.auth.loggedIn,
+  user: state.user.user,
+  loggedIn: state.user.loggedIn,
   items: state.cart.data,
 })
 

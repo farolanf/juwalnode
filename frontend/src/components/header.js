@@ -74,7 +74,11 @@ const ProfileMenu = ({ classes, user }) => {
         onClose={() => setAnchorEl(null)}
       >
         <MenuItem disabled>{user.email}</MenuItem>
-        <MenuItem>Profile</MenuItem>
+        <MenuItem>
+          <Link to='/profile' className={classes.link}>
+            Profile
+          </Link>
+        </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </>

@@ -6,6 +6,7 @@ import theme from '$src/theme'
 
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true,
+  seed: '4kXL9d',
 })
 
 const wrapRootElement = element => (

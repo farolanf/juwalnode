@@ -3,6 +3,7 @@ import department from './department'
 import category from './category'
 import product from './product'
 import cart from './cart'
+import user from './user'
 import shipping from './shipping'
 
 function* rootSaga () {
@@ -11,6 +12,7 @@ function* rootSaga () {
     category(),
     product(),
     cart(),
+    user(),
     shipping(),
   ])
 }
