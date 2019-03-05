@@ -2,18 +2,24 @@ const short = require('short-uuid')
 const events = require('../../lib/events')
 const { Customer, ShoppingCart } = require('../../sequelize')
 
-module.exports = (app, config) => {
-  // init customer and cart for new user
-  events.on('userCreated', async user => {
-    let unique, customer
+async function generateCartId () {
+  let unique
     do {
       // generate unique cart_id
       const cart_id = short.generate()
       unique = await ShoppingCart.count({ where: { cart_id } }) === 0
-      if (unique) {
-        customer = await Customer.create({ cart_id })
+    if (!unique) continue
+    unique = await Customer.count({ where: { cart_id } }) === 0
+    if (unique) return cart_id
       }
-    } while (!unique)
+  while (!unique)
+}
+
+module.exports = (app, config) => {
+  // init customer and cart for new user
+  events.on('userCreated', async user => {
+    const cart_id = await generateCartId()
+    const customer = await Customer.create({ cart_id })
     await user.setCustomer(customer)
   })
 }
