@@ -1,5 +1,6 @@
 import { compose } from 'lodash/fp'
 import redux from './redux'
+import script from './script'
 import mui from './mui'
 import notistack from './notistack'
 
@@ -10,6 +11,7 @@ export default element => {
   }
   return compose(
     redux,
+    script,
     mui,
     notistack,
   )(element)

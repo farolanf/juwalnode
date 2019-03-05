@@ -7,6 +7,7 @@ import search from './search'
 import cart from './cart'
 import notification from './notification'
 import shipping from './shipping'
+import script from './script'
 
 export default combineReducers({
   user,
@@ -17,4 +18,5 @@ export default combineReducers({
   cart,
   notification,
   shipping,
+  script,
 })
