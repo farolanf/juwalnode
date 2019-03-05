@@ -4,6 +4,12 @@
 
 [Live Demo](https://turing-fullstack-challenge.juwal.id/)
 
+### Checkout With PayPal
+
+You can checkout with PayPal with this account:
+  - email: tff-buyer@foo.com
+  - password: turingfullstack
+
 ### Admin Panel
 
 You can access the admin panel by clicking the `Admin` link at the bottom of the page.
