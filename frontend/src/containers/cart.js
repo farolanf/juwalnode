@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
 import {
   fetchCart,
   setCartItemQuantity,
@@ -7,35 +6,18 @@ import {
   deleteCartItem,
 } from '$act/cart'
 import Cart from '$comp/cart'
-
-const itemsSelector = state => state.cart.data || []
-
-// TODO: get cost based on shipping region
-const shippingSelector = () => 15
-
-const subTotalSelector = createSelector(
-  itemsSelector,
-  items => items.reduce((acc, item) => {
-    return acc + (item.Product.price * item.quantity)
-  }, 0)
-)
-
-const totalSelector = createSelector(
+import { 
   subTotalSelector,
-  shippingSelector,
-  (subTotal, shipping) => subTotal + shipping
-)
-
-const dirtySelector = createSelector(
-  itemsSelector,
-  items => !!items.find(item => item._dirty)
-)
+  shippingCostSelector,
+  totalSelector,
+  dirtySelector,
+} from '$selector/cart'
 
 export default connect(
   state => ({
     items: state.cart.data,
     subTotal: subTotalSelector(state),
-    shipping: shippingSelector(state),
+    shipping: shippingCostSelector(state),
     total: totalSelector(state),
     dirty: dirtySelector(state),
   }),

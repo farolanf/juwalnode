@@ -11,7 +11,8 @@ module.exports = {
     ecmaVersion: 8, // optional, recommended 6+
   },
   globals: {
-    tw: true
+    tw: true,
+    paypal: true,
   },
   env: {
     browser: true

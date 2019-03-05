@@ -14,6 +14,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         $lib: path.resolve(__dirname, 'src/lib'),
         $comp: path.resolve(__dirname, 'src/components'),
         $con: path.resolve(__dirname, 'src/containers'),
+        $selector: path.resolve(__dirname, 'src/selector'),
         $act: path.resolve(__dirname, 'src/store/actions'),
         $styles: path.resolve(__dirname, 'src/styles'),
       }
