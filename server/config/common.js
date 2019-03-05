@@ -11,7 +11,9 @@ module.exports = {
     'auth',
     'finale',
     'elasticsearch',
+    'order',
     'customer',
+    'checkout',
   ],
 
   // module options
@@ -64,6 +66,7 @@ module.exports = {
         routes: [
           { path: '/shoppingcarts(/.*)?', method: '*' },
           { path: '/customers(/.*)?', method: 'PUT' },
+          { path: '/paypal/.*', method: ['GET', 'POST']},
         ]
       },
       // admin passed all checks

@@ -16,6 +16,7 @@ export default connect(
     subTotal: subTotalSelector(state),
     shippingCost: shippingCostSelector(state),
     total: totalSelector(state),
+    paypal: state.script.paypal,
   }), 
   dispatch => ({
     setShipping: shipping => dispatch(setShipping({ shipping }))

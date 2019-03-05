@@ -8,6 +8,7 @@ import Cart from '$con/cart'
 import ProductDetail from '$con/product-detail'
 import Profile from '$con/profile'
 import Checkout from '$con/checkout'
+import CheckoutComplete from '$con/checkout-complete'
 
 const Page = () => (
   <Layout>
@@ -19,6 +20,7 @@ const Page = () => (
       <ProductDetail path='/products/:product_id' />
       <Profile path='/profile' />
       <Checkout path='/checkout' />
+      <CheckoutComplete path='/checkout-complete' />
     </Router>
   </Layout>
 )
