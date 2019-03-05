@@ -87,7 +87,11 @@ const Checkout = ({
               ))}
             </Select>
             <FormHelperText>
-              Available options are based on chosen region: <Link to='/profile' className={classes.link}><b className={classes.helperLink}>{shippingRegion.shipping_region}</b></Link>
+              Available options are based on chosen region: {shippingRegion && (
+                <Link to='/profile' className={classes.link}>
+                  <b className={classes.helperLink}>{shippingRegion.shipping_region}</b>
+                </Link>
+              )}
             </FormHelperText>
           </FormControl>
           <Table>
