@@ -33,7 +33,7 @@ const Profile = ({
     fetchShippings()
   }, [])
 
-  const initialValues = _.defaults(
+  const initialValues = _.assignWith(
     {}, 
     schema.cast(customer || {}, { stripUnknown: true }), 
     {
@@ -47,7 +47,9 @@ const Profile = ({
       day_phone: '',
       eve_phone: '',
       mob_phone: '',
-    })
+    },
+    (dst, src) => !dst ? src : dst
+  )
 
   const getValues = values => {
     values = schema.cast(values, { stripUnknown: true })
@@ -105,7 +107,6 @@ const Profile = ({
                     onChange={handleChange}
                   >
                     {shippingRegions && shippingRegions
-                      .filter(sr => sr.shipping_region_id !== 1)
                       .map(sr => (
                         <option
                           key={sr.shipping_region_id}
