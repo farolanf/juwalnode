@@ -163,9 +163,6 @@ function buildQuery (params) {
   if (params.count) {
     params.count = +params.count
   }
-  if (params.attributes) {
-    params.attributes = JSON.parse(params.attributes)
-  }
   const search = {
     from: params.offset || 0,
     size: Math.min(

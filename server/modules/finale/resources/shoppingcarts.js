@@ -20,16 +20,6 @@ module.exports = function initResource (resource) {
     }
   })
 
-  resource.list.send.before(async (req, res, context) => {
-    try {
-      context.instance = context.instance.map(prepareInstance)
-      return context.continue
-    }
-    catch (err) {
-      handleError(err, res)
-    }
-  })
-
   // create
   // params:
   //   product_id
@@ -44,14 +34,12 @@ module.exports = function initResource (resource) {
           return res.sendStatus(400)
         }
 
-        const attrs = JSON.stringify(params.attrs)
-
         // just add quantity if item exists
         const item = await ShoppingCart.findOne({
           where: {
             cart_id: req.user.Customer.cart_id,
             product_id: params.product_id,
-            attrs
+            attrs: JSON.stringify(params.attrs),
           },
           include: includes.shoppingcarts
         })
@@ -67,7 +55,7 @@ module.exports = function initResource (resource) {
         context.attributes = {
           cart_id: req.user.Customer.cart_id,
           product_id: params.product_id,
-          attrs,
+          attrs: params.attrs,
           quantity: params.quantity,
         }
       }
@@ -77,8 +65,6 @@ module.exports = function initResource (resource) {
       handleError(err, res)
     }
   })
-
-  resource.create.send.before(prepareInstanceMilestone)
 
   // read
   resource.read.fetch.before(async (req, res, context) => {
@@ -95,8 +81,6 @@ module.exports = function initResource (resource) {
       handleError(err, res)
     }
   })
-
-  resource.read.send.before(prepareInstanceMilestone)
 
   // update
 
@@ -126,7 +110,7 @@ module.exports = function initResource (resource) {
 
         context.attributes = {
           product_id: params.product_id,
-          attrs: JSON.stringify(params.attrs),
+          attrs: params.attrs,
           quantity: params.quantity,
         }
       }
@@ -136,8 +120,6 @@ module.exports = function initResource (resource) {
       handleError(err, res)
     }
   })
-
-  resource.update.send.before(prepareInstanceMilestone)
 
   // delete
   resource.delete.fetch.before(async (req, res, context) => {
@@ -154,19 +136,4 @@ module.exports = function initResource (resource) {
       handleError(err, res)
     }
   })
-
-  function prepareInstance (instance) {
-    instance.attrs = JSON.parse(instance.attrs)
-    return instance
-  }
-
-  async function prepareInstanceMilestone (req, res, context) {
-    try {
-      prepareInstance(context.instance)
-      return context.continue
-    }
-    catch (err) {
-      handleError(err, res)
-    }
-  }
 }

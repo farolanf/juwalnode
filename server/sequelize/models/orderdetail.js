@@ -9,7 +9,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     order_id: { type: DataTypes.INTEGER, allowNull: false },
     product_id: { type: DataTypes.INTEGER, allowNull: false },
-    attrs: { type: DataTypes.STRING(1000), allowNull: false, field: 'attributes' },
+    attrs: { 
+      type: DataTypes.STRING(1000), 
+      allowNull: false, 
+      field: 'attributes',
+      set (val) {
+        this.setDataValue('attrs', JSON.stringify(val))
+      },
+      get () {
+        const val = this.getDataValue('attrs')
+        return val ? JSON.parse(val) : val
+      }
+    },
     product_name: { type: DataTypes.STRING(100), allowNull: false },
     quantity: { type: DataTypes.INTEGER, allowNull: false },
     unit_cost: { type: DataTypes.DECIMAL(10, 2), allowNull: false }

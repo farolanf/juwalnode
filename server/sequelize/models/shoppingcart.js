@@ -10,7 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     cart_id: { type: DataTypes.CHAR(32), allowNull: false },
     product_id: { type: DataTypes.INTEGER, allowNull: false },
     // sequelize error when using 'attributes' field name, so use 'attrs' instead
-    attrs: { type: DataTypes.STRING(1000), allowNull: false, field: 'attributes' },
+    attrs: { 
+      type: DataTypes.STRING(1000), 
+      allowNull: false, 
+      field: 'attributes',
+      set (val) {
+        this.setDataValue('attrs', JSON.stringify(val))
+      },
+      get () {
+        const val = this.getDataValue('attrs')
+        return val ? JSON.parse(val) : val
+      }
+    },
     quantity: { type: DataTypes.INTEGER, allowNull: false },
     buy_now: { type: DataTypes.TINYINT(1), allowNull: false, defaultValue: true }
   }, {
