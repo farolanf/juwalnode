@@ -1,9 +1,8 @@
-Thanks for your order
+Thanks for your order.
 
 Thank you for shopping with us. We'll send you the tracking number when your item ships.
 
-Your order ID is #{{orderId}}.
-A summary of your order is shown below.
+Your order ID is #{{orderId}}. A summary of your order is shown below.
 
 #, Item, Price, Qty, Amount
 {{#items}}
@@ -17,3 +16,9 @@ Total: {{total}}
 Regards,
 
 TShirtShop
+
+Disclaimer
+
+This is an example email for Turing Fullstack Challenge project.
+
+You're receiving this as a result of doing a checkout test on https://turing-fullstack-challenge.juwal.id
