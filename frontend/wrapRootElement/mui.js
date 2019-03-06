@@ -1,4 +1,5 @@
 import React from 'react'
+import { SheetsRegistry } from 'jss'
 import JssProvider from 'react-jss/lib/JssProvider'
 import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -9,9 +10,12 @@ const generateClassName = createGenerateClassName({
   seed: '4kXL9d',
 })
 
+export const sheetsRegistry = new SheetsRegistry()
+const sheetsManager = new Map()
+
 const wrapRootElement = element => (
-  <JssProvider generateClassName={generateClassName}>
-    <MuiThemeProvider theme={theme}>
+  <JssProvider generateClassName={generateClassName} registry={sheetsRegistry}>
+    <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
       <CssBaseline />
       {element}
     </MuiThemeProvider>
