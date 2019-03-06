@@ -7,7 +7,7 @@ module.exports = {
     apiBase: '/api/v1',
   },
 
-  email: 'noreply@juwal.id',
+  email: process.env.EMAIL_FROM,
   templatesDir: path.resolve(__dirname, '../templates'),
 
   // specify modules to load and their order

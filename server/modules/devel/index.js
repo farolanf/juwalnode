@@ -14,9 +14,9 @@ module.exports = function (app, config) {
   app.get('/devel/testmail', async (req, res) => {
     await sendMail(
       {
-        from: 'sender@foo.com',
-        to: 'user@foo.com',
-        subject: 'test mail'
+        from: config.email,
+        to: req.query.to,
+        subject: 'Test email'
       }, 
       'order-confirmation',
       {
