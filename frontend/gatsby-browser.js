@@ -12,6 +12,11 @@ const ga = GAnalytics('UA-49818631-2')
 
 verify()
 
+export const onInitialClientRender = () => {
+  const node = document.querySelector('[data-ssr-styles]')
+  node.parentNode.removeChild(node)
+}
+
 export const wrapPageElement = ({ element }) => _wrapRootElement(element)
 
 export const onRouteUpdate = ({ location }) => {
