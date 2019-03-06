@@ -7,8 +7,8 @@ const config = require('../config')
 
 const options = {
   host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: process.env.EMAIL_PORT === 465,
+  port: +process.env.EMAIL_PORT,
+  secure: process.env.EMAIL_PORT == 465,
 }
 if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
   options.auth = {
