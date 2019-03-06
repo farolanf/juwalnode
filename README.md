@@ -4,6 +4,8 @@
 
 [Live Demo](https://turing-fullstack-challenge.juwal.id/)
 
+**WARNING! You'll receive an email of order confirmation if you complete a checkout.**
+
 ### Checkout With PayPal
 
 You can checkout with PayPal with this account:
