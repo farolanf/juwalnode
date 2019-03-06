@@ -1,72 +1,78 @@
-<style>
-  table {
-    border-collapse: collapse;
-    border: 1px solid grey;
-  }
-  th {
-    border-bottom: 1px solid grey;
-    background-color: yellowgreen;
-    color: white;
-  }
-  th, td {
-    padding: 16px 24px;
-  }
-  tr:not(:first-child) td {
-    border-top: 1px solid grey;
-  }
-  .notice {
-    background-color: beige;
-    padding: 16px 32px;
-    margin-bottom: 16px;
-  }
-  .ta-r {
-    text-align: right;
-  }
-</style>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+        border: 1px solid grey;
+      }
+      th {
+        border-bottom: 1px solid grey;
+        background-color: yellowgreen;
+        color: white;
+      }
+      th, td {
+        padding: 16px 24px;
+      }
+      tr:not(:first-child) td {
+        border-top: 1px solid grey;
+      }
+      .notice {
+        background-color: beige;
+        padding: 16px 32px;
+        margin-bottom: 16px;
+      }
+      .ta-r {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Thanks for your order</h2>
 
-<h2>Thanks for your order</h2>
+    <p>Thank you for shopping with us. We'll send you the tracking number when your item ships.</p>
 
-<p>Thank you for shopping with us. We'll send you the tracking number when your item ships.</p>
+    <div class="notice">
+      <p>Your order ID is <b>#{{orderId}}</b>.</p>
+      <p>A summary of your order is shown below.</p>
+    </div>
 
-<div class="notice">
-  <p>Your order ID is <b>#{{orderId}}</b>.</p>
-  <p>A summary of your order is shown below.</p>
-</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item</th>
+          <th class="ta-r">Price</th>
+          <th class="ta-r">Qty</th>
+          <th class="ta-r">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#items}}
+        <tr>
+          <td>{{index}}</td>
+          <td>{{product_name}}</td>
+          <td class="ta-r">{{price}}</td>
+          <td class="ta-r">{{quantity}}</td>
+          <td class="ta-r">{{amount}}</td>
+        </tr>
+        {{/items}}
+        <tr>
+          <td colspan="4" class="ta-r">Sub total</td>
+          <td class="ta-r">{{subTotal}}</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="ta-r">Shipping</td>
+          <td class="ta-r">{{shipping}}</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="ta-r">Total</td>
+          <td class="ta-r">{{total}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Item</th>
-      <th class="ta-r">Price</th>
-      <th class="ta-r">Qty</th>
-      <th class="ta-r">Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#items}}
-    <tr>
-      <td>{{index}}</td>
-      <td>{{product_name}}</td>
-      <td class="ta-r">{{price}}</td>
-      <td class="ta-r">{{quantity}}</td>
-      <td class="ta-r">{{amount}}</td>
-    </tr>
-    {{/items}}
-    <tr>
-      <td colspan="4" class="ta-r">Sub total</td>
-      <td class="ta-r">{{subTotal}}</td>
-    </tr>
-    <tr>
-      <td colspan="4" class="ta-r">Shipping</td>
-      <td class="ta-r">{{shipping}}</td>
-    </tr>
-    <tr>
-      <td colspan="4" class="ta-r">Total</td>
-      <td class="ta-r">{{total}}</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Regards,</p>
-<p>TShirtShop</p>
+    <p>Regards,</p>
+    <p>TShirtShop</p>
+  </body>
+</html>
