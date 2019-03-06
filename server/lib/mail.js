@@ -5,15 +5,18 @@ const nodemailer = require('nodemailer')
 const mustache = require('mustache')
 const config = require('../config')
 
-const transporter = nodemailer.createTransport({
+const options = {
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
   secure: process.env.EMAIL_PORT === 465,
-  auth: {
+}
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  options.auth = {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   }
-})
+}
+const transporter = nodemailer.createTransport(options)
 
 exports.sendMail = async function sendMail (options, template, context) {
   const ext = '.html'
