@@ -1,4 +1,5 @@
 const { sendMail } = require('../../lib/mail')
+const { createFormatCurrency } = require('../../lib/format')
 
 module.exports = function (app, config) {
   app.use((req, res, next) => {
@@ -12,6 +13,10 @@ module.exports = function (app, config) {
   })
 
   app.get('/devel/testmail', async (req, res) => {
+    const currency = createFormatCurrency('USD')
+    if (!req.query.to) {
+      return res.status(400).send('Missing query param: to (destination address)')
+    } 
     await sendMail(
       {
         from: config.email,
@@ -54,12 +59,4 @@ module.exports = function (app, config) {
     )
     res.sendStatus(200)
   })
-}
-
-function currency (val) {
-  return `USD ${prec2(val)}`
-}
-
-function prec2 (val) {
-  return parseFloat(Math.round(val * 100) / 100).toFixed(2)
 }
