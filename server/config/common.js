@@ -1,9 +1,14 @@
+const path = require('path')
+
 module.exports = {
   // app options
   app: {
     port: 3000,
-    apiBase: '/api/v1'
+    apiBase: '/api/v1',
   },
+
+  email: 'noreply@juwal.id',
+  templatesDir: path.resolve(__dirname, '../templates'),
 
   // specify modules to load and their order
   modules: [
@@ -14,6 +19,7 @@ module.exports = {
     'order',
     'customer',
     'checkout',
+    'email',
   ],
 
   // module options
