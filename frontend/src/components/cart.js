@@ -241,7 +241,7 @@ const Cart = ({
             </Button>
           </Grid>
           <Grid item>
-            <Button variant='contained' color='primary'>
+            <Button variant='contained' color='primary' disabled={!items || !items.length}>
               <Link to='/checkout' className={classes.link}>
                 Proceed to checkout
               </Link>
