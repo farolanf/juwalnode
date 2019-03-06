@@ -11,10 +11,13 @@ const transporter = nodemailer.createTransport({
   secure: false,
 })
 
-// TODO: test
 exports.sendMail = async function sendMail (options, template, context) {
+  const ext = '.html'
   options = { ...options }
   if (template) {
+    if (!template.endsWith(ext)) {
+      template += ext
+    }
     const templatePath = path.resolve(config.templatesDir, template)
     const templateContent = await util.promisify(fs.readFile)(templatePath, 'utf8')
     options.html = mustache.render(templateContent, context)

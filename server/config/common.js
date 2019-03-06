@@ -7,6 +7,7 @@ module.exports = {
     apiBase: '/api/v1',
   },
 
+  email: 'noreply@juwal.id',
   templatesDir: path.resolve(__dirname, '../templates'),
 
   // specify modules to load and their order
@@ -18,6 +19,7 @@ module.exports = {
     'order',
     'customer',
     'checkout',
+    'email',
   ],
 
   // module options
