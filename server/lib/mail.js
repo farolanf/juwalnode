@@ -17,14 +17,24 @@ const transporter = nodemailer.createTransport({
 
 exports.sendMail = async function sendMail (options, template, context) {
   const ext = '.html'
+  const extTxt = '.txt'
   options = { ...options }
   if (template) {
-    if (!template.endsWith(ext)) {
-      template += ext
+    const templates = {
+      html: template + ext,
+      text: template + extTxt,
     }
-    const templatePath = path.resolve(config.templatesDir, template)
-    const templateContent = await util.promisify(fs.readFile)(templatePath, 'utf8')
-    options.html = mustache.render(templateContent, context)
+    await Object.keys(templates).reduce((promise, type) => promise.then(async () => {
+      const template = templates[type]
+      const templatePath = path.resolve(config.templatesDir, template)
+      const fileOk = await util.promisify(fs.access)(templatePath, fs.constants.F_OK | fs.constants.R_OK)
+        .then(() => true)  
+        .catch(() => false)
+      if (fileOk) {
+        const templateContent = await util.promisify(fs.readFile)(templatePath, 'utf8')
+        options[type] = mustache.render(templateContent, context)
+      }
+    }), Promise.resolve())
   }
   await transporter.sendMail(options)
 }

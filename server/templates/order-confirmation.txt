@@ -1,0 +1,19 @@
+Thanks for your order
+
+Thank you for shopping with us. We'll send you the tracking number when your item ships.
+
+Your order ID is #{{orderId}}.
+A summary of your order is shown below.
+
+#, Item, Price, Qty, Amount
+{{#items}}
+{{index}}, {{product_name}}, {{price}}, {{quantity}}, {{amount}}
+{{/items}}
+
+Sub total: {{subTotal}}
+Shipping: {{shipping}}
+Total: {{total}}
+
+Regards,
+
+TShirtShop
