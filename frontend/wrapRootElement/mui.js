@@ -5,21 +5,40 @@ import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/sty
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '$src/theme'
 
-const generateClassName = createGenerateClassName({
-  dangerouslyUseGlobalCSS: true,
-  seed: '4kXL9d',
-})
+let context
 
-export const sheetsRegistry = new SheetsRegistry()
-const sheetsManager = new Map()
+export const getSheetsRegistry = () => context && context.sheetsRegistry
 
-const wrapRootElement = element => (
-  <JssProvider generateClassName={generateClassName} registry={sheetsRegistry}>
-    <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-      <CssBaseline />
-      {element}
-    </MuiThemeProvider>
-  </JssProvider>
-)
+function createPageContext () {
+  return {
+    theme,
+    sheetsManager: new Map(),
+    sheetsRegistry: new SheetsRegistry(),
+    generateClassName: createGenerateClassName({
+      dangerouslyUseGlobalCSS: true,
+      seed: 'tss',
+    })
+  }
+}
+
+const wrapRootElement = element => {
+  if (!process.browser) {
+    context = createPageContext()
+  } else {
+    if (!global.__MUI_PAGE_CONTEXT__) {
+      global.__MUI_PAGE_CONTEXT__ = createPageContext()
+    }
+    context = global.__MUI_PAGE_CONTEXT__
+  }
+  const { theme, sheetsManager, sheetsRegistry, generateClassName } = context
+  return (
+    <JssProvider generateClassName={generateClassName} registry={sheetsRegistry}>
+      <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+        <CssBaseline />
+        {element}
+      </MuiThemeProvider>
+    </JssProvider>
+  )
+}
 
 export default wrapRootElement
