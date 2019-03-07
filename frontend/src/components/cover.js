@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 
 const styles = theme => ({
   root: {
-    ...tw`absolute pin flex justify-center items-start bg-transparent text-transparent text-2xl font-bold rounded pt-16`,
+    ...tw`absolute pin flex justify-center items-center bg-transparent text-transparent text-2xl font-bold rounded`,
     zIndex: 10000,
     opacity: 0.9,
     transition: theme.transitions.create(['background-color', 'color']),
