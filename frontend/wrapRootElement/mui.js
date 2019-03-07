@@ -14,10 +14,7 @@ function createPageContext () {
     theme,
     sheetsManager: new Map(),
     sheetsRegistry: new SheetsRegistry(),
-    generateClassName: createGenerateClassName({
-      dangerouslyUseGlobalCSS: true,
-      seed: 'tss',
-    })
+    generateClassName: createGenerateClassName(),
   }
 }
 
