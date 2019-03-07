@@ -14,6 +14,7 @@ module.exports = {
   modules: [
     'data',
     'auth',
+    'db',
     'finale',
     'elasticsearch',
     'order',
@@ -52,6 +53,7 @@ module.exports = {
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'GET' },
 
+          { path: '/graphql.*', method: '*' },
           { path: '/search/.*', method: 'GET' },
 
           // public resources

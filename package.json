@@ -23,10 +23,9 @@
   "homepage": "https://github.com/farolanf/turing-fullstack-farolan#readme",
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.0",
+    "apollo-server-express": "^2.4.8",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
     "change-case": "^3.1.0",
     "commander": "^2.19.0",
     "cors": "^2.8.5",
@@ -34,9 +33,13 @@
     "elasticsearch": "^15.4.1",
     "express": "^4.16.4",
     "finale-rest": "^1.0.2",
+    "graphql": "^14.1.1",
+    "graphql-compose": "^5.11.0",
+    "graphql-compose-mongoose": "^5.3.1",
+    "graphql-compose-pagination": "^4.0.0",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
-    "mocha": "^5.2.0",
+    "mongoose": "^5.4.17",
     "mustache": "^3.0.1",
     "mysql2": "^1.6.5",
     "node-linux": "^0.1.12",
@@ -55,8 +58,10 @@
     "yup": "^0.26.10"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "eslint": "^5.13.0",
-    "gh-pages": "^2.0.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.10"
   }
 }
