@@ -18,7 +18,8 @@ function createPageContext () {
   }
 }
 
-const wrapRootElement = element => {
+function getPageContext () {
+  let context
   if (!process.browser) {
     context = createPageContext()
   } else {
@@ -27,6 +28,11 @@ const wrapRootElement = element => {
     }
     context = global.__MUI_PAGE_CONTEXT__
   }
+  return context
+}
+
+const wrapRootElement = element => {
+  context = getPageContext()
   const { theme, sheetsManager, sheetsRegistry, generateClassName } = context
   return (
     <JssProvider generateClassName={generateClassName} registry={sheetsRegistry}>
