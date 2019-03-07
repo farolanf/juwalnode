@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import _ from 'lodash'
 
 import withStyles from '@material-ui/core/styles/withStyles'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -20,13 +21,36 @@ const styles = () => ({
   container: tw`mt-4 xs:justify-center md:justify-start`,
 })
 
+const ShippingRegionSelect = ({ value, handleChange, shippingRegions }) => (
+  <FormControl margin='normal'>
+    <InputLabel>Shipping Region</InputLabel>
+    <Select
+      native
+      name='shipping_region_id'
+      value={value}
+      onChange={handleChange}
+    >
+      {shippingRegions && shippingRegions
+        .map(sr => (
+          <option
+            key={sr.shipping_region_id}
+            value={sr.shipping_region_id}
+          >
+            {sr.shipping_region}
+          </option>
+        ))}
+    </Select>
+  </FormControl>
+)
+
 const Profile = ({ 
   customer, 
   updateCustomer, 
   fetchShippingRegions, 
   fetchShippings, 
   shippingRegions,
-  classes 
+  classes,
+  width,
 }) => {
   useEffect(() => {
     fetchShippingRegions()
@@ -98,25 +122,13 @@ const Profile = ({
                   fullWidth
                   margin='normal'
                 />
-                <FormControl margin='normal'>
-                  <InputLabel>Shipping Region</InputLabel>
-                  <Select
-                    native
-                    name='shipping_region_id'
+                {isWidthUp('md', width) && (
+                  <ShippingRegionSelect 
                     value={values.shipping_region_id}
-                    onChange={handleChange}
-                  >
-                    {shippingRegions && shippingRegions
-                      .map(sr => (
-                        <option
-                          key={sr.shipping_region_id}
-                          value={sr.shipping_region_id}
-                        >
-                          {sr.shipping_region}
-                        </option>
-                      ))}
-                  </Select>
-                </FormControl>
+                    handleChange={handleChange}
+                    shippingRegions={shippingRegions}
+                  />
+                )}
               </Grid>
               <Grid item xs={12} md={6} container direction='column'>
                 <FormikTextField
@@ -138,6 +150,13 @@ const Profile = ({
                   margin='normal'
                 />
               </Grid>
+              {!isWidthUp('md', width) && (
+                  <ShippingRegionSelect 
+                    value={values.shipping_region_id}
+                    handleChange={handleChange}
+                    shippingRegions={shippingRegions}
+                  />
+                )}
             </Grid>
             <Grid container className={classes.container}>
               <Button
@@ -156,4 +175,4 @@ const Profile = ({
   )
 }
 
-export default withStyles(styles)(Profile)
+export default withWidth()(withStyles(styles)(Profile))
