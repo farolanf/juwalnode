@@ -1,24 +1,6 @@
-# Turing Full Stack Challenge - WIP
+# Juwal
 
-## Demo
-
-[Live Demo](https://turing-fullstack-challenge.juwal.id/)
-
-**WARNING! You'll receive an email of order confirmation if you complete a checkout.**
-
-### Checkout With PayPal
-
-You can checkout with PayPal with this account:
-  - email: tff-buyer@foo.com
-  - password: turingfullstack
-
-### Admin Panel
-
-You can access the admin panel by clicking the `Admin` link at the bottom of the page.
-
-Login with:
-  - username: admin
-  - password: admin
+Personal project
 
 ## Requirements
 
