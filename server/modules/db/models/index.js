@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const mongoose = require('mongoose')
 
+mongoose.connect(process.env.MONGO_CONNECT, { useNewUrlParser: true })
+
 const dir = path.resolve(__dirname)
 const files = fs.readdirSync(dir, 'utf8')
 

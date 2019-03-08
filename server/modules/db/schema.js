@@ -6,7 +6,8 @@ const models = require('./models')
 Object.keys(models).forEach(name => {
   const model = models[name]
   const tc = composeWithMongoose(model)
-  const resolvers = ['findById', 'findByIds', 'findOne', 'findMany', 'count', 'connection', 'pagination']
+  const resolvers = ['findById', 'findByIds', 'findOne', 'findMany', 'count', 
+'connection', 'pagination']
   const fields = {}
   
   resolvers.forEach(resolver => {

@@ -9,6 +9,7 @@ module.exports = ({ ObjectId }) => ({
     thumbnail: { type: String, maxlength: 150 },
     display: Number,
     attrs: [{ type: ObjectId, ref: 'AttributeValue' }],
+    categories: [{ type: ObjectId, ref: 'Category' }],
   }, 
   options: {
     timestamps: true,
